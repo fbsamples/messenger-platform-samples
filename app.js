@@ -10,10 +10,12 @@
 /* jshint node: true, devel: true */
 'use strict';
 
-const crypto = require('crypto'),
-  https = require('https'),
+const 
   bodyParser = require('body-parser'),
+  config = require('config'),
+  crypto = require('crypto'),
   express = require('express'),
+  https = require('https'),  
   request = require('request');
 
 var app = express();
@@ -22,15 +24,31 @@ app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
+/*
+ * Be sure to setup your config values before running this code. You can 
+ * set them using environment variables or modifying the config file in /config.
+ *
+ */
+
 // App Secret can be retrieved from the App Dashboard
-const APP_SECRET = 'APP_SECRET';
+const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
+  process.env.MESSENGER_APP_SECRET :
+  config.get('appSecret');
 
 // Arbitrary value used to validate a webhook
-const VALIDATION_TOKEN = 'my_voice_is_my_passport_verify_me';
+const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
+  (process.env.MESSENGER_VALIDATION_TOKEN) :
+  config.get('validationToken');
 
 // Generate a page access token for your page from the App Dashboard
-const PAGE_ACCESS_TOKEN = 'PAGE_ACCESS_TOKEN';
+const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
+  (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
+  config.get('pageAccessToken');
 
+if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
+  console.error("Missing config values");
+  process.exit(1);
+}
 
 /*
  * Use your own validation token. Check that the token used in the Webhook 
@@ -189,6 +207,10 @@ function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (messageText) {
+      case 'image':
+        sendImageMessage(senderID);
+        break;
+
       case 'button':
         sendButtonMessage(senderID);
         break;
@@ -260,6 +282,28 @@ function receivedPostback(event) {
   sendTextMessage(senderID, "Postback called");
 }
 
+
+/*
+ * Send a message with an using the Send API.
+ *
+ */
+function sendImageMessage(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "image",
+        payload: {
+          url: "http://i.imgur.com/zYIlgBl.png"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+}
 
 /*
  * Send a text message using the Send API.
