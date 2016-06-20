@@ -75,7 +75,6 @@ app.get('/webhook', function(req, res) {
  *
  */
 app.post('/webhook', function (req, res) {
-
   var data = req.body;
 
   // Make sure this is a page subscription
@@ -199,7 +198,6 @@ function receivedMessage(event) {
   // You may get a text or attachment but not both
   var messageText = message.text;
   var messageAttachments = message.attachments;
-
 
   if (messageText) {
 
