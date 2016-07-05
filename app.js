@@ -213,6 +213,10 @@ function receivedMessage(event) {
         sendGifMessage(senderID);
         break;
 
+      case 'video':
+        sendVideoMessage(senderID);
+        break;
+
       case 'button':
         sendButtonMessage(senderID);
         break;
@@ -298,7 +302,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "http://i.imgur.com/zYIlgBl.png"
+          url: "http://messengerdemo.parseapp.com/img/rift.png"
         }
       }
     }
@@ -320,7 +324,29 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "http://i.imgur.com/Y7iiYr6.gif"
+          url: "http://messengerdemo.parseapp.com/img/instagram_logo.gif"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Send a video using the Send API.
+ *
+ */
+function sendVideoMessage(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "video",
+        payload: {
+          url: "http://messengerdemo.parseapp.com/img/allofus480.mov"
         }
       }
     }
