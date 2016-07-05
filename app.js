@@ -217,6 +217,10 @@ function receivedMessage(event) {
         sendVideoMessage(senderID);
         break;
 
+      case 'file':
+        sendFileMessage(senderID);
+        break;
+
       case 'button':
         sendButtonMessage(senderID);
         break;
@@ -347,6 +351,28 @@ function sendVideoMessage(recipientId) {
         type: "video",
         payload: {
           url: "http://messengerdemo.parseapp.com/video/allofus480.mov"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Send a video using the Send API.
+ *
+ */
+function sendFileMessage(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "file",
+        payload: {
+          url: "http://messengerdemo.parseapp.com/files/test.txt"
         }
       }
     }
