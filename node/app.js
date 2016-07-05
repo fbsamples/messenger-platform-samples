@@ -209,6 +209,10 @@ function receivedMessage(event) {
         sendImageMessage(senderID);
         break;
 
+      case 'gif':
+        sendGifMessage(senderID);
+        break;
+
       case 'button':
         sendButtonMessage(senderID);
         break;
@@ -282,7 +286,7 @@ function receivedPostback(event) {
 
 
 /*
- * Send a message with an using the Send API.
+ * Send an image using the Send API.
  *
  */
 function sendImageMessage(recipientId) {
@@ -295,6 +299,28 @@ function sendImageMessage(recipientId) {
         type: "image",
         payload: {
           url: "http://i.imgur.com/zYIlgBl.png"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Send a Gif using the Send API.
+ *
+ */
+function sendGifMessage(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "image",
+        payload: {
+          url: "http://i.imgur.com/Y7iiYr6.gif"
         }
       }
     }
