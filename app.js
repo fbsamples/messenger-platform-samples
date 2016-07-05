@@ -346,7 +346,7 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: "http://messengerdemo.parseapp.com/img/allofus480.mov"
+          url: "http://messengerdemo.parseapp.com/video/allofus480.mov"
         }
       }
     }
