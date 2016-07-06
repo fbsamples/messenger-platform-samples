@@ -215,6 +215,7 @@ function receivedMessage(event) {
       messageId, quickReplyPayload);
 
     sendTextMessage(senderID, "Quick reply tapped");
+    return;
   }
 
   if (messageText) {
@@ -229,6 +230,10 @@ function receivedMessage(event) {
 
       case 'gif':
         sendGifMessage(senderID);
+        break;
+
+      case 'audio':
+        sendAudioMessage(senderID);
         break;
 
       case 'video':
@@ -369,6 +374,28 @@ function sendGifMessage(recipientId) {
         type: "image",
         payload: {
           url: "http://messengerdemo.parseapp.com/img/instagram_logo.gif"
+        }
+      }
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Send audio using the Send API.
+ *
+ */
+function sendAudioMessage(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "audio",
+        payload: {
+          url: "http://messengerdemo.parseapp.com/audio/sample.mp3"
         }
       }
     }
