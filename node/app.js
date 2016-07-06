@@ -195,11 +195,20 @@ function receivedMessage(event) {
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
 
+  var isEcho = message.is_echo;
   var messageId = message.mid;
+  var metadata = message.metadata;
 
   // You may get a text or attachment but not both
   var messageText = message.text;
   var messageAttachments = message.attachments;
+
+  if (isEcho) {
+    // Just logging message echoes to console
+    console.log("Received echo for sent message %d with metadata %s", 
+      messageId, metadata);
+    return;
+  }
 
   if (messageText) {
 
@@ -305,7 +314,7 @@ function receivedMessageRead(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
 
-  // All messages before watermark (a timestamp) have been seen.
+  // All messages before watermark (a timestamp) or sequence have been seen.
   var watermark = event.read.watermark;
   var sequenceNumber = event.read.seq;
 
@@ -411,7 +420,8 @@ function sendTextMessage(recipientId, messageText) {
       id: recipientId
     },
     message: {
-      text: messageText
+      text: messageText,
+      metadata: "DEVELOPER_DEFINED_METADATA"
     }
   };
 
