@@ -202,12 +202,19 @@ function receivedMessage(event) {
   // You may get a text or attachment but not both
   var messageText = message.text;
   var messageAttachments = message.attachments;
+  var quickReply = message.quick_reply;
 
   if (isEcho) {
     // Just logging message echoes to console
-    console.log("Received echo for sent message %d with metadata %s", 
+    console.log("Received echo for sent message %s with metadata %s", 
       messageId, metadata);
     return;
+  } else if (quickReply) {
+    var quickReplyPayload = quickReply.payload;
+    console.log("Quick reply for message %s with payload %s",
+      messageId, quickReplyPayload);
+
+    sendTextMessage(senderID, "Quick reply tapped");
   }
 
   if (messageText) {
@@ -243,6 +250,10 @@ function receivedMessage(event) {
       case 'receipt':
         sendReceiptMessage(senderID);
         break;
+
+      case 'quick reply':
+        sendQuickReply(senderID);
+        break        
 
       default:
         sendTextMessage(senderID, messageText);
@@ -571,6 +582,41 @@ function sendReceiptMessage(recipientId) {
           }]
         }
       }
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Send a message with Quick Reply buttons.
+ *
+ */
+function sendQuickReply(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "What's your favorite movie genre?",
+      metadata: "DEVELOPER_DEFINED_METADATA",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"Action",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+        },
+        {
+          "content_type":"text",
+          "title":"Comedy",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_COMEDY"
+        },
+        {
+          "content_type":"text",
+          "title":"Drama",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_DRAMA"
+        }
+      ]
     }
   };
 
