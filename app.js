@@ -197,6 +197,7 @@ function receivedMessage(event) {
 
   var isEcho = message.is_echo;
   var messageId = message.mid;
+  var appId = message.app_id;
   var metadata = message.metadata;
 
   // You may get a text or attachment but not both
@@ -206,8 +207,8 @@ function receivedMessage(event) {
 
   if (isEcho) {
     // Just logging message echoes to console
-    console.log("Received echo for sent message %s with metadata %s", 
-      messageId, metadata);
+    console.log("Received echo for message %s and app %d with metadata %s", 
+      messageId, appId, metadata);
     return;
   } else if (quickReply) {
     var quickReplyPayload = quickReply.payload;
@@ -487,8 +488,12 @@ function sendButtonMessage(recipientId) {
             title: "Open Web URL"
           }, {
             type: "postback",
-            title: "Call Postback",
-            payload: "Developer defined postback"
+            title: "Trigger Postback",
+            payload: "DEVELOPED_DEFINED_PAYLOAD"
+          }, {
+            type: "phone_number",
+            title: "Call Phone Number",
+            payload: "+16505551234"
           }]
         }
       }
