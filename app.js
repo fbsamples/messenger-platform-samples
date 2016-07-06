@@ -71,7 +71,7 @@ app.get('/webhook', function(req, res) {
  * All callbacks for Messenger are POST-ed. They will be sent to the same
  * webhook. Be sure to subscribe your app to your page to receive callbacks
  * for your page. 
- * https://developers.facebook.com/docs/messenger-platform/implementation#subscribe_app_pages
+ * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
  *
  */
 app.post('/webhook', function (req, res) {
@@ -95,6 +95,8 @@ app.post('/webhook', function (req, res) {
           receivedDeliveryConfirmation(messagingEvent);
         } else if (messagingEvent.postback) {
           receivedPostback(messagingEvent);
+        } else if (messagingEvent.read) {
+          receivedMessageRead(messagingEvent);
         } else {
           console.log("Webhook received unknown messagingEvent: ", messagingEvent);
         }
@@ -144,7 +146,7 @@ function verifyRequestSignature(req, res, buf) {
  *
  * The value for 'optin.ref' is defined in the entry point. For the "Send to 
  * Messenger" plugin, it is the 'data-ref' field. Read more at 
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference#auth
+ * https://developers.facebook.com/docs/messenger-platform/webhook-reference/authentication
  *
  */
 function receivedAuthentication(event) {
@@ -174,7 +176,7 @@ function receivedAuthentication(event) {
  *
  * This event is called when a message is sent to your page. The 'message' 
  * object format can vary depending on the kind of message that was received.
- * Read more at https://developers.facebook.com/docs/messenger-platform/webhook-reference#received_message
+ * Read more at https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-received
  *
  * For this example, we're going to echo any text that we get. If we get some 
  * special keywords ('button', 'generic', 'receipt'), then we'll send back
@@ -246,7 +248,7 @@ function receivedMessage(event) {
  * Delivery Confirmation Event
  *
  * This event is sent to confirm the delivery of a message. Read more about 
- * these fields at https://developers.facebook.com/docs/messenger-platform/webhook-reference#message_delivery
+ * these fields at https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-delivered
  *
  */
 function receivedDeliveryConfirmation(event) {
@@ -271,8 +273,8 @@ function receivedDeliveryConfirmation(event) {
 /*
  * Postback Event
  *
- * This event is called when a postback is tapped on a Structured Message. Read
- * more at https://developers.facebook.com/docs/messenger-platform/webhook-reference#postback
+ * This event is called when a postback is tapped on a Structured Message. 
+ * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
  * 
  */
 function receivedPostback(event) {
@@ -292,6 +294,24 @@ function receivedPostback(event) {
   sendTextMessage(senderID, "Postback called");
 }
 
+/*
+ * Message Read Event
+ *
+ * This event is called when a previously-sent message has been read.
+ * https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-read
+ * 
+ */
+function receivedMessageRead(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+
+  // All messages before watermark (a timestamp) have been seen.
+  var watermark = event.read.watermark;
+  var sequenceNumber = event.read.seq;
+
+  console.log("Received message read event for watermark %d and sequence " +
+    "number %d", watermark, sequenceNumber);
+}
 
 /*
  * Send an image using the Send API.
