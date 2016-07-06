@@ -737,9 +737,10 @@ function callSendAPI(messageData) {
         recipientId);
       }
     } else {
-      console.error("Unable to send message.");
-      console.error(response);
-      console.error(error);
+      var errorMessage = response.error.message;
+      var errorCode = response.error.code;
+      console.error("Unable to send message. Error %d: %s", 
+        errorCode, errorMessage);
     }
   });  
 }
