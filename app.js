@@ -261,6 +261,18 @@ function receivedMessage(event) {
         sendQuickReply(senderID);
         break        
 
+      case 'read receipt':
+        sendReadReceipt(senderID);
+        break        
+
+      case 'typing on':
+        sendTypingOn(senderID);
+        break        
+
+      case 'typing off':
+        sendTypingOff(senderID);
+        break        
+
       default:
         sendTextMessage(senderID, messageText);
     }
@@ -650,6 +662,51 @@ function sendQuickReply(recipientId) {
         }
       ]
     }
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Send a read receipt to indicate the message has been read
+ *
+ */
+function sendReadReceipt(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "mark_seen"
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Turn typing indicator on
+ *
+ */
+function sendTypingOn(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "typing_on"
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Turn typing indicator off
+ *
+ */
+function sendTypingOff(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "typing_off"
   };
 
   callSendAPI(messageData);
