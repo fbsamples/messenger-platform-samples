@@ -23,8 +23,6 @@ app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
-var serverURL;
-
 /*
  * Be sure to setup your config values before running this code. You can 
  * set them using environment variables or modifying the config file in /config.
@@ -46,7 +44,12 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
   (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
   config.get('pageAccessToken');
 
-if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN)) {
+// Generate a page access token for your page from the App Dashboard
+const SERVER_URL = (process.env.SERVER_URL) ?
+  (process.env.SERVER_URL) :
+  config.get('serverURL');
+
+if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
   process.exit(1);
 }
@@ -390,7 +393,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: serverURL + "/assets/rift.png"
+          url: SERVER_URL + "/assets/rift.png"
         }
       }
     }
@@ -804,17 +807,11 @@ function callSendAPI(messageData) {
   });  
 }
 
-// Start the server
+// Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
-var server = app.listen(app.get('port'), function () {
+app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
-  var host = server.address().address;
-  var port = server.address().port;
-
-  serverURL = "https://" + host + ":" + port;
-
-  console.log('App listening at https://%s:%s', host, port);
 });
 
 module.exports = app;
