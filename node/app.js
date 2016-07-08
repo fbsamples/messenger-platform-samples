@@ -390,7 +390,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: serverURL + "/assets/rift.png";
+          url: serverURL + "/assets/rift.png"
         }
       }
     }
