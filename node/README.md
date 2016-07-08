@@ -7,6 +7,7 @@ It contains the following functionality:
 * Webhook (specifically for Messenger Platform events)
 * Send API 
 * Web Plugins
+* Messenger Platform v1.1 features
 
 Follow the [walk-through](https://developers.facebook.com/docs/messenger-platform/quickstart) to learn about this project in more detail.
 
