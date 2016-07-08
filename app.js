@@ -19,10 +19,11 @@ const
   request = require('request');
 
 var app = express();
-
 app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+
+var serverURL;
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -97,6 +98,8 @@ app.post('/webhook', function (req, res) {
           receivedPostback(messagingEvent);
         } else if (messagingEvent.read) {
           receivedMessageRead(messagingEvent);
+        } else if (messagingEvent.account_linking) {
+          receivedAccountLink(messagingEvent);
         } else {
           console.log("Webhook received unknown messagingEvent: ", messagingEvent);
         }
@@ -259,19 +262,23 @@ function receivedMessage(event) {
 
       case 'quick reply':
         sendQuickReply(senderID);
-        break        
+        break;        
 
       case 'read receipt':
         sendReadReceipt(senderID);
-        break        
+        break;        
 
       case 'typing on':
         sendTypingOn(senderID);
-        break        
+        break;        
 
       case 'typing off':
         sendTypingOff(senderID);
-        break        
+        break;        
+
+      case 'account linking':
+        sendAccountLinking(senderID);
+        break;
 
       default:
         sendTextMessage(senderID, messageText);
@@ -352,6 +359,25 @@ function receivedMessageRead(event) {
 }
 
 /*
+ * Account Link Event
+ *
+ * This event is called when the Link Account or UnLink Account action has been
+ * tapped.
+ * https://developers.facebook.com/docs/messenger-platform/webhook-reference/account-linking
+ * 
+ */
+function receivedAccountLink(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+
+  var status = event.account_linking.status;
+  var authCode = event.account_linking.authorization_code;
+
+  console.log("Received account link event with status %s and auth code %s ", 
+    status, authCode);
+}
+
+/*
  * Send an image using the Send API.
  *
  */
@@ -364,7 +390,7 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "http://messengerdemo.parseapp.com/img/rift.png"
+          url: serverURL + "/assets/rift.png";
         }
       }
     }
@@ -719,6 +745,33 @@ function sendTypingOff(recipientId) {
 }
 
 /*
+ * Send a message with the account linking call-to-action
+ *
+ */
+function sendAccountLinking(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Welcome. Link your account.",
+          buttons:[{
+            type: "account_link",
+            url: "https://www.example.com/oauth/authorize"
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
+/*
  * Call the Send API. The message data goes in the body. If successful, we'll 
  * get the message id in a response 
  *
@@ -756,6 +809,19 @@ function callSendAPI(messageData) {
 // certificate authority.
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
+});
+
+// Start the server
+// Webhooks must be available via SSL with a certificate signed by a valid 
+// certificate authority.
+var server = app.listen(app.get('port'), function () {
+  console.log('Node app is running on port', app.get('port'));
+  var host = server.address().address;
+  var port = server.address().port;
+
+  serverURL = "https://" + host + ":" + port;
+
+  console.log('App listening at https://%s:%s', host, port);
 });
 
 module.exports = app;
