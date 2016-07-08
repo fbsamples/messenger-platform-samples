@@ -672,6 +672,8 @@ function sendQuickReply(recipientId) {
  *
  */
 function sendReadReceipt(recipientId) {
+  console.log("Sending a read receipt to mark message as seen");
+
   var messageData = {
     recipient: {
       id: recipientId
@@ -687,6 +689,8 @@ function sendReadReceipt(recipientId) {
  *
  */
 function sendTypingOn(recipientId) {
+  console.log("Turning typing indicator on");
+
   var messageData = {
     recipient: {
       id: recipientId
@@ -702,6 +706,8 @@ function sendTypingOn(recipientId) {
  *
  */
 function sendTypingOff(recipientId) {
+  console.log("Turning typing indicator off");
+
   var messageData = {
     recipient: {
       id: recipientId
