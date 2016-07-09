@@ -44,7 +44,8 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
   (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
   config.get('pageAccessToken');
 
-// Generate a page access token for your page from the App Dashboard
+// URL where the app is running. Used to point to scripts and assets located
+// at this address. 
 const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
@@ -415,7 +416,7 @@ function sendGifMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "http://messengerdemo.parseapp.com/img/instagram_logo.gif"
+          url: SERVER_URL + "/assets/instagram_logo.gif"
         }
       }
     }
@@ -437,7 +438,7 @@ function sendAudioMessage(recipientId) {
       attachment: {
         type: "audio",
         payload: {
-          url: "http://messengerdemo.parseapp.com/audio/sample.mp3"
+          url: SERVER_URL + "/assets/sample.mp3"
         }
       }
     }
@@ -459,7 +460,7 @@ function sendVideoMessage(recipientId) {
       attachment: {
         type: "video",
         payload: {
-          url: "http://messengerdemo.parseapp.com/video/allofus480.mov"
+          url: SERVER_URL + "/assets/allofus480.mov"
         }
       }
     }
@@ -481,7 +482,7 @@ function sendFileMessage(recipientId) {
       attachment: {
         type: "file",
         payload: {
-          url: "http://messengerdemo.parseapp.com/files/test.txt"
+          url: SERVER_URL + "/assets/test.txt"
         }
       }
     }
@@ -562,7 +563,7 @@ function sendGenericMessage(recipientId) {
             title: "rift",
             subtitle: "Next-generation virtual reality",
             item_url: "https://www.oculus.com/en-us/rift/",               
-            image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+            image_url: SERVER_URL + "/assets/rift.png",
             buttons: [{
               type: "web_url",
               url: "https://www.oculus.com/en-us/rift/",
@@ -576,7 +577,7 @@ function sendGenericMessage(recipientId) {
             title: "touch",
             subtitle: "Your Hands, Now in VR",
             item_url: "https://www.oculus.com/en-us/touch/",               
-            image_url: "http://messengerdemo.parseapp.com/img/touch.png",
+            image_url: SERVER_URL + "/assets/touch.png",
             buttons: [{
               type: "web_url",
               url: "https://www.oculus.com/en-us/touch/",
@@ -623,14 +624,14 @@ function sendReceiptMessage(recipientId) {
             quantity: 1,
             price: 599.00,
             currency: "USD",
-            image_url: "http://messengerdemo.parseapp.com/img/riftsq.png"
+            image_url: SERVER_URL + "/assets/riftsq.png"
           }, {
             title: "Samsung Gear VR",
             subtitle: "Frost White",
             quantity: 1,
             price: 99.99,
             currency: "USD",
-            image_url: "http://messengerdemo.parseapp.com/img/gearvrsq.png"
+            image_url: SERVER_URL + "/assets/gearvrsq.png"
           }],
           address: {
             street_1: "1 Hacker Way",
