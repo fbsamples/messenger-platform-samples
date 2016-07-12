@@ -20,6 +20,7 @@ const
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
+app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
@@ -44,8 +45,8 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
   (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
   config.get('pageAccessToken');
 
-// URL where the app is running. Used to point to scripts and assets located
-// at this address. 
+// URL where the app is running (include protocol). Used to point to scripts and 
+// assets located at this address. 
 const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
@@ -119,6 +120,29 @@ app.post('/webhook', function (req, res) {
 });
 
 /*
+ * This path is used for account linking. The account linking call-to-action
+ * (sendAccountLinking) is pointed to this URL. 
+ * 
+ */
+app.get('/authorize', function(req, res) {
+  var accountLinkingToken = req.query['account_linking_token'];
+  var redirectURI = req.query['redirect_uri'];
+
+  // Authorization Code should be generated per user by the developer. This will 
+  // be passed to the Account Linking callback.
+  var authCode = "1234567890";
+
+  // Redirect users to this URI on successful login
+  var redirectURISuccess = redirectURI + "&authorization_code=" + authCode;
+
+  res.render('authorize', {
+    accountLinkingToken: accountLinkingToken,
+    redirectURI: redirectURI,
+    redirectURISuccess: redirectURISuccess
+  });
+});
+
+/*
  * Verify that the callback came from Facebook. Using the App Secret from 
  * the App Dashboard, we can verify the signature that is sent with each 
  * callback in the x-hub-signature field, located in the header.
@@ -176,7 +200,6 @@ function receivedAuthentication(event) {
   // to let them know it was successful.
   sendTextMessage(senderID, "Authentication successful");
 }
-
 
 /*
  * Message Event
@@ -377,8 +400,8 @@ function receivedAccountLink(event) {
   var status = event.account_linking.status;
   var authCode = event.account_linking.authorization_code;
 
-  console.log("Received account link event with status %s and auth code %s ", 
-    status, authCode);
+  console.log("Received account link event with for user %d with status %s " +
+    "and auth code %s ", senderID, status, authCode);
 }
 
 /*
@@ -765,7 +788,7 @@ function sendAccountLinking(recipientId) {
           text: "Welcome. Link your account.",
           buttons:[{
             type: "account_link",
-            url: "https://www.example.com/oauth/authorize"
+            url: SERVER_URL + "/authorize"
           }]
         }
       }
