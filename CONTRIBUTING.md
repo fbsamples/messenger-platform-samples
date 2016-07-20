@@ -31,4 +31,4 @@ outlined on that page and do not file a public issue.
 * 80 character line length
 
 ## License
-By contributing to messenger-platform-samples, you agree that your contributions will be licensed under its license.
+By contributing to, you agree that your contributions will be licensed under the LICENSE file in the root directory of this source tree.
