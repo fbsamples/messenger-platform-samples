@@ -562,7 +562,7 @@ function sendButtonMessage(recipientId, phoneForButton) {
           }, {
             type: "phone_number",
             title: "Call Phone Number",
-            payload: phoneForButton
+            payload: "number: "+phoneForButton
           }]
         }
       }
