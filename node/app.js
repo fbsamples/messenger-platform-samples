@@ -255,6 +255,9 @@ function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (messageText) {
+      case 'fire emergency':
+        sendTextMessage(senderID, "The number for fire emergencies is 990 (in Trinidad and Tobago)");
+        break;
       case 'image':
         sendImageMessage(senderID);
         break;
