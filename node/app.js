@@ -257,6 +257,7 @@ function receivedMessage(event) {
     switch (messageText) {
       case 'fire emergency':
         sendTextMessage(senderID, "The number for fire emergencies is 990 (in Trinidad and Tobago)");
+        sendButtonMessage(senderID, "+990");
         break;
       case 'image':
         sendImageMessage(senderID);
@@ -539,7 +540,7 @@ function sendTextMessage(recipientId, messageText) {
  * Send a button message using the Send API.
  *
  */
-function sendButtonMessage(recipientId) {
+function sendButtonMessage(recipientId, phoneForButton) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -561,7 +562,7 @@ function sendButtonMessage(recipientId) {
           }, {
             type: "phone_number",
             title: "Call Phone Number",
-            payload: "+16505551234"
+            payload: phoneForButton
           }]
         }
       }
