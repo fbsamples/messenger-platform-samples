@@ -809,7 +809,9 @@ function checkForOrderStatus(recipientID){
 		message: {
 			text: "test message for searching order"
 		}
-	}
+	};
+	
+	callSendAPI(messageData);
 }
 
 /*
