@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://source.developers.google.com/p/messenger-get-started/r/default"
+    "url": "https://github.com/kleijheeg/messenger-platform-samples"
   },
   "author": "Facebook",
   "license": "ISC",
