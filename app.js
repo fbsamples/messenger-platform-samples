@@ -360,13 +360,19 @@ function receivedPostback(event) {
   // The 'payload' param is a developer-defined field which is set in a postback 
   // button for Structured Messages. 
   var payload = event.postback.payload;
-
+	if(payload === "Trigger order search postback"){
+		askForOrderNumber(recipientID, senderID);
+	}
   console.log("Received postback for user %d and page %d with payload '%s' " + 
     "at %d", senderID, recipientID, payload, timeOfPostback);
 
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
   sendTextMessage(senderID, "Postback called");
+}
+
+function askforOrderNumber(recipientID, senderID){
+	
 }
 
 /*
@@ -810,15 +816,15 @@ function checkForOrderStatus(recipientID){
 			text: "Please input the order number."
 			attachment: {
 			type: "template",
-		payload: {
-          template_type: "button",
-          text: "This is test text",
-          buttons:[ {
-            type: "postback",
-            title: "Trigger order search postback",
-            payload: "PAYLOAD FOR ORDER SEARCH"
-          }]
-        }
+			payload: {
+				  template_type: "button",
+				  text: "This is test text",
+				  buttons:[ {
+					type: "postback",
+					title: "Trigger order search postback",
+					payload: "PAYLOAD FOR ORDER SEARCH"
+				  }]
+			}
       }
 		}
 	};
