@@ -821,9 +821,7 @@ function checkForOrderStatus(recipientID){
         }
       }
 		}
-	};
-	
-	callSendAPI(messageData);
+	}
 }
 
 /*
