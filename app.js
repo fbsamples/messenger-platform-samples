@@ -801,27 +801,35 @@ function sendAccountLinking(recipientId) {
   callSendAPI(messageData);
 }
 
-/*  function checkForOrderStatus(recipientID){
-	var messageData = {
-			recipient: {
-				id: recipientID
-			},
-		message: {
-			attachment: {
-				type: "template",
-				payload: {
-					template_type: "button"
-					text: "Input the order number here",
-					buttons: [{
-						type: "postback",
-						payload: "search for said order number"
-					}]
-				}
-			}
-		}
-	}
+ function checkForOrderStatus(recipientID){
+  var messageData = {
+    recipient: {
+      id: recipientID
+    },
+    message: {
+      text: "what is your order number?",
+      metadata: "DEVELOPER_DEFINED_METADATA",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"Action",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+        },
+        {
+          "content_type":"text",
+          "title":"Comedy",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_COMEDY"
+        },
+        {
+          "content_type":"text",
+          "title":"Drama",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_DRAMA"
+        }
+      ]
+    }
+  };
 	callSendAPI(messageData);
-}*/
+}
 
 /*
  * Call the Send API. The message data goes in the body. If successful, we'll 
