@@ -807,7 +807,19 @@ function checkForOrderStatus(recipientID){
 			id: recipientID
 		},
 		message: {
-			text: "test message for searching order"
+			text: "Please input the order number."
+			attachment: {
+			type: "template",
+		payload: {
+          template_type: "button",
+          text: "This is test text",
+          buttons:[ {
+            type: "postback",
+            title: "Trigger order search postback",
+            payload: "PAYLOAD FOR ORDER SEARCH"
+          }]
+        }
+      }
 		}
 	};
 	
