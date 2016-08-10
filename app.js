@@ -306,10 +306,8 @@ function receivedMessage(event) {
       case 'account linking':
         sendAccountLinking(senderID);
         break;
-	  case 'order status':
 	/*  case 'order status':
 		checkForOrderStatus(senderID);
-		break;
 		break;*/
 
       default:
@@ -803,8 +801,7 @@ function sendAccountLinking(recipientId) {
   callSendAPI(messageData);
 }
 
-function checkForOrderStatus(recipientID){
-/*function checkForOrderStatus(recipientID){
+/*  function checkForOrderStatus(recipientID){
 	var messageData = {
 			recipient: {
 				id: recipientID
@@ -824,7 +821,6 @@ function checkForOrderStatus(recipientID){
 		}
 	}
 	callSendAPI(messageData);
-}
 }*/
 
 /*
