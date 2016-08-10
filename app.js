@@ -306,6 +306,9 @@ function receivedMessage(event) {
       case 'account linking':
         sendAccountLinking(senderID);
         break;
+	  case 'order status':
+		checkForOrderStatus(senderID);
+		break;
 
       default:
         sendTextMessage(senderID, messageText);
@@ -796,6 +799,36 @@ function sendAccountLinking(recipientId) {
   };  
 
   callSendAPI(messageData);
+}
+
+ function checkForOrderStatus(recipientID){
+  var messageData = {
+    recipient: {
+      id: recipientID
+    },
+    message: {
+      text: "what is your order number?",
+      metadata: "DEVELOPER_DEFINED_METADATA",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"Action",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+        },
+        {
+          "content_type":"text",
+          "title":"Comedy",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_COMEDY"
+        },
+        {
+          "content_type":"text",
+          "title":"Drama",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_DRAMA"
+        }
+      ]
+    }
+  };
+	callSendAPI(messageData);
 }
 
 /*
