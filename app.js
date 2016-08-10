@@ -306,9 +306,9 @@ function receivedMessage(event) {
       case 'account linking':
         sendAccountLinking(senderID);
         break;
-	/*  case 'order status':
+	  case 'order status':
 		checkForOrderStatus(senderID);
-		break;*/
+		break;
 
       default:
         sendTextMessage(senderID, messageText);
