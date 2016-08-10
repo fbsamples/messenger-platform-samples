@@ -306,9 +306,9 @@ function receivedMessage(event) {
       case 'account linking':
         sendAccountLinking(senderID);
         break;
-	  case 'order status':
+	/*  case 'order status':
 		checkForOrderStatus(senderID);
-		break;
+		break;*/
 
       default:
         sendTextMessage(senderID, messageText);
@@ -801,7 +801,7 @@ function sendAccountLinking(recipientId) {
   callSendAPI(messageData);
 }
 
-function checkForOrderStatus(recipientID){
+/*function checkForOrderStatus(recipientID){
 	var messageData = {
 		recipient: {
 			id: recipientID
@@ -822,7 +822,8 @@ function checkForOrderStatus(recipientID){
       }
 		}
 	}
-}
+	callSendAPI(messageData);
+}*/
 
 /*
  * Call the Send API. The message data goes in the body. If successful, we'll 
