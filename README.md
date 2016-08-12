@@ -4,4 +4,4 @@ This is a sample project showcasing the Messenger Platform. You can go through t
 
 Visit the [dev site](https://developers.facebook.com/docs/messenger-platform/) to find out more details about the Messenger Platform.
 
-First commit in this repo.
+Master updated, let's create a second PR.
