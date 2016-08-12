@@ -4,4 +4,4 @@ This is a sample project showcasing the Messenger Platform. You can go through t
 
 Visit the [dev site](https://developers.facebook.com/docs/messenger-platform/) to find out more details about the Messenger Platform.
 
-Well, time to commit for a second PR.
+I guess that I should always create a PR each time I am working on a specific feature.
