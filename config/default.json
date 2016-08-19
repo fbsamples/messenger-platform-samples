@@ -1,6 +1,6 @@
 {
-    "appSecret": "",
-    "pageAccessToken": "",
+    "appSecret": "8968ddc5b4e51fd823997cadd82bca70",
+    "pageAccessToken": "EAAWMIpvLp2gBABubdOxXtW1O8e1u1r7t5YAma4viI3lxsMGX5d03HZBPBIyZA945PiC3BaxAxOMk4JXPaviE8Ef9jfVtTIg4oes8ZBnLRjL23L3RpZC7k8ti8jveSMecIkkCGfyPY4oexhKKP2ipZBBqPleLpKc2fUtiXNUeOBgZDZD",
     "validationToken": "",
-    "serverURL": ""
+    "serverURL": "https://skytelbot.herokuapp.com/"
 }
