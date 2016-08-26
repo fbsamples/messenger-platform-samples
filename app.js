@@ -280,7 +280,15 @@ function receivedMessage(event) {
         break;
 
       case 'generic':
-        sendGenericMessage(senderID);
+        sendGenericMessage(senderID, getGenericElement());
+        break;
+
+      case 'recientes':
+        sendGenericMessage(senderID, getRecents());
+        break;
+
+      case 'favoritos':
+        sendGenericMessage(senderID, getFavoritePicks());
         break;
 
       case 'receipt':
@@ -572,7 +580,7 @@ function sendButtonMessage(recipientId) {
  * Send a Structured Message (Generic Message type) using the Send API.
  *
  */
-function sendGenericMessage(recipientId) {
+function sendGenericMessage(recipientId, elements) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -582,21 +590,7 @@ function sendGenericMessage(recipientId) {
         type: "template",
         payload: {
           template_type: "generic",
-          elements: [{
-            title: "WhatsApp to share user data with Facebook for ad targeting — here’s how to opt out",
-            subtitle: "Posted yesterday by Natasha Lomas (@riptari)",
-            item_url: "https://techcrunch.com/2016/08/25/whatsapp-to-share-user-data-with-facebook-for-ad-targeting-heres-how-to-opt-out/",
-            image_url: "https://tctechcrunch2011.files.wordpress.com/2014/02/facebook-whatsapp-tilt.png?w=738",
-            buttons: [{
-              type: "web_url",
-              url: "https://techcrunch.com/2016/08/25/whatsapp-to-share-user-data-with-facebook-for-ad-targeting-heres-how-to-opt-out/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Custom action",
-              payload: "Payload for first bubble",
-            }],
-          }]
+          elements: elements
         }
       }
     }
@@ -813,6 +807,90 @@ function callSendAPI(messageData) {
     }
   });
 }
+
+function getGenericElement() {
+  return [{
+    title: "WhatsApp to share user data with Facebook for ad targeting — here’s how to opt out",
+    subtitle: "Posted yesterday by Natasha Lomas (@riptari)",
+    item_url: "https://techcrunch.com/2016/08/25/whatsapp-to-share-user-data-with-facebook-for-ad-targeting-heres-how-to-opt-out/",
+    image_url: "https://tctechcrunch2011.files.wordpress.com/2014/02/facebook-whatsapp-tilt.png?w=738",
+    buttons: [{
+      type: "web_url",
+      url: "https://techcrunch.com/2016/08/25/whatsapp-to-share-user-data-with-facebook-for-ad-targeting-heres-how-to-opt-out/",
+      title: "Open Web URL"
+    }, {
+      type: "postback",
+      title: "Custom action",
+      payload: "Payload for first bubble",
+    }],
+  }]
+}
+
+function getRecents() {
+  return [{
+    title: "A 6 años de la masacre en San Fernando, las víctimas aún no acceden a la investigación",
+    subtitle: "Manuel Ureste (@ManuVPC)",
+    item_url: "http://www.animalpolitico.com/2016/08/masacre-migrantes-san-fernando-investigacion/",
+    image_url: "http://static.animalpolitico.com/wp-content/uploads/2016/08/Ofrendas_CNDH-DF-2-e1472215934233-960x500.jpg",
+    buttons: [{
+      type: "web_url",
+      url: "http://www.animalpolitico.com/2016/08/masacre-migrantes-san-fernando-investigacion/",
+      title: "Open Web URL"
+    }, {
+      type: "postback",
+      title: "Custom action",
+      payload: "Payload for first bubble",
+    }],
+  }, {
+    title: "Las marchas y reclamos funcionaron: estas son las nuevas reglas para la evaluación docente",
+    subtitle: "Nayeli Roldán (@nayaroldan)",
+    item_url: "http://www.animalpolitico.com/2016/08/masacre-migrantes-san-fernando-investigacion/",
+    image_url: "http://static.animalpolitico.com/wp-content/uploads/2016/08/Ofrendas_CNDH-DF-2-e1472215934233-960x500.jpg",
+    buttons: [{
+      type: "web_url",
+      url: "http://www.animalpolitico.com/2016/08/masacre-migrantes-san-fernando-investigacion/",
+      title: "Open Web URL"
+    }, {
+      type: "postback",
+      title: "Custom action",
+      payload: "Payload for first bubble",
+    }],
+  }, {
+    title: "A Cuauhtémoc Blanco le pagaron 7 mdp para ser candidato en Cuernavaca",
+    subtitle: "Redacción Animal Político",
+    item_url: "http://www.animalpolitico.com/2016/08/psd-contrato-cuauhtemoc-blanco-7-mdp-candidato-cuernavaca/",
+    image_url: "http://static.animalpolitico.com/wp-content/uploads/2016/08/Cuauhte769moc_Blanco-1-e1472224257318-960x500.jpg",
+    buttons: [{
+      type: "web_url",
+      url: "http://www.animalpolitico.com/2016/08/psd-contrato-cuauhtemoc-blanco-7-mdp-candidato-cuernavaca/",
+      title: "Open Web URL"
+    }, {
+      type: "postback",
+      title: "Custom action",
+      payload: "Payload for first bubble",
+    }],
+  }]
+}
+
+function getFavoritePicks() {
+  return [{
+    title: "A Cuauhtémoc Blanco le pagaron 7 mdp para ser candidato en Cuernavaca",
+    subtitle: "Redacción Animal Político",
+    item_url: "http://www.animalpolitico.com/2016/08/psd-contrato-cuauhtemoc-blanco-7-mdp-candidato-cuernavaca/",
+    image_url: "http://static.animalpolitico.com/wp-content/uploads/2016/08/Cuauhte769moc_Blanco-1-e1472224257318-960x500.jpg",
+    buttons: [{
+      type: "web_url",
+      url: "http://www.animalpolitico.com/2016/08/psd-contrato-cuauhtemoc-blanco-7-mdp-candidato-cuernavaca/",
+      title: "Open Web URL"
+    }, {
+      type: "postback",
+      title: "Custom action",
+      payload: "Payload for first bubble",
+    }],
+  }]
+}
+
+function getKeywordPicks() {}
 
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid
