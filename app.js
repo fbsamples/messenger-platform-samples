@@ -845,7 +845,7 @@ function getRecents() {
     title: "Las marchas y reclamos funcionaron: estas son las nuevas reglas para la evaluación docente",
     subtitle: "Nayeli Roldán (@nayaroldan)",
     item_url: "http://www.animalpolitico.com/2016/08/masacre-migrantes-san-fernando-investigacion/",
-    image_url: "http://static.animalpolitico.com/wp-content/uploads/2016/08/Ofrendas_CNDH-DF-2-e1472215934233-960x500.jpg",
+    image_url: "http://static.animalpolitico.com/wp-content/uploads/2016/08/Regreso_a_clases_Primaria-8-e1472214823816-960x500.jpg",
     buttons: [{
       type: "web_url",
       url: "http://www.animalpolitico.com/2016/08/masacre-migrantes-san-fernando-investigacion/",
