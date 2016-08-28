@@ -823,7 +823,7 @@ function callSendAPI(messageData) {
         recipientId);
       }
     } else {
-      console.error(response.error);
+      console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
     }
   });  
 }
