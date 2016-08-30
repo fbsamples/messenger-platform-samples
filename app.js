@@ -291,7 +291,7 @@ function receivedMessage(event) {
         send123Buttons(senderID);
         break; 
         
-        case 'news':
+        case 'мэдээ':
             sendNewsMessage(senderID); 
             break; 
 
@@ -665,8 +665,8 @@ function sendNewsMessage(recipientId) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "СКАЙТЕЛ КОМПАНИ Д.ОТГОНДАЛАЙГИЙН ҮҮРЭН ХОЛБООНЫ 4 ЖИЛИЙН ХЭРЭГЦЭЭГ ХАНГАХААР БОЛЛОО",
-            subtitle: "NМҮОХ-ны албан ёсны түнш, олимпийн баг тамирчдыг дэмжигч, Монголын 100% хөрөнгө",
+            title: "СКАЙТЕЛ КОМПАНИ Д.ОТГОНДАЛАЙГИЙН ҮҮРЭН ХОЛБООНЫ 4 ЖИЛИЙН ХЭРЭГЦЭЭГ",
+            subtitle: "NМҮОХ-ны албан ёсны түнш",
             item_url: "https://www.skytel.mn/content/2287/view",               
             image_url: "https://www.skytel.mn/uploads/images/DSC0702.jpg",
             buttons: [{
@@ -680,7 +680,7 @@ function sendNewsMessage(recipientId) {
             }],
           }, {
             title: "НЭГИЙН ҮНЭЭР “ӨНГӨЛӨГ ТАВАН ДУГААР” АВААРАЙ",
-            subtitle: "Өнгөлөг 2.0 үйлчилгээний шинэ дугаарын урамшуулал эхэллээ.",
+            subtitle: "Өнгөлөг 2.0 үйлчилгээний шинэ",
             item_url: "https://www.skytel.mn/content/2284/view",               
             image_url: "/https://www.skytel.mn/uploads/news/5d4c16554439ac7f20e87381a9a032369b953ee8.jpg",
             buttons: [{
