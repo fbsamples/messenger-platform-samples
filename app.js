@@ -290,6 +290,10 @@ function receivedMessage(event) {
       case '123': 
         send123Buttons(senderID);
         break; 
+        
+        case 'мэдээ':
+            sendNewsMessage(senderID); 
+            break; 
 
       default:
         sendTextMessage(senderID, messageText);
