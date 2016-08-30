@@ -291,7 +291,7 @@ function receivedMessage(event) {
         send123Buttons(senderID);
         break; 
         
-        case 'мэдээ':
+        case 'news':
             sendNewsMessage(senderID); 
             break; 
 
