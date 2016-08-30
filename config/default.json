@@ -2,5 +2,5 @@
     "appSecret": "8968ddc5b4e51fd823997cadd82bca70",
     "pageAccessToken": "EAAWMIpvLp2gBAJHDs6rbRThwlwZC5jYOYj6p8e7IjDoP1CUImK8wZCUmiW8jTBuc0t5cLN0FSts4MSKQ6PQpO1yKY4bYwIM7jmQmaSDqbK4aYBv0muUQyKtQWCcNO8lyyAFaZA1fc7BBWFZACfI06hFwnaHQMKoeTleSD4L5YgZDZD",
     "validationToken": "zolooo1123hoho",
-    "serverURL": "https://skytelbot.herokuapp.com/app.js"
+    "serverURL": "https://skytelbot.herokuapp.com"
 }
