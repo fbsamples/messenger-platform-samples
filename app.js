@@ -668,7 +668,7 @@ function sendNewsMessage(recipientId) {
             title: "СКАЙТЕЛ КОМПАНИ Д.ОТГОНДАЛАЙГИЙН ҮҮРЭН ХОЛБООНЫ 4 ЖИЛИЙН ХЭРЭГЦЭЭГ",
             subtitle: "NМҮОХ-ны албан ёсны түнш",
             item_url: "https://www.skytel.mn/content/2287/view",               
-            //image_url: "https://www.skytel.mn/uploads/images/DSC0702.jpg",
+            image_url: "https://www.skytel.mn/uploads/images/DSC0702.jpg",
             buttons: [{
               type: "web_url",
               url: "https://www.skytel.mn/content/2287/view",
@@ -682,7 +682,7 @@ function sendNewsMessage(recipientId) {
             title: "НЭГИЙН ҮНЭЭР “ӨНГӨЛӨГ ТАВАН ДУГААР” АВААРАЙ",
             subtitle: "Өнгөлөг 2.0 үйлчилгээний шинэ",
             item_url: "https://www.skytel.mn/content/2284/view",               
-            //image_url: "/https://www.skytel.mn/uploads/news/5d4c16554439ac7f20e87381a9a032369b953ee8.jpg",
+            image_url: "https://www.skytel.mn/uploads/news/5d4c16554439ac7f20e87381a9a032369b953ee8.jpg",
             buttons: [{
               type: "web_url",
               url: "https://www.skytel.mn/content/2284/view",
