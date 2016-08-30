@@ -359,6 +359,12 @@ function receivedPostback(event) {
         case 'CUSTOM_123_247_PACKAGE':
             sendTextMessage(senderID, "247 үйлчилгээг 123 ашиглан авахын тулд тэгэх ингэх хэрэгтэй. \n\Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
             break; 
+        case 'CUSTOM_NEWS_1':
+            sendTextMessage(senderID, "МҮОХ-ны албан ёсны түнш, олимпийн баг тамирчдыг дэмжигч, Монголын 100% хөрөнгө оруулалттай СКАЙтел компани Рио 2016 олимпийн ХҮРЭЛ медальт Доржнямбуугийн Отгондалайд хүндэтгэл үзүүлэн хүлээн авч, компанийнхаа гарын бэлгээр урмын мялаалга өргөлөө."); 
+            break; 
+        case 'CUSTOM_NEWS_2':
+            sendTextMessage(senderID, "Яриа, дата, мессежийн хэрэглээндээ санаа амар байж, төлж буй мөнгөн дүнгээсээ илүү их үнэ цэнийг хүртэх боломжийг СКАЙтелийн дараа төлбөрт МОНГОЛдоо үйлчилгээ бий болгож чадсан. Илүү хэмнэлттэй, илүү таатай нөхцөлтэй энэхүү үйлчилгээнд бүх дараа төлбөрт үйлчилгээний хэрэглэгчдээ хамруулах үүднээс 2016 оны 9-р сарын 1-нээс эхлэн одоогийн VIP, Business class 10k, Business class 20k,  Business class 30k болон Open (150, 400, 750, 1500) багцын хэрэглэгчдийг МОНГОЛдоо үйлчилгээний багцуудад дүйцүүлэн шилжүүлэх гэж байна."); 
+            break; 
         default: 
             // When a postback is called, we'll send a message back to the sender to 
             // let them know it was successful
@@ -592,7 +598,6 @@ function send123Buttons(recipientId) {
             type: "postback",
             title: "247 багц авах",
             payload: "CUSTOM_123_247_PACKAGE"
-            
           }]
         }
       }
@@ -675,7 +680,7 @@ function sendNewsMessage(recipientId) {
               title: "Мэдээг унших"
             }, {
               type: "postback",
-              title: "Энд унших",
+              title: "Тойм унших",
               payload: "CUSTOM_NEWS_1",
             }],
           }, {
@@ -689,7 +694,7 @@ function sendNewsMessage(recipientId) {
               title: "Мэдээг унших"
             }, {
               type: "postback",
-              title: "Энд унших",
+              title: "Тойм унших",
               payload: "CUSTOM_NEWS_2",
             }]
           }]
