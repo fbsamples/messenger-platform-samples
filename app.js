@@ -347,16 +347,13 @@ function receivedPostback(event) {
   
     switch (payload){
         case 'CUSTOM_123_DATA_PACKAGE':
-            sendTextMessage(senderID, "123 -р та дата багц авахын тулд тэгэх ингэх хэрэгтэй. \n\
-            Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
+            sendTextMessage(senderID, "123 -р та дата багц авахын тулд тэгэх ингэх хэрэгтэй. \n\Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
             break; 
         case 'CUSTOM_123_FB_PACKAGE':
-            sendTextMessage(senderID, "Та 123 -г ашиглан ФБ багц авахын тулд тэгэх ингэх хэрэгтэй. \n\
-            Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
+            sendTextMessage(senderID, "Та 123 -г ашиглан ФБ багц авахын тулд тэгэх ингэх хэрэгтэй. \n\Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
             break; 
         case 'CUSTOM_123_247_PACKAGE':
-            sendTextMessage(senderID, "247 үйлчилгээг 123 ашиглан авахын тулд тэгэх ингэх хэрэгтэй. \n\
-            Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
+            sendTextMessage(senderID, "247 үйлчилгээг 123 ашиглан авахын тулд тэгэх ингэх хэрэгтэй. \n\Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
             break; 
         default: 
             // When a postback is called, we'll send a message back to the sender to 
@@ -582,14 +579,14 @@ function send123Buttons(recipientId) {
           buttons:[{
             type: "postback",
             payload: "CUSTOM_123_DATA_PACKAGE",
-            title: "123 -р дата багц авах"
+            title: "Дата багц авах"
           }, {
             type: "postback",
-            title: "123-р Facebook Багц авах",
+            title: "Facebook багц авах",
             payload: "CUSTOM_123_FB_PACKAGE"
           }, {
             type: "postback",
-            title: "123-р 247 багц авах",
+            title: "247 багц авах",
             payload: "CUSTOM_123_247_PACKAGE"
             
           }]
@@ -642,6 +639,54 @@ function sendGenericMessage(recipientId) {
               type: "postback",
               title: "Call Postback",
               payload: "Payload for second bubble",
+            }]
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
+
+//TODO mine 
+function sendNewsMessage(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [{
+            title: "СКАЙТЕЛ КОМПАНИ Д.ОТГОНДАЛАЙГИЙН ҮҮРЭН ХОЛБООНЫ 4 ЖИЛИЙН ХЭРЭГЦЭЭГ ХАНГАХААР БОЛЛОО",
+            subtitle: "NМҮОХ-ны албан ёсны түнш, олимпийн баг тамирчдыг дэмжигч, Монголын 100% хөрөнгө",
+            item_url: "https://www.skytel.mn/content/2287/view",               
+            image_url: "https://www.skytel.mn/uploads/images/DSC0702.jpg",
+            buttons: [{
+              type: "web_url",
+              url: "https://www.skytel.mn/content/2287/view",
+              title: "Мэдээг унших"
+            }, {
+              type: "postback",
+              title: "Энд унших",
+              payload: "CUSTOM_NEWS_1",
+            }],
+          }, {
+            title: "НЭГИЙН ҮНЭЭР “ӨНГӨЛӨГ ТАВАН ДУГААР” АВААРАЙ",
+            subtitle: "Өнгөлөг 2.0 үйлчилгээний шинэ дугаарын урамшуулал эхэллээ.",
+            item_url: "https://www.skytel.mn/content/2284/view",               
+            image_url: "/https://www.skytel.mn/uploads/news/5d4c16554439ac7f20e87381a9a032369b953ee8.jpg",
+            buttons: [{
+              type: "web_url",
+              url: "https://www.skytel.mn/content/2284/view",
+              title: "Мэдээг унших"
+            }, {
+              type: "postback",
+              title: "Энд унших",
+              payload: "CUSTOM_NEWS_2",
             }]
           }]
         }
