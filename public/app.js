@@ -407,7 +407,8 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/assets/rift.png"
+         // url: SERVER_URL + "/assets/rift.png"
+         url: "https://www.skytel.mn/app/images/beldsen/home/card.png"
         }
       }
     }
