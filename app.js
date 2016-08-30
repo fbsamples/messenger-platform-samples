@@ -194,16 +194,9 @@ function receivedAuthentication(event) {
 /*
  * Message Event
  *
- * This event is called when a message is sent to your page. The 'message' 
- * object format can vary depending on the kind of message that was received.
+ * This event is called when a message is sent to your page.
  * Read more at https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-received
  *
- * For this example, we're going to echo any text that we get. If we get some 
- * special keywords ('button', 'generic', 'receipt'), then we'll send back
- * examples of those bubbles to illustrate the special message bubbles we've 
- * created. If we receive a message with an attachment (image, video, audio), 
- * then we'll simply confirm that we've received the attachment.
- * 
  */
 function receivedMessage(event) {
   var senderID = event.sender.id;
@@ -241,9 +234,6 @@ function receivedMessage(event) {
 
   if (messageText) {
 
-    // If we receive a text message, check to see if it matches any special
-    // keywords and send back the corresponding example. Otherwise, just echo
-    // the text we received.
     switch (messageText) {
       case 'image':
         sendImageMessage(senderID);
@@ -296,6 +286,10 @@ function receivedMessage(event) {
       case 'account linking':
         sendAccountLinking(senderID);
         break;
+        
+      case '123': 
+        send123Buttons(senderID);
+        break; 
 
       default:
         sendTextMessage(senderID, messageText);
@@ -347,13 +341,29 @@ function receivedPostback(event) {
   // The 'payload' param is a developer-defined field which is set in a postback 
   // button for Structured Messages. 
   var payload = event.postback.payload;
-
-  console.log("Received postback for user %d and page %d with payload '%s' " + 
+  
+    console.log("Received postback for user %d and page %d with payload '%s' " + 
     "at %d", senderID, recipientID, payload, timeOfPostback);
-
-  // When a postback is called, we'll send a message back to the sender to 
-  // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
+  
+    switch (payload){
+        case 'CUSTOM_123_DATA_PACKAGE':
+            sendTextMessage(senderID, "123 -р та дата багц авахын тулд тэгэх ингэх хэрэгтэй. \n\
+            Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
+            break; 
+        case 'CUSTOM_123_FB_PACKAGE':
+            sendTextMessage(senderID, "Та 123 -г ашиглан ФБ багц авахын тулд тэгэх ингэх хэрэгтэй. \n\
+            Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
+            break; 
+        case 'CUSTOM_123_247_PACKAGE':
+            sendTextMessage(senderID, "247 үйлчилгээг 123 ашиглан авахын тулд тэгэх ингэх хэрэгтэй. \n\
+            Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
+            break; 
+        default: 
+            // When a postback is called, we'll send a message back to the sender to 
+            // let them know it was successful
+            sendTextMessage(senderID, "Postback called");
+            break; 
+    }
 }
 
 /*
@@ -557,10 +567,43 @@ function sendButtonMessage(recipientId) {
 
   callSendAPI(messageData);
 }
+//TODO mine 
+function send123Buttons(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Танд манай 123 шинэ үйлчилгээг танилцуулж байна",
+          buttons:[{
+            type: "postback",
+            payload: "CUSTOM_123_DATA_PACKAGE",
+            title: "123 -р дата багц авах"
+          }, {
+            type: "postback",
+            title: "123-р Facebook Багц авах",
+            payload: "CUSTOM_123_FB_PACKAGE"
+          }, {
+            type: "postback",
+            title: "123-р 247 багц авах",
+            payload: "CUSTOM_123_247_PACKAGE"
+            
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
+}
 
 /*
  * Send a Structured Message (Generic Message type) using the Send API.
- *
+ * TODO Use this Zolbayar (slider)
  */
 function sendGenericMessage(recipientId) {
   var messageData = {
