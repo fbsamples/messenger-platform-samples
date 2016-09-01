@@ -1,4 +1,3 @@
-'use strict';
 
 const 
   bodyParser = require('body-parser'),
@@ -7,7 +6,7 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request');
-
+  
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
@@ -227,65 +226,24 @@ function receivedMessage(event) {
     var quickReplyPayload = quickReply.payload;
     console.log("Quick reply for message %s with payload %s",
       messageId, quickReplyPayload);
-
-    sendTextMessage(senderID, "Quick reply tapped");
+	  switch (quickReplyPayload) {
+		case 'CUSTOM_QUICK_DATA_1GB':
+			sendTextMessage(senderID, "1gb гэсэн түлхүүр үгийг 123 дугаарт илгээнэ. Дагалдах эрх үйлчилгээний хоног 30. Үнэ 10.000₮"); 
+            break;
+		case 'CUSTOM_QUICK_DATA_2GB':
+			sendTextMessage(senderID, "2gb гэсэн түлхүүр үгийг 123 дугаарт илгээнэ. Дагалдах эрх үйлчилгээний хоног 30. Үнэ 13.000₮"); 
+            break;
+		case 'CUSTOM_QUICK_DATA_10GB':
+			sendTextMessage(senderID, "10gb гэсэн түлхүүр үгийг 123 дугаарт илгээнэ. Дагалдах эрх үйлчилгээний хоног 60. Үнэ 30.000₮"); 
+            break;
+	  }
     return;
   }
 
   if (messageText) {
 
     switch (messageText) {
-      case 'image':
-        sendImageMessage(senderID);
-        break;
-
-      case 'gif':
-        sendGifMessage(senderID);
-        break;
-
-      case 'audio':
-        sendAudioMessage(senderID);
-        break;
-
-      case 'video':
-        sendVideoMessage(senderID);
-        break;
-
-      case 'file':
-        sendFileMessage(senderID);
-        break;
-
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
-
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
-
-      case 'quick reply':
-        sendQuickReply(senderID);
-        break;        
-
-      case 'read receipt':
-        sendReadReceipt(senderID);
-        break;        
-
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;        
-
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;        
-
-      case 'account linking':
-        sendAccountLinking(senderID);
-        break;
+      
         
       case '123': 
         send123Buttons(senderID);
@@ -295,8 +253,8 @@ function receivedMessage(event) {
             sendNewsMessage(senderID); 
             break; 
 
-      default:
-        sendTextMessage(senderID, messageText);
+     // default:
+      //  sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
@@ -351,13 +309,13 @@ function receivedPostback(event) {
   
     switch (payload){
         case 'CUSTOM_123_DATA_PACKAGE':
-            sendTextMessage(senderID, "123 -р та дата багц авахын тулд тэгэх ингэх хэрэгтэй. \n\Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
+			sendDataQuickReply(senderID); 
             break; 
         case 'CUSTOM_123_FB_PACKAGE':
-            sendTextMessage(senderID, "Та 123 -г ашиглан ФБ багц авахын тулд тэгэх ингэх хэрэгтэй. \n\Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
+            sendTextMessage(senderID, "Та 123-г ашиглан Facebook багц авахын тулд facebook гэсэн түлхүүр үгийг 123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
             break; 
         case 'CUSTOM_123_247_PACKAGE':
-            sendTextMessage(senderID, "247 үйлчилгээг 123 ашиглан авахын тулд тэгэх ингэх хэрэгтэй. \n\Хэнтий хангай Саяны өндөр сайхан нуруунууд хойд зүгийн чимэг болсон ой хөвч уулууд");
+            sendTextMessage(senderID, "Та 123-г ашиглан 247 багц авахын тулд 247 гэсэн түлхүүр үгийг 123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
             break; 
         case 'CUSTOM_NEWS_1':
             sendTextMessage(senderID, "МҮОХ-ны албан ёсны түнш, олимпийн баг тамирчдыг дэмжигч, Монголын 100% хөрөнгө оруулалттай СКАЙтел компани Рио 2016 олимпийн ХҮРЭЛ медальт Доржнямбуугийн Отгондалайд хүндэтгэл үзүүлэн хүлээн авч, компанийнхаа гарын бэлгээр урмын мялаалга өргөлөө."); 
@@ -811,6 +769,37 @@ function sendQuickReply(recipientId) {
 
   callSendAPI(messageData);
 }
+//TODO mine 
+function sendDataQuickReply(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Та дата багцыг 123-с дараах 3-н төрлөөс сонгон авах боломжтой",
+      metadata: "ZOL_DEFINED_METADATA",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"1GB",
+          "payload":"CUSTOM_QUICK_DATA_1GB"
+        },
+        {
+          "content_type":"text",
+          "title":"2GB",
+          "payload":"CUSTOM_QUICK_DATA_2GB"
+        },
+        {
+          "content_type":"text",
+          "title":"10GB",
+          "payload":"CUSTOM_QUICK_DATA_10GB"
+        }
+      ]
+    }
+  };
+
+  callSendAPI(messageData);
+}
 
 /*
  * Send a read receipt to indicate the message has been read
@@ -923,9 +912,21 @@ function callSendAPI(messageData) {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+
+var privateKey = fs.readFileSync('/home/www/ssl_old/20150330 SSL/server.key');
+var certificate = fs.readFileSync('/home/www/ssl_old/20150330 SSL/ssl_certificate.crt' );
+
+//var privateKey = fs.readFileSync('/home/www/ssl_ev/skytel.mn.key');
+//var certificate = fs.readFileSync('/home/www/ssl_ev/ssl_certificate.crt' );
+
+https.createServer({
+    key: privateKey,
+    cert: certificate
+}, app).listen(app.get('port'));
+
+//app.listen(app.get('port'), function() {
+ // console.log('Node app is running on port', app.get('port'));
+//});
 
 module.exports = app;
 
