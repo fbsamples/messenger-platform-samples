@@ -913,20 +913,16 @@ function callSendAPI(messageData) {
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
 
-var privateKey = fs.readFileSync('/home/www/ssl_old/20150330 SSL/server.key');
-var certificate = fs.readFileSync('/home/www/ssl_old/20150330 SSL/ssl_certificate.crt' );
+//var privateKey = fs.readFileSync('/home/www/ssl_old/20150330 SSL/server.key');
+//var certificate = fs.readFileSync('/home/www/ssl_old/20150330 SSL/ssl_certificate.crt' );
+//https.createServer({
+//    key: privateKey,
+//    cert: certificate
+//}, app).listen(app.get('port'));
 
-//var privateKey = fs.readFileSync('/home/www/ssl_ev/skytel.mn.key');
-//var certificate = fs.readFileSync('/home/www/ssl_ev/ssl_certificate.crt' );
-
-https.createServer({
-    key: privateKey,
-    cert: certificate
-}, app).listen(app.get('port'));
-
-//app.listen(app.get('port'), function() {
- // console.log('Node app is running on port', app.get('port'));
-//});
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
 
 module.exports = app;
 
