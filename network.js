@@ -37,6 +37,8 @@ function getLatestNews(){
     })
 }
 
+module.exports.getLatestNews = getLatestNews;
+
 /**
  * Save the news detail into file 
  * FIXME - Overwriting into the file 4 times! (Bazarvaani!)
