@@ -64,3 +64,5 @@ function getLastNewsId(){
     var result = jsonfile.readFileSync(newsListFile);
     return result[0].id;
 }
+
+module.exports = network.js;
