@@ -11,6 +11,7 @@ var currentNews = [];
 
 function getLatestNews(){ 
     var currentLatestId = getLastNewsId();
+    console.log("$$$$ currentLatestId: "+currentLatestId);
     request({
         url: newsListURL, 
         json: true
@@ -19,17 +20,21 @@ function getLatestNews(){
             var newsList = body.result.newsList;
             
             if(newsList[0].id >= currentLatestId){
+                console.log("$$$$ new news fount: "+newsList[0].id);
                 jsonfile.writeFileSync(newsListFile, newsList, function (err) {
                     console.error(err);
                 });
                 
                 for(var i in newsList){
+                    console.log("$$$$ saving news detail: "+newsList[i].id);
                     saveNewsDetail(newsList[i].id); 
                     if(i == 4){
                         break; 
                     }
                 }
             }
+        }else{
+            console.log("$$$$ getting news list: "+response.statusCode );
         }
         
         var detail = jsonfile.readFileSync(newsDetailFile);
@@ -57,6 +62,9 @@ function saveNewsDetail(newsId){
             jsonfile.writeFileSync(newsDetailFile, currentNews, function (err) {
                 console.error(err);
             });
+            console.log("$$$$ saved news detail: "+newsList[i].id);
+        }else{
+            console.log("$$$$ getting news detail: "+response.statusCode );
         }
     })
 }
