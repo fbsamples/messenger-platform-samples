@@ -5,7 +5,8 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),  
-  request = require('request');
+  request = require('request'),
+  network = require('network.js');
 
   
 var app = express();
@@ -13,6 +14,7 @@ app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -624,6 +626,8 @@ function sendGenericMessage(recipientId) {
 
 //TODO mine 
 function sendNewsMessage(recipientId) {
+    
+  var news = network.getLatestNews();
   var messageData = {
     recipient: {
       id: recipientId
@@ -634,7 +638,7 @@ function sendNewsMessage(recipientId) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "СКАЙТЕЛ КОМПАНИ Д.ОТГОНДАЛАЙГИЙН ҮҮРЭН ХОЛБООНЫ 4 ЖИЛИЙН ХЭРЭГЦЭЭГ",
+            title: news[0].title,
             subtitle: "NМҮОХ-ны албан ёсны түнш",
             item_url: "https://www.skytel.mn/content/2287/view",               
             image_url: "https://www.skytel.mn/uploads/images/DSC0702.jpg",
