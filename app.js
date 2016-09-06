@@ -1,4 +1,6 @@
 
+/* global networking */
+
 const 
   bodyParser = require('body-parser'),
   config = require('config'),
@@ -6,7 +8,7 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request'),
-  network = require('network.js');
+  networking = require('network');
 
   
 var app = express();
@@ -627,7 +629,7 @@ function sendGenericMessage(recipientId) {
 //TODO mine 
 function sendNewsMessage(recipientId) {
     
-  var news = network.getLatestNews();
+  var news = networking.getLatestNews();
   var messageData = {
     recipient: {
       id: recipientId

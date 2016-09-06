@@ -65,4 +65,3 @@ function getLastNewsId(){
     return result[0].id;
 }
 
-module.exports = network.js;
