@@ -317,6 +317,10 @@ function receivedPostback(event) {
     console.log("Received postback for user %d and page %d with payload '%s' " + 
     "at %d", senderID, recipientID, payload, timeOfPostback);
   
+    if((/\/^CUSTOM_NEWS_/).test(payload)){
+        sendTextMessage(senderID, "CUSTOM_NEWS_ called: "+payload);
+    }
+    
     switch (payload){
         case 'CUSTOM_123_DATA_PACKAGE':
 			sendDataQuickReply(senderID); 
@@ -327,6 +331,7 @@ function receivedPostback(event) {
         case 'CUSTOM_123_247_PACKAGE':
             sendTextMessage(senderID, "Та 123-г ашиглан 247 багц авахын тулд 247 гэсэн түлхүүр үгийг 123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
             break; 
+            
         case 'CUSTOM_NEWS_1':
             sendTextMessage(senderID, "МҮОХ-ны албан ёсны түнш, олимпийн баг тамирчдыг дэмжигч, Монголын 100% хөрөнгө оруулалттай СКАЙтел компани Рио 2016 олимпийн ХҮРЭЛ медальт Доржнямбуугийн Отгондалайд хүндэтгэл үзүүлэн хүлээн авч, компанийнхаа гарын бэлгээр урмын мялаалга өргөлөө."); 
             sendTextMessage(senderID, "Даян дэлхийн эв нэгдлийн их наадам Рио 2016 зуны олимпийн боксыг 60 кг-ийн төрөлд хүч үзэн, эх орондоо хүрэл медаль авчирч, монголчууд биднийхээ магнай тэнийлгэсэн, одтой хийморьтой аавын хүү Д.Отгондалайгаараа бид бахархахгүй байхын аргагүй"); 
@@ -341,7 +346,7 @@ function receivedPostback(event) {
         default: 
             // When a postback is called, we'll send a message back to the sender to 
             // let them know it was successful
-            sendTextMessage(senderID, "Postback called");
+//            sendTextMessage(senderID, "Postback called");
             break; 
     }
 }
