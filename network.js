@@ -38,6 +38,7 @@ function getLatestNews(){
         }
         
         var detail = jsonfile.readFileSync(newsDetailFile);
+        console.log("$$$$ detail to return: "+detail );
         return detail; 
     })
 }
