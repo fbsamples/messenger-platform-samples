@@ -52,7 +52,7 @@ var detailCounter = 0;
 
 function saveNewsDetail(newsIds){
     
-    if(counter < 4){
+    if(detailCounter < 4){
         var newsDetailURL = `https://www.skytel.mn/api/content/${newsIds[detailCounter]}/show`; 
         request({
             url: newsDetailURL,
