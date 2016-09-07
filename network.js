@@ -23,7 +23,7 @@ function getLatestNews(callbackfn){
                 console.log("$$$$ new news found: "+newsList[0].id);
                 var errorlog; 
                 jsonfile.writeFileSync(newsListFile, newsList, errorlog); 
-                    console.error("error in writing file: "+errorlog);
+                    console.error("$$$ error in writing file: "+errorlog);
                 
                 for(var i in newsList){
                     console.log("$$$$ saving news detail: "+newsList[i].id);
@@ -60,9 +60,9 @@ function saveNewsDetail(newsId){
         if (!error && response.statusCode === 200) {
             var newsContent = body.result.content;
             currentNews.push(newsContent); 
-            jsonfile.writeFileSync(newsDetailFile, currentNews, function (err) {
-                console.error(err);
-            });
+            var writingErr; 
+            jsonfile.writeFileSync(newsDetailFile, currentNews, writingErr);
+            console.error("$$$ error in writing file: "+errorlog);
             console.log("$$$$ saved news detail: "+newsList[i].id);
         }else{
             console.log("$$$$ getting news detail: "+response.statusCode );
