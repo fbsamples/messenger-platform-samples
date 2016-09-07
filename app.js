@@ -317,7 +317,7 @@ function receivedPostback(event) {
     console.log("Received postback for user %d and page %d with payload '%s' " + 
     "at %d", senderID, recipientID, payload, timeOfPostback);
   
-    if((/\/^CUSTOM_NEWS_/).test(payload)){
+    if((/^CUSTOM_NEWS_/).test(payload)){
         sendTextMessage(senderID, "CUSTOM_NEWS_ called: "+payload);
     }
     
