@@ -648,32 +648,18 @@ function sendNewsMessage(recipientId) {
             payload: {
               template_type: "generic",
               elements: [{
-                title: detail[0].title,
-                subtitle: stringUtils.getSubWords(detail[0].intro, charLimitTitle),
-                item_url: `https://www.skytel.mn/content/${detail[0].id}/view`,               
-                image_url: detail[0].image,
+                title: detail[3].title,
+                subtitle: stringUtils.getSubWords(detail[3].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[3].id}/view`,               
+                image_url: detail[3].image,
                 buttons: [{
                   type: "web_url",
-                  url: `https://www.skytel.mn/content/${detail[0].id}/view`,
+                  url: `https://www.skytel.mn/content/${detail[3].id}/view`,
                   title: "Мэдээг унших"
                 }, {
                   type: "postback",
                   title: "Тойм унших",
-                  payload: `CUSTOM_NEWS_${detail[0].id}`,
-                }],
-              },{
-                title: detail[1].title,
-                subtitle: stringUtils.getSubWords(detail[1].intro, charLimitTitle),
-                item_url: `https://www.skytel.mn/content/${detail[1].id}/view`,               
-                image_url: detail[1].image,
-                buttons: [{
-                  type: "web_url",
-                  url: `https://www.skytel.mn/content/${detail[1].id}/view`,
-                  title: "Мэдээг унших"
-                }, {
-                  type: "postback",
-                  title: "Тойм унших",
-                  payload: `CUSTOM_NEWS_${detail[1].id}`,
+                  payload: `CUSTOM_NEWS_${detail[3].id}`,
                 }],
               },{
                 title: detail[2].title,
@@ -690,18 +676,32 @@ function sendNewsMessage(recipientId) {
                   payload: `CUSTOM_NEWS_${detail[2].id}`,
                 }],
               },{
-                title: detail[3].title,
-                subtitle: stringUtils.getSubWords(detail[3].intro, charLimitTitle),
-                item_url: `https://www.skytel.mn/content/${detail[3].id}/view`,               
-                image_url: detail[3].image,
+                title: detail[1].title,
+                subtitle: stringUtils.getSubWords(detail[1].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[1].id}/view`,               
+                image_url: detail[1].image,
                 buttons: [{
                   type: "web_url",
-                  url: `https://www.skytel.mn/content/${detail[3].id}/view`,
+                  url: `https://www.skytel.mn/content/${detail[1].id}/view`,
                   title: "Мэдээг унших"
                 }, {
                   type: "postback",
                   title: "Тойм унших",
-                  payload: `CUSTOM_NEWS_${detail[3].id}`,
+                  payload: `CUSTOM_NEWS_${detail[1].id}`,
+                }],
+              },{
+                title: detail[0].title,
+                subtitle: stringUtils.getSubWords(detail[0].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[0].id}/view`,               
+                image_url: detail[0].image,
+                buttons: [{
+                  type: "web_url",
+                  url: `https://www.skytel.mn/content/${detail[0].id}/view`,
+                  title: "Мэдээг унших"
+                }, {
+                  type: "postback",
+                  title: "Тойм унших",
+                  payload: `CUSTOM_NEWS_${detail[0].id}`,
                 }],
               }]
             }
