@@ -318,7 +318,8 @@ function receivedPostback(event) {
     "at %d", senderID, recipientID, payload, timeOfPostback);
   
     if((/^CUSTOM_NEWS_/).test(payload)){
-        sendTextMessage(senderID, "CUSTOM_NEWS_ called: "+payload);
+        var detailID = payload.substring(12, payload.length);
+        sendTextMessage(senderID, stringUtils.getSubWords(newsDetail[detailID].intro, charLimitTextMsg));
     }
     
     switch (payload){
@@ -330,18 +331,6 @@ function receivedPostback(event) {
             break; 
         case 'CUSTOM_123_247_PACKAGE':
             sendTextMessage(senderID, "Та 123-г ашиглан 247 багц авахын тулд 247 гэсэн түлхүүр үгийг 123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
-            break; 
-            
-        case 'CUSTOM_NEWS_1':
-            sendTextMessage(senderID, "МҮОХ-ны албан ёсны түнш, олимпийн баг тамирчдыг дэмжигч, Монголын 100% хөрөнгө оруулалттай СКАЙтел компани Рио 2016 олимпийн ХҮРЭЛ медальт Доржнямбуугийн Отгондалайд хүндэтгэл үзүүлэн хүлээн авч, компанийнхаа гарын бэлгээр урмын мялаалга өргөлөө."); 
-            sendTextMessage(senderID, "Даян дэлхийн эв нэгдлийн их наадам Рио 2016 зуны олимпийн боксыг 60 кг-ийн төрөлд хүч үзэн, эх орондоо хүрэл медаль авчирч, монголчууд биднийхээ магнай тэнийлгэсэн, одтой хийморьтой аавын хүү Д.Отгондалайгаараа бид бахархахгүй байхын аргагүй"); 
-            sendTextMessage(senderID, " Иймд СКАЙтел компани Д.Отгондалайгийнхаа хүч хөдөлмөр, баатарлаг гавьяаг үнэлэн, Риогоос Токио 2020 олимп хүртэл буюу 4 жилийн хугацаанд үүрэн холбоо, дата интернетийнх хэрэгцээг хангахаар ");
-            sendTextMessage(senderID, "дараа төлбөрт МОНГОЛдоо 70000 багцын үйлчилгээг ашиглах эрхтэй Алтан дугаар, сүүлийн үеийн, өндөр үзүүлэлт бүхий Samsung Galaxy S7 загварын ухаалаг утсаар мялаалаа.");
-            sendTextMessage(senderID, "Мөн түүний дасгалжуулагч, ОУХМ Б.Эрдэнэбаярыг МОНГОЛдоо 40000 багцын үйлчилгээний 1 жилийн эрхтэй үнэ цэнэтэй дугаар, ухаалаг утсаар урамшууллаа");
-            break; 
-        case 'CUSTOM_NEWS_2':
-            sendTextMessage(senderID, "Яриа, дата, мессежийн хэрэглээндээ санаа амар байж, төлж буй мөнгөн дүнгээсээ илүү их үнэ цэнийг хүртэх боломжийг СКАЙтелийн дараа төлбөрт МОНГОЛдоо үйлчилгээ бий болгож чадсан."); 
-            sendTextMessage(senderID, "Илүү хэмнэлттэй, илүү таатай нөхцөлтэй энэхүү үйлчилгээнд бүх дараа төлбөрт үйлчилгээний хэрэглэгчдээ хамруулах үүднээс 2016 оны 9-р сарын 1-нээс эхлэн одоогийн VIP, Business class 10k, Business class 20k,  Business class 30k болон Open (150, 400, 750, 1500) багцын хэрэглэгчдийг МОНГОЛдоо үйлчилгээний багцуудад дүйцүүлэн шилжүүлэх гэж байна.");
             break; 
         default: 
             // When a postback is called, we'll send a message back to the sender to 
@@ -585,57 +574,6 @@ function send123Buttons(recipientId) {
   callSendAPI(messageData);
 }
 
-/*
- * Send a Structured Message (Generic Message type) using the Send API.
- * TODO Use this Zolbayar (slider)
- */
-function sendGenericMessage(recipientId) {
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements: [{
-            title: "rift",
-            subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",               
-            image_url: SERVER_URL + "/assets/rift.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for first bubble",
-            }],
-          }, {
-            title: "touch",
-            subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",               
-            image_url: SERVER_URL + "/assets/touch.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/touch/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for second bubble",
-            }]
-          }]
-        }
-      }
-    }
-  };  
-
-  callSendAPI(messageData);
-}
-
 var newsDetail; 
 
 //TODO mine 
@@ -664,7 +602,7 @@ function sendNewsMessage(recipientId) {
                 }, {
                   type: "postback",
                   title: "Тойм унших",
-                  payload: `CUSTOM_NEWS_${detail[0].id}`,
+                  payload: `CUSTOM_NEWS_0`,
                 }],
               },{
                 title: detail[1].title,
@@ -678,7 +616,7 @@ function sendNewsMessage(recipientId) {
                 }, {
                   type: "postback",
                   title: "Тойм унших",
-                  payload: `CUSTOM_NEWS_${detail[1].id}`,
+                  payload: `CUSTOM_NEWS_1`,
                 }],
               },{
                 title: detail[2].title,
@@ -692,7 +630,7 @@ function sendNewsMessage(recipientId) {
                 }, {
                   type: "postback",
                   title: "Тойм унших",
-                  payload: `CUSTOM_NEWS_${detail[2].id}`,
+                  payload: `CUSTOM_NEWS_2`,
                 }],
               },{
                 title: detail[3].title,
@@ -706,7 +644,7 @@ function sendNewsMessage(recipientId) {
                 }, {
                   type: "postback",
                   title: "Тойм унших",
-                  payload: `CUSTOM_NEWS_${detail[3].id}`,
+                  payload: `CUSTOM_NEWS_3`,
                 }],
               }]
             }

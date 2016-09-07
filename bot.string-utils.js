@@ -6,4 +6,3 @@ function getSubWords(sentence, maxLength){
     return trimmedString;
 }
 module.exports.getSubWords = getSubWords;
-
