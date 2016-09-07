@@ -66,7 +66,7 @@ function saveNewsDetail(newsIds){
                 console.error("$$$ options in writing file: "+writingErr);
 
                 detailCounter++; 
-                saveNewsDetail(newsId); 
+                saveNewsDetail(newsIds); 
                 console.log("$$$$ saved news detail: "+newsContent.id);
             }else{
                 console.log("$$$$ getting news detail: "+response.statusCode );
