@@ -22,7 +22,8 @@ function getLatestNews(callbackfn){
             if(newsList[0].id >= currentLatestId){
                 console.log("$$$$ new news fount: "+newsList[0].id);
                 jsonfile.writeFileSync(newsListFile, newsList, function (err) {
-                    console.error(err);
+                    console.error("error in writing file: "+err);
+                    console.error("end of error");
                 });
                 
                 for(var i in newsList){
