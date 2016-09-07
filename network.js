@@ -9,7 +9,7 @@ const newsDetailFile = 'data/news_detail.json'
         
 var currentNews = []; 
 
-function getLatestNews(){ 
+function getLatestNews(callbackfn){ 
     var currentLatestId = getLastNewsId();
     console.log("$$$$ currentLatestId: "+currentLatestId);
     request({
@@ -38,8 +38,8 @@ function getLatestNews(){
         }
         
         var detail = jsonfile.readFileSync(newsDetailFile);
-        console.log("$$$$ detail to return: "+detail );
-        return detail; 
+        console.log("$$$$ detail to callback: "+detail );
+        callbackfn(detail);
     })
 }
 

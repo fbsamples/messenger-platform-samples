@@ -629,51 +629,53 @@ function sendGenericMessage(recipientId) {
 //TODO mine 
 function sendNewsMessage(recipientId) {
     
-  var news = networking.getLatestNews();
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements: [{
-            title: news[0].title,
-            subtitle: "NМҮОХ-ны албан ёсны түнш",
-            item_url: "https://www.skytel.mn/content/2287/view",               
-            image_url: "https://www.skytel.mn/uploads/images/DSC0702.jpg",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.skytel.mn/content/2287/view",
-              title: "Мэдээг унших"
-            }, {
-              type: "postback",
-              title: "Тойм унших",
-              payload: "CUSTOM_NEWS_1",
-            }],
-          }, {
-            title: "НЭГИЙН ҮНЭЭР “ӨНГӨЛӨГ ТАВАН ДУГААР” АВААРАЙ",
-            subtitle: "Өнгөлөг 2.0 үйлчилгээний шинэ",
-            item_url: "https://www.skytel.mn/content/2284/view",               
-            image_url: "https://www.skytel.mn/uploads/news/5d4c16554439ac7f20e87381a9a032369b953ee8.jpg",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.skytel.mn/content/2284/view",
-              title: "Мэдээг унших"
-            }, {
-              type: "postback",
-              title: "Тойм унших",
-              payload: "CUSTOM_NEWS_2",
-            }]
-          }]
+  var news = networking.getLatestNews((detail) => {
+      var messageData = {
+        recipient: {
+          id: recipientId
+        },
+        message: {
+          attachment: {
+            type: "template",
+            payload: {
+              template_type: "generic",
+              elements: [{
+                title: news[0].title,
+                subtitle: "NМҮОХ-ны албан ёсны түнш",
+                item_url: "https://www.skytel.mn/content/2287/view",               
+                image_url: "https://www.skytel.mn/uploads/images/DSC0702.jpg",
+                buttons: [{
+                  type: "web_url",
+                  url: "https://www.skytel.mn/content/2287/view",
+                  title: "Мэдээг унших"
+                }, {
+                  type: "postback",
+                  title: "Тойм унших",
+                  payload: "CUSTOM_NEWS_1",
+                }],
+              }, {
+                title: "НЭГИЙН ҮНЭЭР “ӨНГӨЛӨГ ТАВАН ДУГААР” АВААРАЙ",
+                subtitle: "Өнгөлөг 2.0 үйлчилгээний шинэ",
+                item_url: "https://www.skytel.mn/content/2284/view",               
+                image_url: "https://www.skytel.mn/uploads/news/5d4c16554439ac7f20e87381a9a032369b953ee8.jpg",
+                buttons: [{
+                  type: "web_url",
+                  url: "https://www.skytel.mn/content/2284/view",
+                  title: "Мэдээг унших"
+                }, {
+                  type: "postback",
+                  title: "Тойм унших",
+                  payload: "CUSTOM_NEWS_2",
+                }]
+              }]
+            }
+          }
         }
-      }
-    }
-  };  
+      };  
 
-  callSendAPI(messageData);
+      callSendAPI(messageData);
+  });
+  
 }
 
 /*
