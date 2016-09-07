@@ -63,7 +63,7 @@ function saveNewsDetail(newsId){
             var writingErr; 
             jsonfile.writeFileSync(newsDetailFile, currentNews, writingErr);
             console.error("$$$ error in writing file: "+writingErr);
-            console.log("$$$$ saved news detail: "+newsList[i].id);
+            console.log("$$$$ saved news detail: "+newsContent.id);
         }else{
             console.log("$$$$ getting news detail: "+response.statusCode );
         }
