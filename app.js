@@ -629,7 +629,7 @@ function sendGenericMessage(recipientId) {
 //TODO mine 
 function sendNewsMessage(recipientId) {
     
-  var news = networking.getLatestNews((detail) => {
+  networking.getLatestNews((detail) => {
       var messageData = {
         recipient: {
           id: recipientId
@@ -640,7 +640,7 @@ function sendNewsMessage(recipientId) {
             payload: {
               template_type: "generic",
               elements: [{
-                title: news[0].title,
+                title: detail[0].title,
                 subtitle: "NМҮОХ-ны албан ёсны түнш",
                 item_url: "https://www.skytel.mn/content/2287/view",               
                 image_url: "https://www.skytel.mn/uploads/images/DSC0702.jpg",
