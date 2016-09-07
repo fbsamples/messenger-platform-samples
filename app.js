@@ -8,8 +8,13 @@ const
   express = require('express'),
   https = require('https'),  
   request = require('request'),
-  networking = require('./network');
-
+  networking = require('./network'),
+  stringUtils = require('./bot.string-utils');
+  
+const 
+    charLimitTitle = 80,
+    charLimitButtonTitle = 20,
+    charLimitTextMsg = 320; 
   
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -626,10 +631,13 @@ function sendGenericMessage(recipientId) {
   callSendAPI(messageData);
 }
 
+var newsDetail; 
+
 //TODO mine 
 function sendNewsMessage(recipientId) {
     
   networking.getLatestNews((detail) => {
+      newsDetail = detail; 
       var messageData = {
         recipient: {
           id: recipientId
@@ -641,32 +649,60 @@ function sendNewsMessage(recipientId) {
               template_type: "generic",
               elements: [{
                 title: detail[0].title,
-                subtitle: "NМҮОХ-ны албан ёсны түнш",
-                item_url: "https://www.skytel.mn/content/2287/view",               
-                image_url: "https://www.skytel.mn/uploads/images/DSC0702.jpg",
+                subtitle: stringUtils.getSubWords(detail[0].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[0].id}/view`,               
+                image_url: detail[0].image,
                 buttons: [{
                   type: "web_url",
-                  url: "https://www.skytel.mn/content/2287/view",
+                  url: `https://www.skytel.mn/content/${detail[0].id}/view`,
                   title: "Мэдээг унших"
                 }, {
                   type: "postback",
                   title: "Тойм унших",
-                  payload: "CUSTOM_NEWS_1",
+                  payload: `CUSTOM_NEWS_${detail[0].id}`,
                 }],
-              }, {
-                title: "НЭГИЙН ҮНЭЭР “ӨНГӨЛӨГ ТАВАН ДУГААР” АВААРАЙ",
-                subtitle: "Өнгөлөг 2.0 үйлчилгээний шинэ",
-                item_url: "https://www.skytel.mn/content/2284/view",               
-                image_url: "https://www.skytel.mn/uploads/news/5d4c16554439ac7f20e87381a9a032369b953ee8.jpg",
+              },{
+                title: detail[1].title,
+                subtitle: stringUtils.getSubWords(detail[1].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[1].id}/view`,               
+                image_url: detail[1].image,
                 buttons: [{
                   type: "web_url",
-                  url: "https://www.skytel.mn/content/2284/view",
+                  url: `https://www.skytel.mn/content/${detail[1].id}/view`,
                   title: "Мэдээг унших"
                 }, {
                   type: "postback",
                   title: "Тойм унших",
-                  payload: "CUSTOM_NEWS_2",
-                }]
+                  payload: `CUSTOM_NEWS_${detail[1].id}`,
+                }],
+              },{
+                title: detail[2].title,
+                subtitle: stringUtils.getSubWords(detail[2].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[2].id}/view`,               
+                image_url: detail[2].image,
+                buttons: [{
+                  type: "web_url",
+                  url: `https://www.skytel.mn/content/${detail[2].id}/view`,
+                  title: "Мэдээг унших"
+                }, {
+                  type: "postback",
+                  title: "Тойм унших",
+                  payload: `CUSTOM_NEWS_${detail[2].id}`,
+                }],
+              },{
+                title: detail[3].title,
+                subtitle: stringUtils.getSubWords(detail[3].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[3].id}/view`,               
+                image_url: detail[3].image,
+                buttons: [{
+                  type: "web_url",
+                  url: `https://www.skytel.mn/content/${detail[3].id}/view`,
+                  title: "Мэдээг унших"
+                }, {
+                  type: "postback",
+                  title: "Тойм унших",
+                  payload: `CUSTOM_NEWS_${detail[3].id}`,
+                }],
               }]
             }
           }
