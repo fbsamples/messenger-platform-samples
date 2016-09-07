@@ -8,7 +8,7 @@ const newsListURL = "https://www.skytel.mn/api/content/list?category=7&page=1";
 const newsDetailFile = 'data/news_detail.json'
         
 var currentNews = []; 
-
+var currentNewsIds = []; 
 function getLatestNews(callbackfn){ 
     var currentLatestId = getLastNewsId();
     console.log("$$$$ currentLatestId: "+currentLatestId);
@@ -23,15 +23,14 @@ function getLatestNews(callbackfn){
                 console.log("$$$$ new news found: "+newsList[0].id);
                 var errorlog; 
                 jsonfile.writeFileSync(newsListFile, newsList, errorlog); 
-                    console.error("$$$ error in writing file: "+errorlog);
+                    console.error("$$$ options in writing file: "+errorlog);
                 
                 for(var i in newsList){
                     console.log("$$$$ saving news detail: "+newsList[i].id);
-                    saveNewsDetail(newsList[i].id); 
-                    if(i == 4){
-                        break; 
-                    }
+                    currentNewsIds.push(newsList[i].id);
                 }
+                
+                saveNewsDetail(currentNewsIds); 
             }
         }else{
             console.log("$$$$ getting news list: "+response.statusCode );
@@ -49,25 +48,32 @@ module.exports.getLatestNews = getLatestNews;
  * Save the news detail into file 
  * FIXME - Overwriting into the file 4 times! (Bazarvaani!)
  */
-function saveNewsDetail(newsId){
-    
-    var newsDetailURL = `https://www.skytel.mn/api/content/${newsId}/show`; 
+var detailCounter = 0; 
 
-    request({
-        url: newsDetailURL,
-        json: true
-    }, (error, response, body) => {
-        if (!error && response.statusCode === 200) {
-            var newsContent = body.result.content;
-            currentNews.push(newsContent); 
-            var writingErr; 
-            jsonfile.writeFileSync(newsDetailFile, currentNews, writingErr);
-            console.error("$$$ error in writing file: "+writingErr);
-            console.log("$$$$ saved news detail: "+newsContent.id);
-        }else{
-            console.log("$$$$ getting news detail: "+response.statusCode );
-        }
-    })
+function saveNewsDetail(newsIds){
+    
+    if(counter < 4){
+        var newsDetailURL = `https://www.skytel.mn/api/content/${newsIds[detailCounter]}/show`; 
+        request({
+            url: newsDetailURL,
+            json: true
+        }, (error, response, body) => {
+            if (!error && response.statusCode === 200) {
+                var newsContent = body.result.content;
+                currentNews.push(newsContent); 
+                var writingErr; 
+                jsonfile.writeFileSync(newsDetailFile, currentNews, writingErr);
+                console.error("$$$ options in writing file: "+writingErr);
+
+                detailCounter++; 
+                saveNewsDetail(newsId); 
+                console.log("$$$$ saved news detail: "+newsContent.id);
+            }else{
+                console.log("$$$$ getting news detail: "+response.statusCode );
+            }
+        })
+    }
+    
 }
 
 //Get the id of last news saved in file
