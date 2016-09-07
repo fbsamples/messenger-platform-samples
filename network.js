@@ -20,11 +20,10 @@ function getLatestNews(callbackfn){
             var newsList = body.result.newsList;
             
             if(newsList[0].id >= currentLatestId){
-                console.log("$$$$ new news fount: "+newsList[0].id);
-                jsonfile.writeFileSync(newsListFile, newsList, function (err) {
-                    console.error("error in writing file: "+err);
-                    console.error("end of error");
-                });
+                console.log("$$$$ new news found: "+newsList[0].id);
+                var errorlog; 
+                jsonfile.writeFileSync(newsListFile, newsList, errorlog); 
+                    console.error("error in writing file: "+errorlog);
                 
                 for(var i in newsList){
                     console.log("$$$$ saving news detail: "+newsList[i].id);
