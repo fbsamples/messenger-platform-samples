@@ -19,7 +19,7 @@ function getLatestNews(callbackfn){
         if (!error && response.statusCode === 200) {
             var newsList = body.result.newsList;
             
-            if(newsList[0].id > currentLatestId){
+            if(newsList[0].id >= currentLatestId){
                 console.log("$$$$ new news found: "+newsList[0].id);
                 var errorlog; 
                 jsonfile.writeFileSync(newsListFile, newsList, errorlog); 
