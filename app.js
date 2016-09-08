@@ -323,8 +323,19 @@ function receivedPostback(event) {
     }
     
     switch (payload){
+        case 'CUSTOM_GET_STARTED_PAYLOAD':
+            sendStartButtons(senderID); 
+            break; 
+        case 'CUSTOM_START_NEW_SERVICE':
+            sendTypingOn(senderID);
+            send123Buttons(senderID);
+            break; 
+        case 'CUSTOM_START_NEWS':
+            sendTypingOn(senderID);
+            sendNewsMessage(senderID);
+            break;
         case 'CUSTOM_123_DATA_PACKAGE':
-			sendDataQuickReply(senderID); 
+            sendDataQuickReply(senderID); 
             break; 
         case 'CUSTOM_123_FB_PACKAGE':
             sendTextMessage(senderID, "Та 123-г ашиглан Facebook багц авахын тулд facebook гэсэн түлхүүр үгийг 123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
@@ -786,6 +797,35 @@ function sendDataQuickReply(recipientId) {
     }
   };
 
+  callSendAPI(messageData);
+}
+
+//MINE
+function sendStartButtons(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Skytel Messenger-т тавтай морил",
+          buttons:[{
+            type: "postback",
+            payload: "CUSTOM_START_NEW_SERVICE",
+            title: "Шинэ үйлчилгээ"
+          }, {
+            type: "postback",
+            title: "Шинэ мэдээ",
+            payload: "CUSTOM_START_NEWS"
+          }]
+        }
+      }
+    }
+  };  
+	sendTypingOff(recipientId); 
   callSendAPI(messageData);
 }
 
