@@ -254,7 +254,24 @@ function receivedMessage(event) {
 
     switch (messageText) {
       
-        
+      case 'Сайн байна уу?':
+    case 'Sain baina uu? ':
+    case 'Сайнуу':
+    case 'Sainuu':
+    case 'сайнуу':
+    case 'sainuu':
+    case 'Байна уу?':
+    case 'Baina uu?':
+    case 'Бну':
+    case 'Bnu':
+    case 'bnu':
+    case 'бну':
+      case 'hi': 
+      case 'Yum asuuy':  
+      case 'юм асууя':  
+      case 'yum asuuya':  
+      case 'хүн бну':  
+      case 'hun bnu':
       case '123': 
         send123Buttons(senderID);
         break; 
@@ -334,6 +351,10 @@ function receivedPostback(event) {
             sendTypingOn(senderID);
             sendNewsMessage(senderID);
             break;
+        case 'CUSTOM_NEWS_FROM_123':
+                    sendNewsMessage(senderID); 
+        //sendTextMessage(senderID, "Та 123-г ашиглан 247 багц авахын тулд 247 гэсэн түлхүүр үгийг //123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
+        break; 
         case 'CUSTOM_123_DATA_PACKAGE':
             sendDataQuickReply(senderID); 
             break; 
@@ -574,8 +595,8 @@ function send123Buttons(recipientId) {
             payload: "CUSTOM_123_FB_PACKAGE"
           }, {
             type: "postback",
-            title: "247 багц авах",
-            payload: "CUSTOM_123_247_PACKAGE"
+            title: "Сүүлийн үеийн мэдээ",
+            payload: "CUSTOM_NEWS_FROM_123"
           }]
         }
       }
