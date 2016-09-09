@@ -1,14 +1,5 @@
-/*
- * Copyright 2016-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
 
-/* jshint node: true, devel: true */
-'use strict';
+/* global networking */
 
 const 
   bodyParser = require('body-parser'),
@@ -16,13 +7,21 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),  
-  request = require('request');
-
+  request = require('request'),
+  networking = require('./bot.network'),
+  stringUtils = require('./bot.string-utils');
+  
+const 
+    charLimitTitle = 80,
+    charLimitButtonTitle = 20,
+    charLimitTextMsg = 320; 
+  
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+
 
 /*
  * Be sure to setup your config values before running this code. You can 
@@ -204,16 +203,9 @@ function receivedAuthentication(event) {
 /*
  * Message Event
  *
- * This event is called when a message is sent to your page. The 'message' 
- * object format can vary depending on the kind of message that was received.
+ * This event is called when a message is sent to your page.
  * Read more at https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-received
  *
- * For this example, we're going to echo any text that we get. If we get some 
- * special keywords ('button', 'generic', 'receipt'), then we'll send back
- * examples of those bubbles to illustrate the special message bubbles we've 
- * created. If we receive a message with an attachment (image, video, audio), 
- * then we'll simply confirm that we've received the attachment.
- * 
  */
 function receivedMessage(event) {
   var senderID = event.sender.id;
@@ -244,71 +236,52 @@ function receivedMessage(event) {
     var quickReplyPayload = quickReply.payload;
     console.log("Quick reply for message %s with payload %s",
       messageId, quickReplyPayload);
-
-    sendTextMessage(senderID, "Quick reply tapped");
+	  switch (quickReplyPayload) {
+		case 'CUSTOM_QUICK_DATA_1GB':
+			sendTextMessage(senderID, "1gb гэсэн түлхүүр үгийг 123 дугаарт илгээнэ. Дагалдах эрх үйлчилгээний хоног 30. Үнэ 10.000₮"); 
+            break;
+		case 'CUSTOM_QUICK_DATA_2GB':
+			sendTextMessage(senderID, "2gb гэсэн түлхүүр үгийг 123 дугаарт илгээнэ. Дагалдах эрх үйлчилгээний хоног 30. Үнэ 13.000₮"); 
+            break;
+		case 'CUSTOM_QUICK_DATA_10GB':
+			sendTextMessage(senderID, "10gb гэсэн түлхүүр үгийг 123 дугаарт илгээнэ. Дагалдах эрх үйлчилгээний хоног 60. Үнэ 30.000₮"); 
+            break;
+	  }
     return;
   }
 
   if (messageText) {
 
-    // If we receive a text message, check to see if it matches any special
-    // keywords and send back the corresponding example. Otherwise, just echo
-    // the text we received.
     switch (messageText) {
-      case 'image':
-        sendImageMessage(senderID);
-        break;
+      
+      case 'Сайн байна уу?':
+    case 'Sain baina uu? ':
+    case 'Сайнуу':
+    case 'Sainuu':
+    case 'сайнуу':
+    case 'sainuu':
+    case 'Байна уу?':
+    case 'Baina uu?':
+    case 'Бну':
+    case 'Bnu':
+    case 'bnu':
+    case 'бну':
+      case 'hi': 
+      case 'Yum asuuy':  
+      case 'юм асууя':  
+      case 'yum asuuya':  
+      case 'хүн бну':  
+      case 'hun bnu':
+      case '123': 
+        send123Buttons(senderID);
+        break; 
+        
+        case 'мэдээ':
+            sendNewsMessage(senderID); 
+            break; 
 
-      case 'gif':
-        sendGifMessage(senderID);
-        break;
-
-      case 'audio':
-        sendAudioMessage(senderID);
-        break;
-
-      case 'video':
-        sendVideoMessage(senderID);
-        break;
-
-      case 'file':
-        sendFileMessage(senderID);
-        break;
-
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
-
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
-
-      case 'quick reply':
-        sendQuickReply(senderID);
-        break;        
-
-      case 'read receipt':
-        sendReadReceipt(senderID);
-        break;        
-
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;        
-
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;        
-
-      case 'account linking':
-        sendAccountLinking(senderID);
-        break;
-
-      default:
-        sendTextMessage(senderID, messageText);
+     // default:
+      //  sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
@@ -357,13 +330,46 @@ function receivedPostback(event) {
   // The 'payload' param is a developer-defined field which is set in a postback 
   // button for Structured Messages. 
   var payload = event.postback.payload;
-
-  console.log("Received postback for user %d and page %d with payload '%s' " + 
+  
+    console.log("Received postback for user %d and page %d with payload '%s' " + 
     "at %d", senderID, recipientID, payload, timeOfPostback);
-
-  // When a postback is called, we'll send a message back to the sender to 
-  // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
+  
+    if((/^CUSTOM_NEWS_/).test(payload)){
+        var detailID = payload.substring(12, payload.length);
+        sendTextMessage(senderID, stringUtils.getSubWords(newsDetail[detailID].intro, charLimitTextMsg));
+    }
+    
+    switch (payload){
+        case 'CUSTOM_GET_STARTED_PAYLOAD':
+            sendStartButtons(senderID); 
+            break; 
+        case 'CUSTOM_START_NEW_SERVICE':
+            sendTypingOn(senderID);
+            send123Buttons(senderID);
+            break; 
+        case 'CUSTOM_START_NEWS':
+            sendTypingOn(senderID);
+            sendNewsMessage(senderID);
+            break;
+        case 'CUSTOM_FROM_123_NEWS':
+                    sendNewsMessage(senderID); 
+        //sendTextMessage(senderID, "Та 123-г ашиглан 247 багц авахын тулд 247 гэсэн түлхүүр үгийг //123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
+        break; 
+        case 'CUSTOM_123_DATA_PACKAGE':
+            sendDataQuickReply(senderID); 
+            break; 
+        case 'CUSTOM_123_FB_PACKAGE':
+            sendTextMessage(senderID, "Та 123-г ашиглан Facebook багц авахын тулд facebook гэсэн түлхүүр үгийг 123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
+            break; 
+        case 'CUSTOM_123_247_PACKAGE':
+            sendTextMessage(senderID, "Та 123-г ашиглан 247 багц авахын тулд 247 гэсэн түлхүүр үгийг 123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
+            break; 
+        default: 
+            // When a postback is called, we'll send a message back to the sender to 
+            // let them know it was successful
+//            sendTextMessage(senderID, "Postback called");
+            break; 
+    }
 }
 
 /*
@@ -567,12 +573,8 @@ function sendButtonMessage(recipientId) {
 
   callSendAPI(messageData);
 }
-
-/*
- * Send a Structured Message (Generic Message type) using the Send API.
- *
- */
-function sendGenericMessage(recipientId) {
+//TODO mine 
+function send123Buttons(recipientId) {
   var messageData = {
     recipient: {
       id: recipientId
@@ -581,35 +583,20 @@ function sendGenericMessage(recipientId) {
       attachment: {
         type: "template",
         payload: {
-          template_type: "generic",
-          elements: [{
-            title: "rift",
-            subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",               
-            image_url: SERVER_URL + "/assets/rift.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for first bubble",
-            }],
+          template_type: "button",
+          text: "Танд манай 123 шинэ үйлчилгээг танилцуулж байна",
+          buttons:[{
+            type: "postback",
+            payload: "CUSTOM_123_DATA_PACKAGE",
+            title: "Дата багц авах"
           }, {
-            title: "touch",
-            subtitle: "Your Hands, Now in VR",
-            item_url: "https://www.oculus.com/en-us/touch/",               
-            image_url: SERVER_URL + "/assets/touch.png",
-            buttons: [{
-              type: "web_url",
-              url: "https://www.oculus.com/en-us/touch/",
-              title: "Open Web URL"
-            }, {
-              type: "postback",
-              title: "Call Postback",
-              payload: "Payload for second bubble",
-            }]
+            type: "postback",
+            title: "Facebook багц авах",
+            payload: "CUSTOM_123_FB_PACKAGE"
+          }, {
+            type: "postback",
+            title: "Сүүлийн үеийн мэдээ",
+            payload: "CUSTOM_FROM_123_NEWS"
           }]
         }
       }
@@ -617,6 +604,89 @@ function sendGenericMessage(recipientId) {
   };  
 
   callSendAPI(messageData);
+}
+
+var newsDetail; 
+
+//TODO mine 
+function sendNewsMessage(recipientId) {
+    
+  networking.getLatestNews((detail) => {
+      newsDetail = detail; 
+      var messageData = {
+        recipient: {
+          id: recipientId
+        },
+        message: {
+          attachment: {
+            type: "template",
+            payload: {
+              template_type: "generic",
+              elements: [{
+                title: detail[0].title,
+                subtitle: stringUtils.getSubWords(detail[0].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[0].id}/view`,               
+                image_url: detail[0].image,
+                buttons: [{
+                  type: "web_url",
+                  url: `https://www.skytel.mn/content/${detail[0].id}/view`,
+                  title: "Мэдээг унших"
+                }, {
+                  type: "postback",
+                  title: "Тойм унших",
+                  payload: `CUSTOM_NEWS_0`,
+                }],
+              },{
+                title: detail[1].title,
+                subtitle: stringUtils.getSubWords(detail[1].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[1].id}/view`,               
+                image_url: detail[1].image,
+                buttons: [{
+                  type: "web_url",
+                  url: `https://www.skytel.mn/content/${detail[1].id}/view`,
+                  title: "Мэдээг унших"
+                }, {
+                  type: "postback",
+                  title: "Тойм унших",
+                  payload: `CUSTOM_NEWS_1`,
+                }],
+              },{
+                title: detail[2].title,
+                subtitle: stringUtils.getSubWords(detail[2].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[2].id}/view`,               
+                image_url: detail[2].image,
+                buttons: [{
+                  type: "web_url",
+                  url: `https://www.skytel.mn/content/${detail[2].id}/view`,
+                  title: "Мэдээг унших"
+                }, {
+                  type: "postback",
+                  title: "Тойм унших",
+                  payload: `CUSTOM_NEWS_2`,
+                }],
+              },{
+                title: detail[3].title,
+                subtitle: stringUtils.getSubWords(detail[3].intro, charLimitTitle),
+                item_url: `https://www.skytel.mn/content/${detail[3].id}/view`,               
+                image_url: detail[3].image,
+                buttons: [{
+                  type: "web_url",
+                  url: `https://www.skytel.mn/content/${detail[3].id}/view`,
+                  title: "Мэдээг унших"
+                }, {
+                  type: "postback",
+                  title: "Тойм унших",
+                  payload: `CUSTOM_NEWS_3`,
+                }],
+              }]
+            }
+          }
+        }
+      };  
+
+      callSendAPI(messageData);
+  });
+  
 }
 
 /*
@@ -717,6 +787,66 @@ function sendQuickReply(recipientId) {
     }
   };
 
+  callSendAPI(messageData);
+}
+//TODO mine 
+function sendDataQuickReply(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Та дата багцыг 123-с дараах 3-н төрлөөс сонгон авах боломжтой",
+      metadata: "ZOL_DEFINED_METADATA",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"1GB",
+          "payload":"CUSTOM_QUICK_DATA_1GB"
+        },
+        {
+          "content_type":"text",
+          "title":"2GB",
+          "payload":"CUSTOM_QUICK_DATA_2GB"
+        },
+        {
+          "content_type":"text",
+          "title":"10GB",
+          "payload":"CUSTOM_QUICK_DATA_10GB"
+        }
+      ]
+    }
+  };
+
+  callSendAPI(messageData);
+}
+
+//MINE
+function sendStartButtons(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Skytel Messenger-т тавтай морил",
+          buttons:[{
+            type: "postback",
+            payload: "CUSTOM_START_NEW_SERVICE",
+            title: "Шинэ үйлчилгээ"
+          }, {
+            type: "postback",
+            title: "Шинэ мэдээ",
+            payload: "CUSTOM_START_NEWS"
+          }]
+        }
+      }
+    }
+  };  
+	sendTypingOff(recipientId); 
   callSendAPI(messageData);
 }
 
@@ -831,6 +961,14 @@ function callSendAPI(messageData) {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
+
+//var privateKey = fs.readFileSync('/home/www/ssl_old/20150330 SSL/server.key');
+//var certificate = fs.readFileSync('/home/www/ssl_old/20150330 SSL/ssl_certificate.crt' );
+//https.createServer({
+//    key: privateKey,
+//    cert: certificate
+//}, app).listen(app.get('port'));
+
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
