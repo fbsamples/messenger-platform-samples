@@ -351,7 +351,7 @@ function receivedPostback(event) {
             sendTypingOn(senderID);
             sendNewsMessage(senderID);
             break;
-        case 'CUSTOM_NEWS_FROM_123':
+        case 'CUSTOM_FROM_123_NEWS':
                     sendNewsMessage(senderID); 
         //sendTextMessage(senderID, "Та 123-г ашиглан 247 багц авахын тулд 247 гэсэн түлхүүр үгийг //123 тусгай дугаарт илгээхэд хангалттай. Дагалдах эрх үйлчилгээний 30 хоног. Үнэ 5000₮");
         break; 
@@ -596,7 +596,7 @@ function send123Buttons(recipientId) {
           }, {
             type: "postback",
             title: "Сүүлийн үеийн мэдээ",
-            payload: "CUSTOM_NEWS_FROM_123"
+            payload: "CUSTOM_FROM_123_NEWS"
           }]
         }
       }
