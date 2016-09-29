@@ -823,7 +823,7 @@ function callSendAPI(messageData) {
         recipientId);
       }
     } else {
-      console.error(response.error);
+      console.error(body.error);
     }
   });  
 }
