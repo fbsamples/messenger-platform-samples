@@ -1,6 +1,6 @@
 {
-    "appSecret": "",
-    "pageAccessToken": "",
-    "validationToken": "",
-    "serverURL": ""
+    "appSecret": "32e9902f7e227df6776cceaad7ae2e70",
+    "pageAccessToken": "EAAEaZB7aYHysBAJtajg6pS6X3aKJ07HBrJMKKKmfWyM2x6tRFQIJEEIl2J4IYVZAGQ6esaKOgLgMQtKFhfm0zUpGiyZCBKZAAz63dRiPkJfROjPW2PF9LDChsbnfGm3IZBfXqFyC7rHcgR2QjnEjUAVOAFLyChKV1VBSh4UpSSwZDZD",
+    "validationToken": "this_is_a_testing_messger_app",
+    "serverURL": "server39.000webhost.com"
 }
