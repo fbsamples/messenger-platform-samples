@@ -493,7 +493,7 @@ function sendVideoMessage(recipientId) {
 }
 
 /*
- * Send a video using the Send API.
+ * Send a file using the Send API.
  *
  */
 function sendFileMessage(recipientId) {
