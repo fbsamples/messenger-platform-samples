@@ -696,7 +696,6 @@ function sendQuickReply(recipientId) {
     },
     message: {
       text: "What's your favorite movie genre?",
-      metadata: "DEVELOPER_DEFINED_METADATA",
       quick_replies: [
         {
           "content_type":"text",
