@@ -63,7 +63,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
  */
 app.get('/webhook', function(req, res) {
   if (req.query['hub.mode'] === 'subscribe' &&
-      req.query['hub.verify_token'] === VALIDATION_TOKEN) {
+      constEq(req.query['hub.verify_token'], VALIDATION_TOKEN)) {
     console.log("Validating webhook");
     res.status(200).send(req.query['hub.challenge']);
   } else {
@@ -166,7 +166,7 @@ function verifyRequestSignature(req, res, buf) {
                         .update(buf)
                         .digest('hex');
 
-    if (signatureHash != expectedHash) {
+    if (!constEq(signatureHash, expectedHash)) {
       throw new Error("Couldn't validate the request signature.");
     }
   }
@@ -796,6 +796,25 @@ function sendAccountLinking(recipientId) {
 
   callSendAPI(messageData);
 }
+
+/**
+ * An equality check resistant against timing attacks.
+ */
+function constEq(a, b) {
+  const aLen = a.length;
+  const bLen = b.length;
+  const len = Math.max(aLen, bLen);
+  let ret = 0;
+
+  for (let i = 0; i < len; i++) {
+    ret |= a[i % aLen] ^ b[i % bLen];
+  }
+
+  ret |= aLen ^ bLen;
+
+  return ret === 0;
+}
+
 
 /*
  * Call the Send API. The message data goes in the body. If successful, we'll 
