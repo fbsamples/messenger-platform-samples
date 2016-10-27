@@ -554,7 +554,7 @@ function sendButtonMessage(recipientId) {
           }, {
             type: "postback",
             title: "Trigger Postback",
-            payload: "DEVELOPED_DEFINED_PAYLOAD"
+            payload: "DEVELOPER_DEFINED_PAYLOAD"
           }, {
             type: "phone_number",
             title: "Call Phone Number",
