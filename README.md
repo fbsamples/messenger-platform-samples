@@ -4,3 +4,5 @@ This is a sample project showcasing the Messenger Platform. You can go through t
 
 Visit the [dev site](https://developers.facebook.com/docs/messenger-platform/) to find out more details about the Messenger Platform.
 
+Be sure to set your config variables in `config/default.json` before running the app.
+
