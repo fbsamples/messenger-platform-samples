@@ -85,7 +85,6 @@ app.get('/webhook', function(req, res) {
  *
  */
 app.post('/webhook', function (req, res) {
-  console.log("post webhook", req);
   var data = req.body;
 
   // Make sure this is a page subscription
@@ -312,6 +311,10 @@ function receivedMessage(event) {
         sendAccountLinking(senderID);
         break;
 
+      case 'yelp restaurant':
+        sendYelp(senderID);
+        break;
+
       default:
         sendTextMessage(senderID, messageText);
     }
@@ -407,6 +410,20 @@ function receivedAccountLink(event) {
 
   console.log("Received account link event with for user %d with status %s " +
     "and auth code %s ", senderID, status, authCode);
+}
+
+function sendYelp(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: 'YELP REQUEST RECEIVED',
+      metadata: "DEVELOPER_DEFINED_METADATA" //not sure what this is
+    }
+  };
+
+  callSendAPI(messageData);
 }
 
 /*
