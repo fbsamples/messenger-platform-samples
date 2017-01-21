@@ -16,7 +16,8 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),
-  request = require('request');
+  request = require('request'),
+  axios = require('axios');
 
 var app = express();
 app.set('port', process.env.PORT || 8445);
@@ -30,7 +31,8 @@ app.use(express.static('public'));
  *
  */
 
-let VALIDATION_TOKEN = 'yoonah';
+const VALIDATION_TOKEN = 'yoonah';
+const YELP_ACCESS_TOKEN = config.get('yelpAccessToken');
 
 // crypto.randomBytes(8, (err, buff) => {
 //   if (err) throw err;
@@ -413,6 +415,8 @@ function receivedAccountLink(event) {
 }
 
 function sendYelp(recipientId) {
+  var yelpResult;
+
   var messageData = {
     recipient: {
       id: recipientId
@@ -423,7 +427,64 @@ function sendYelp(recipientId) {
     }
   };
 
-  callSendAPI(messageData);
+  // axios.get('https://api.yelp.com/v3/businesses/search?location="New York"&term="restaurant"')
+  // .then(response => console.log(response.data))
+  //callYelpAPI();
+  request({
+    uri: 'https://api.yelp.com/v3/businesses/search',
+    qs: {
+      location: 'New York',
+      term: 'restaurant',
+      limit: 2
+    },
+    auth: {
+      bearer: YELP_ACCESS_TOKEN
+    },
+    method: 'GET'
+  }, function(error, response, body){
+     if (!error && response.statusCode == 200) {
+      //set up messageData to include responce.body
+      console.log('NEW YELP RESPONSE', response.body)
+      messageData.message.text = response.body
+      callSendAPI(messageData)
+
+    } else {
+      console.error("Failed calling Yelp API", response.statusCode, response.statusMessage, body.error);
+    }
+  });
+
+}
+
+function callYelpAPI() {
+  request({
+    uri: 'https://api.yelp.com/v3/businesses/search',
+    qs: {
+      location: 'New York',
+      term: 'restaurant'
+    },
+    auth: {
+      bearer: YELP_ACCESS_TOKEN
+    },
+    method: 'GET'
+    //json: messageData
+
+  }, function (error, response, body) {
+    console.log('YELP RESPONSE', response.body);
+    if (!error && response.statusCode == 200) {
+      var recipientId = body.recipient_id;
+      var messageId = body.message_id;
+
+      if (messageId) {
+        console.log("Successfully sent message with id %s to recipient %s",
+          messageId, recipientId);
+      } else {
+      console.log("Successfully called Send API for recipient %s",
+        recipientId);
+      }
+    } else {
+      console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+    }
+  });
 }
 
 /*

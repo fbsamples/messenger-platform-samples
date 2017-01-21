@@ -10,7 +10,7 @@ function sendYelp(messageText){
   let term = [];
   let request = 'https://api.yelp.com/v3/businesses/search?'
 
-  //assuming that only one keyword will be included in each query
+ //assuming that only one keyword will be included in each query
   keywords.forEach(word => {
     if (messageText.includes(word)) {
       term.push(word);
