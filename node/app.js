@@ -440,12 +440,13 @@ function sendYelp(recipientId) {
     auth: {
       bearer: YELP_ACCESS_TOKEN
     },
-    method: 'GET'
+    method: 'GET',
+    json: true
   }, function(error, response, body){
      if (!error && response.statusCode == 200) {
-      //set up messageData to include responce.body
-      console.log('NEW YELP RESPONSE', response.body)
-      messageData.message.text = response.body
+      //set up messageData to include response.body
+      console.log('NEW YELP BUSINESSES', response.body.businesses[0].name)
+      messageData.message.text = response.body.businesses[0].name;
       callSendAPI(messageData)
 
     } else {
@@ -891,7 +892,6 @@ function callSendAPI(messageData) {
     qs: { access_token: PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: messageData
-
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       var recipientId = body.recipient_id;
