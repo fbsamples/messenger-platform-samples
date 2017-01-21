@@ -16,14 +16,26 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),
-  request = require('request'),
-  axios = require('axios');
+  request = require('request');
 
 var app = express();
 app.set('port', process.env.PORT || 8445);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
+
+//Wit.ai setup --------------------------
+let Wit = null;
+let log = null;
+try {
+  // if running from repo
+  Wit = require('../').Wit;
+  log = require('../').log;
+} catch (e) {
+  Wit = require('node-wit').Wit;
+  log = require('node-wit').log;
+}
+//----------------------------------------
 
 /*
  * Be sure to setup your config values before running this code. You can
@@ -33,12 +45,7 @@ app.use(express.static('public'));
 
 const VALIDATION_TOKEN = 'yoonah';
 const YELP_ACCESS_TOKEN = config.get('yelpAccessToken');
-
-// crypto.randomBytes(8, (err, buff) => {
-//   if (err) throw err;
-//   VALIDATION_TOKEN = buff.toString('hex');
-//   console.log(`/webhook will accept the Verify Token "${VALIDATION_TOKEN}"`);
-// });
+const WIT_TOKEN = config.get('witToken');
 
 // App Secret can be retrieved from the App Dashboard
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ?
@@ -269,48 +276,9 @@ function receivedMessage(event) {
         sendGifMessage(senderID);
         break;
 
-      case 'audio':
-        sendAudioMessage(senderID);
-        break;
-
-      case 'video':
-        sendVideoMessage(senderID);
-        break;
-
-      case 'file':
-        sendFileMessage(senderID);
-        break;
-
+      //phone call option
       case 'button':
         sendButtonMessage(senderID);
-        break;
-
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
-
-      case 'quick reply':
-        sendQuickReply(senderID);
-        break;
-
-      case 'read receipt':
-        sendReadReceipt(senderID);
-        break;
-
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;
-
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;
-
-      case 'account linking':
-        sendAccountLinking(senderID);
         break;
 
       case 'yelp restaurant':
@@ -415,7 +383,6 @@ function receivedAccountLink(event) {
 }
 
 function sendYelp(recipientId) {
-  var yelpResult;
 
   var messageData = {
     recipient: {
@@ -427,22 +394,8 @@ function sendYelp(recipientId) {
     }
   };
 
-  // axios.get('https://api.yelp.com/v3/businesses/search?location="New York"&term="restaurant"')
-  // .then(response => console.log(response.data))
-  //callYelpAPI();
-  request({
-    uri: 'https://api.yelp.com/v3/businesses/search',
-    qs: {
-      location: 'New York',
-      term: 'restaurant',
-      limit: 2
-    },
-    auth: {
-      bearer: YELP_ACCESS_TOKEN
-    },
-    method: 'GET',
-    json: true
-  }, function(error, response, body){
+  request( createYelpRequest('New York', 'restaurant')
+  , function(error, response, body){
      if (!error && response.statusCode == 200) {
       //set up messageData to include response.body
       console.log('NEW YELP BUSINESSES', response.body.businesses[0].name)
@@ -453,39 +406,22 @@ function sendYelp(recipientId) {
       console.error("Failed calling Yelp API", response.statusCode, response.statusMessage, body.error);
     }
   });
-
 }
 
-function callYelpAPI() {
-  request({
+function createYelpRequest(location, term) {
+  return {
     uri: 'https://api.yelp.com/v3/businesses/search',
     qs: {
-      location: 'New York',
-      term: 'restaurant'
+      location: location,
+      term: term,
+      limit: 2
     },
     auth: {
       bearer: YELP_ACCESS_TOKEN
     },
-    method: 'GET'
-    //json: messageData
-
-  }, function (error, response, body) {
-    console.log('YELP RESPONSE', response.body);
-    if (!error && response.statusCode == 200) {
-      var recipientId = body.recipient_id;
-      var messageId = body.message_id;
-
-      if (messageId) {
-        console.log("Successfully sent message with id %s to recipient %s",
-          messageId, recipientId);
-      } else {
-      console.log("Successfully called Send API for recipient %s",
-        recipientId);
-      }
-    } else {
-      console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
-    }
-  });
+    method: 'GET',
+    json: true
+  }
 }
 
 /*
