@@ -30,8 +30,6 @@ try {
   log = require('node-wit').log;
 }
 
-// Webserver parameter
-const PORT = process.env.PORT || 8445;
 
 // Wit.ai parameters
 const WIT_TOKEN = process.env.WIT_TOKEN;
@@ -55,25 +53,25 @@ crypto.randomBytes(8, (err, buff) => {
 // See the Send API reference
 // https://developers.facebook.com/docs/messenger-platform/send-api-reference
 
-const fbMessage = (id, text) => {
-  const body = JSON.stringify({
-    recipient: { id },
-    message: { text },
-  });
-  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
-  return fetch('https://graph.facebook.com/me/messages?' + qs, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body,
-  })
-  .then(rsp => rsp.json())
-  .then(json => {
-    if (json.error && json.error.message) {
-      throw new Error(json.error.message);
-    }
-    return json;
-  });
-};
+// const fbMessage = (id, text) => {
+//   const body = JSON.stringify({
+//     recipient: { id },
+//     message: { text },
+//   });
+//   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
+//   return fetch('https://graph.facebook.com/me/messages?' + qs, {
+//     method: 'POST',
+//     headers: {'Content-Type': 'application/json'},
+//     body,
+//   })
+//   .then(rsp => rsp.json())
+//   .then(json => {
+//     if (json.error && json.error.message) {
+//       throw new Error(json.error.message);
+//     }
+//     return json;
+//   });
+// };
 
 // ----------------------------------------------------------------------------
 // Wit.ai bot specific code
@@ -129,15 +127,14 @@ const actions = {
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
 
-//   getForecast({context, entities}) {
-//     return new Promise(function(resolve, reject) {
-//       // Here should go the api call, e.g.:
-//       // context.forecast = apiCall(context.loc)
-//       context.forecast = 'sunny';
-//       return resolve(context);
-//     });
-//   },
-// };
+  getRestaurant({context, entities}) {
+    return new Promise(function(resolve, reject) {
+      // Here should go the api call, e.g.:
+      // context.forecast = apiCall(context.loc)
+      context.forecast = 'sunny';
+      return resolve(context);
+    });
+  }
 };
 
 // Setting up our bot
@@ -145,27 +142,6 @@ const wit = new Wit({
   accessToken: WIT_TOKEN,
   actions,
   logger: new log.Logger(log.INFO)
-});
-
-// Starting our webserver and putting it all together
-const app = express();
-app.use(({method, url}, rsp, next) => {
-  rsp.on('finish', () => {
-    console.log(`${rsp.statusCode} ${method} ${url}`);
-  });
-  next();
-});
-app.use(bodyParser.json({ verify: verifyRequestSignature }));
-
-// Webhook setup
-app.get('/webhook', (req, res) => {
-  console.log('FACEBOOK REACHED WEBHOOK');
-  if (req.query['hub.mode'] === 'subscribe' &&
-    req.query['hub.verify_token'] === FB_VERIFY_TOKEN) {
-    res.send(req.query['hub.challenge']);
-  } else {
-    res.sendStatus(400);
-  }
 });
 
 // Message handler
@@ -189,14 +165,10 @@ app.post('/webhook', (req, res) => {
           const sessionId = findOrCreateSession(sender);
 
           // We retrieve the message content
-          const {text, attachments} = event.message;
+          const {text} = event.message;
           console.log('EVENT', event);
-          if (attachments) {
-            // We received an attachment
-            // Let's reply with an automatic message
-            fbMessage(sender, 'Sorry I can only process text messages for now.')
-            .catch(console.error);
-          } else if (text) {
+
+          if (text) {
             // We received a text message
 
             // Let's forward the message to the Wit.ai Bot Engine
@@ -223,7 +195,6 @@ app.post('/webhook', (req, res) => {
             .catch((err) => {
               console.error('Oops! Got an error from Wit: ', err.stack || err);
             })
-          }
         } else {
           console.log('received event', JSON.stringify(event));
         }
@@ -263,5 +234,3 @@ function verifyRequestSignature(req, res, buf) {
   }
 }
 
-app.listen(PORT);
-console.log('Listening on :' + PORT + '...');
