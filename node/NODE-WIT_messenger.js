@@ -18,6 +18,7 @@ const crypto = require('crypto');
 const express = require('express');
 const fetch = require('node-fetch');
 const request = require('request');
+const config = require('config');
 
 let Wit = null;
 let log = null;
@@ -30,22 +31,22 @@ try {
   log = require('node-wit').log;
 }
 
+// Webserver parameter
+const PORT = process.env.PORT || 8445;
 
 // Wit.ai parameters
-const WIT_TOKEN = process.env.WIT_TOKEN;
+const WIT_TOKEN = config.get('witToken');
 
 // Messenger API parameters
-const FB_PAGE_TOKEN = process.env.FB_PAGE_TOKEN;
-if (!FB_PAGE_TOKEN) { throw new Error('missing FB_PAGE_TOKEN') }
-const FB_APP_SECRET = process.env.FB_APP_SECRET;
-if (!FB_APP_SECRET) { throw new Error('missing FB_APP_SECRET') }
+const FB_PAGE_TOKEN = config.get('pageAccessToken');
+const FB_APP_SECRET = config.get('appSecret');
 
-let FB_VERIFY_TOKEN = null;
-crypto.randomBytes(8, (err, buff) => {
-  if (err) throw err;
-  FB_VERIFY_TOKEN = buff.toString('hex');
-  console.log(`/webhook will accept the Verify Token "${FB_VERIFY_TOKEN}"`);
-});
+let FB_VERIFY_TOKEN = 'yoonah';
+// crypto.randomBytes(8, (err, buff) => {
+//   if (err) throw err;
+//   FB_VERIFY_TOKEN = buff.toString('hex');
+//   console.log(`/webhook will accept the Verify Token "${FB_VERIFY_TOKEN}"`);
+// });
 
 // ----------------------------------------------------------------------------
 // Messenger API specific code
@@ -53,25 +54,25 @@ crypto.randomBytes(8, (err, buff) => {
 // See the Send API reference
 // https://developers.facebook.com/docs/messenger-platform/send-api-reference
 
-// const fbMessage = (id, text) => {
-//   const body = JSON.stringify({
-//     recipient: { id },
-//     message: { text },
-//   });
-//   const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
-//   return fetch('https://graph.facebook.com/me/messages?' + qs, {
-//     method: 'POST',
-//     headers: {'Content-Type': 'application/json'},
-//     body,
-//   })
-//   .then(rsp => rsp.json())
-//   .then(json => {
-//     if (json.error && json.error.message) {
-//       throw new Error(json.error.message);
-//     }
-//     return json;
-//   });
-// };
+const fbMessage = (id, text) => {
+  const body = JSON.stringify({
+    recipient: { id },
+    message: { text },
+  });
+  const qs = 'access_token=' + encodeURIComponent(FB_PAGE_TOKEN);
+  return fetch('https://graph.facebook.com/me/messages?' + qs, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body,
+  })
+  .then(rsp => rsp.json())
+  .then(json => {
+    if (json.error && json.error.message) {
+      throw new Error(json.error.message);
+    }
+    return json;
+  });
+};
 
 // ----------------------------------------------------------------------------
 // Wit.ai bot specific code
@@ -144,9 +145,29 @@ const wit = new Wit({
   logger: new log.Logger(log.INFO)
 });
 
+// Starting our webserver and putting it all together
+const app = express();
+app.use(({method, url}, rsp, next) => {
+  rsp.on('finish', () => {
+    console.log(`${rsp.statusCode} ${method} ${url}`);
+  });
+  next();
+});
+app.use(bodyParser.json({ verify: verifyRequestSignature }));
+
+// Webhook setup
+app.get('/webhook', (req, res) => {
+  console.log('FACEBOOK REACHED WEBHOOK');
+  if (req.query['hub.mode'] === 'subscribe' &&
+    req.query['hub.verify_token'] === FB_VERIFY_TOKEN) {
+    res.send(req.query['hub.challenge']);
+  } else {
+    res.sendStatus(400);
+  }
+});
+
 // Message handler
 app.post('/webhook', (req, res) => {
-  console.log('HIT WEBHOOK POST');
   // Parse the Messenger payload
   // See the Webhook reference
   // https://developers.facebook.com/docs/messenger-platform/webhook-reference
@@ -165,10 +186,14 @@ app.post('/webhook', (req, res) => {
           const sessionId = findOrCreateSession(sender);
 
           // We retrieve the message content
-          const {text} = event.message;
+          const {text, attachments} = event.message;
           console.log('EVENT', event);
-
-          if (text) {
+          if (attachments) {
+            // We received an attachment
+            // Let's reply with an automatic message
+            fbMessage(sender, 'Sorry I can only process text messages for now.')
+            .catch(console.error);
+          } else if (text) {
             // We received a text message
 
             // Let's forward the message to the Wit.ai Bot Engine
@@ -195,6 +220,7 @@ app.post('/webhook', (req, res) => {
             .catch((err) => {
               console.error('Oops! Got an error from Wit: ', err.stack || err);
             })
+          }
         } else {
           console.log('received event', JSON.stringify(event));
         }
@@ -234,3 +260,5 @@ function verifyRequestSignature(req, res, buf) {
   }
 }
 
+app.listen(PORT);
+console.log('Listening on :' + PORT + '...');
