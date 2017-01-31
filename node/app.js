@@ -13,13 +13,16 @@
 const 
   bodyParser = require('body-parser'),
   config = require('config'),
+  fs = require('fs'),
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),  
   request = require('request');
 
 var app = express();
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 443);
+app.set('key', fs.readFileSync('/etc/letsencrypt/live/that-test-server.example.com/privkey.pem'));
+app.set('cert', fs.readFileSync('/etc/letsencrypt/live/that-test-server.example.com/fullchain.pem'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
@@ -830,9 +833,13 @@ function callSendAPI(messageData) {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+var server = https.createServer({
+        key: app.get('key'),
+        cert: app.get('cert')}, app).listen(app.get('port'),
+        function()
+        {
+          console.log('Node app is running on port', app.get('port'));
+        });
 
 module.exports = app;
 
