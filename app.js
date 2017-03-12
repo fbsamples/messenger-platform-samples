@@ -30,6 +30,7 @@ const APP_SECRET = 0;
 const VALIDATION_TOKEN = 0;
 const PAGE_ACCESS_TOKEN = 0;
 const SERVER_URL = 0;
+/*
 request("/apps/latex-messenger-bot/config-vars", 
         function (error, reponse, body) {
           console.log("body = " + body);
@@ -39,7 +40,7 @@ request("/apps/latex-messenger-bot/config-vars",
           PAGE_ACCESS_TOKEN = jsonResponse.PAGE_ACCESS_TOKEN;
           SERVER_URL = jsonResponse.SERVER_URL;
         });
-
+*/
 
 if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
