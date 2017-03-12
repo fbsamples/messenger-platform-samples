@@ -52,11 +52,14 @@ const SERVER_URL = (process.env.SERVER_URL) ?
   config.get('serverURL');
 */
 const VERSION = 22; // Update this before every release please.
-const APP_SECRET;
+const APP_SECRET = 0;
+const VALIDATION_TOKEN = 0;
+const PAGE_ACCESS_TOKEN = 0;
+const SERVER_URL = 0;
 request("http://api.heroku.com/apps/latex-messenger-bot/releases/" + VERSION + 
         "config-vars", 
         function (error, reponse, body) {
-          console.log(body);
+          console.log("body = " + body);
         });
 
 
