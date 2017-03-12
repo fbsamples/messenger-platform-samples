@@ -24,42 +24,22 @@ app.use(bodyParser.json({ verify: verifyRequestSignature }));
 app.use(express.static('public'));
 
 /*
- * Be sure to setup your config values before running this code. You can 
- * set them using environment variables or modifying the config file in /config.
- *
+ * Get the environment variables
  */
-
-/*
-// App Secret can be retrieved from the App Dashboard
-const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
-  process.env.MESSENGER_APP_SECRET :
-  config.get('appSecret');
-
-// Arbitrary value used to validate a webhook
-const VALIDATION_TOKEN = (process.env.MESSENGER_VALIDATION_TOKEN) ?
-  (process.env.MESSENGER_VALIDATION_TOKEN) :
-  config.get('validationToken');
-
-// Generate a page access token for your page from the App Dashboard
-const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
-  (process.env.MESSENGER_PAGE_ACCESS_TOKEN) :
-  config.get('pageAccessToken');
-
-// URL where the app is running (include protocol). Used to point to scripts and 
-// assets located at this address. 
-const SERVER_URL = (process.env.SERVER_URL) ?
-  (process.env.SERVER_URL) :
-  config.get('serverURL');
-*/
-const VERSION = 22; // Update this before every release please.
+const VERSION = 30; // Update this before every release please.
 const APP_SECRET = 0;
 const VALIDATION_TOKEN = 0;
 const PAGE_ACCESS_TOKEN = 0;
 const SERVER_URL = 0;
-request("http://api.heroku.com/apps/latex-messenger-bot/releases/" + VERSION + 
+request("https://api.heroku.com/apps/latex-messenger-bot/releases/" + VERSION + 
         "config-vars", 
         function (error, reponse, body) {
           console.log("body = " + body);
+          var jsonResponse = JSON.parse(body);
+          APP_SECRET = jsonResponse.APP_SECRET;
+          VALIDATION_TOKEN = jsonResponse.VALIDATION_TOKEN;
+          PAGE_ACCESS_TOKEN = jsonResponse.PAGE_ACCESS_TOKEN;
+          SERVER_URL = jsonResponse.SERVER_URL;
         });
 
 
