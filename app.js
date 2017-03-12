@@ -26,10 +26,10 @@ app.use(express.static('public'));
 /*
  * Get the environment variables
  */
-const APP_SECRET = 0;
-const VALIDATION_TOKEN = 0;
-const PAGE_ACCESS_TOKEN = 0;
-const SERVER_URL = 0;
+const APP_SECRET = process.env.APP_SECRET;
+const VALIDATION_TOKEN = process.env.VALIDATION_TOKEN;
+const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+const SERVER_URL = process.env.SERVER_URL;
 /*
 request("/apps/latex-messenger-bot/config-vars", 
         function (error, reponse, body) {
