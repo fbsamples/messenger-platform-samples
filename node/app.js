@@ -12,7 +12,6 @@
 
 const 
   bodyParser = require('body-parser'),
-  config = require('config'),
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),  
@@ -30,6 +29,7 @@ app.use(express.static('public'));
  *
  */
 
+/*
 // App Secret can be retrieved from the App Dashboard
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
   process.env.MESSENGER_APP_SECRET :
@@ -50,10 +50,19 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
 const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
+*/
+const VERSION = 22; // Update this before every release please.
+const APP_SECRET;
+request("http://api.heroku.com/apps/latex-messenger-bot/releases/" + VERSION + 
+        "config-vars", 
+        function (error, reponse, body) {
+          console.log(body);
+        });
+
 
 if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
-  process.exit(1);
+  //process.exit(1);
 }
 
 /*
