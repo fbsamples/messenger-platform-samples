@@ -12,10 +12,85 @@
 
 const 
   bodyParser = require('body-parser'),
-  crypto = require('crypto'),
-  express = require('express'),
-  https = require('https'),  
-  request = require('request');
+  crypto     = require('crypto'),
+  express    = require('express'),
+  https      = require('https'),  
+  request    = require('request'),
+  mjAPI      = require('mathjax-node'),
+  fs         = require('pn/fs'),
+  execFile   = require('child_process').execFile,
+  svg2png    = require("svg2png");
+
+// MJ test
+var math = "\\sum_0^{\\infty}\\frac{1}{x}";
+recieveMath("testid", math);
+
+// Later on, make this more in depth to actually use the latex compiler errors.
+const ERROR_MESSAGE_LATEX_FAILED = "Error, LaTeX parsing failed";
+
+function recieveMath (recipientID, math) {
+  /*
+   * Receives a math string as Tex and converts to svg, which converts to png.
+   */
+
+  mjAPI.typeset({
+    math:   math,
+    format: "TeX",
+    svg:    true
+  }, function (data) {
+    if (!data.errors) {
+      createSVG(recipientID, data);
+    } else {
+      // LaTeX parsing failed, handle accordingly.
+      sendTextMessage(recipientID , ERROR_MESSAGE_LATEX_FAILED);
+    }
+  });
+
+}
+
+function createSVG(recipientID, result) {
+
+  var data = result[Object.keys(result)[0]];
+  var svgName = 'output/' + recipientID + '.svg';
+
+  fs.writeFile(svgName, data, function (err) {
+
+    // SVG is written, read back to convert to png
+    fs.readFile(svgName)
+      .then(buffer => createPNG(recipientID, buffer))
+      .catch(e => console.error(e));
+  });
+
+}
+
+function createPNG (recipientID, buffer) {
+  
+  var pngName = 'output/' + recipientID + '.png';
+  var bufferString = buffer.toString();
+
+  // Get the height and width from the svg.
+  // Currently this is done by manually reading the svg buffer.
+  const widthKey  = "width=\"",
+        heightKey = "height=\"",
+        MULTIPLIER = 15; // Arbitrary, keeps it looking nice though.
+
+  var widthStart  = bufferString.indexOf(widthKey) + widthKey.length;
+  var widthEnd    = bufferString.indexOf("ex", widthStart);
+
+  var heightStart = bufferString.indexOf(heightKey) + heightKey.length;
+  var heightEnd   = bufferString.indexOf("ex", heightStart);
+
+  var width       = parseFloat(bufferString.substring(widthStart,widthEnd));
+  var height      = parseFloat(bufferString.substring(heightStart,heightEnd));
+
+  // SVG stores the height and width as relative ratios.
+  width  = Math.floor(width  * MULTIPLIER);
+  height = Math.floor(height * MULTIPLIER);
+  svg2png(buffer,{width:width, height:height})
+    .then(buffer => fs.writeFile(pngName, buffer))
+    .then(sendImageMessage(recipientID))
+    .catch(e => console.error(e));
+}
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -30,17 +105,6 @@ const APP_SECRET = process.env.APP_SECRET;
 const VALIDATION_TOKEN = process.env.VALIDATION_TOKEN;
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const SERVER_URL = process.env.SERVER_URL;
-/*
-request("/apps/latex-messenger-bot/config-vars", 
-        function (error, reponse, body) {
-          console.log("body = " + body);
-          var jsonResponse = JSON.parse(body);
-          APP_SECRET = jsonResponse.APP_SECRET;
-          VALIDATION_TOKEN = jsonResponse.VALIDATION_TOKEN;
-          PAGE_ACCESS_TOKEN = jsonResponse.PAGE_ACCESS_TOKEN;
-          SERVER_URL = jsonResponse.SERVER_URL;
-        });
-*/
 
 if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
@@ -242,68 +306,13 @@ function receivedMessage(event) {
 
   if (messageText) {
 
-    // If we receive a text message, check to see if it matches any special
-    // keywords and send back the corresponding example. Otherwise, just echo
-    // the text we received.
-    switch (messageText) {
-      case 'image':
-        sendImageMessage(senderID);
-        break;
+    // Receieved a message, go through the LaTeX parse chain.
+    receiveMath(messageText);
 
-      case 'gif':
-        sendGifMessage(senderID);
-        break;
-
-      case 'audio':
-        sendAudioMessage(senderID);
-        break;
-
-      case 'video':
-        sendVideoMessage(senderID);
-        break;
-
-      case 'file':
-        sendFileMessage(senderID);
-        break;
-
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
-
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
-
-      case 'quick reply':
-        sendQuickReply(senderID);
-        break;        
-
-      case 'read receipt':
-        sendReadReceipt(senderID);
-        break;        
-
-      case 'typing on':
-        sendTypingOn(senderID);
-        break;        
-
-      case 'typing off':
-        sendTypingOff(senderID);
-        break;        
-
-      case 'account linking':
-        sendAccountLinking(senderID);
-        break;
-
-      default:
-        sendTextMessage(senderID, messageText);
-    }
-  } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
+  } else {
+    // No message text?
   }
+
 }
 
 
@@ -408,13 +417,13 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/assets/rift.png"
+          url: SERVER_URL + '/output/' + recipientID + '.png';
         }
       }
     }
   };
 
-  callSendAPI(messageData);
+  callSendAPI(messageData); // remove the image from memory after.
 }
 
 /*

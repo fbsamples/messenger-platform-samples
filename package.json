@@ -12,7 +12,7 @@
     "type": "git",
     "url": "https://github.com/fbsamples/messenger-platform-samples.git"
   },
-  "author": "Facebook",
+  "author": "MichaelVu97",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
@@ -22,6 +22,9 @@
     "request": "^2.72.0"
   },
   "engines": {
-    "node": "~4.1.2"
+    "node": "~4.1.2",
+    "mathjax-node": "0.5.2",
+    "svg2png": "4.1.1",
+    "phantomjs": "2.1.7"
   }
 }
