@@ -1,5 +1,8 @@
 {
     "appSecret": "",
+    "ca": "",
+    "cert": "",
+    "key": "",
     "pageAccessToken": "",
     "validationToken": "",
     "serverURL": ""

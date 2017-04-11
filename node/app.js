@@ -15,6 +15,7 @@ const
   config = require('config'),
   crypto = require('crypto'),
   express = require('express'),
+  fs = require('fs'),
   https = require('https'),  
   request = require('request');
 
@@ -51,10 +52,50 @@ const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
 
-if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
+// File location of the SSL key .pem file. Required to create SSL connection.
+const KEY = (process.env.KEY) ?
+  (process.env.KEY) :
+  fs.readFileSync(config.get('key'));
+
+// File location of the SSL Certificate .pem file. Required to create SSL
+// connection.
+const CERT = (process.env.CERT) ?
+  (process.env.CERT) :
+  fs.readFileSync(config.get('cert'));
+
+// Optional file location of Certificate Authority .pem file. May be required
+// if the default Certificate Authorities don't recognise SSL Key. Leave blank
+// for default
+const CA = process.env.CA || config.get('ca') || fs.readFileSync(config.get('cert'));
+
+// Credentials for creating initialising the webserver.
+const CREDS = function() {
+  if (CA) {
+    return {
+      key: KEY,
+      cert: CERT,
+      ca: CA
+    }
+  } else {
+    return {
+      key: KEY,
+      cert: CERT
+    }
+  }
+}()
+
+if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL && KEY && CERT)) {
   console.error("Missing config values");
   process.exit(1);
 }
+
+var app = express();
+app.set('port', process.env.PORT || 5000);
+app.set('key', KEY);
+app.set('cert', CERT);
+app.set('view engine', 'ejs');
+app.use(bodyParser.json({ verify: verifyRequestSignature }));
+app.use(express.static('public'));
 
 /*
  * Use your own validation token. Check that the token used in the Webhook 
@@ -830,9 +871,9 @@ function callSendAPI(messageData) {
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
 // certificate authority.
-app.listen(app.get('port'), function() {
+const server = https.createServer(CREDS, app).listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
-});
+  });
 
 module.exports = app;
 
