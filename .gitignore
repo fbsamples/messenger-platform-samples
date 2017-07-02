@@ -4,3 +4,4 @@ pids
 node_modules
 .npm
 *.dat
+.idea
