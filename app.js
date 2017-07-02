@@ -815,16 +815,16 @@ function testImage(senderID, imageObj) {
 
   request({
     uri: imageObj.payload.url,
-    encoding: 'base64',
+    encoding: null,
   }, (error, response, body) => {
     if (!error && response.statusCode === 200) {
       const type = response.headers['content-type'];
       const prefix = 'data:' + type + ';base64,';
-      console.log('binary', bl);
+      //console.log('binary', bl);
       // const base64 = new Buffer(bl.toString(), 'binary').toString('base64');
       // const base64 = body.toString('base64');
       const data = /* prefix + */body;
-      console.log('base64', data);
+      console.log('base64', body);
 
       /* This operation detects labels in the supplied image */
 
