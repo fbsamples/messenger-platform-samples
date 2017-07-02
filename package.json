@@ -17,16 +17,17 @@
   "dependencies": {
     "aws-sdk": "^2.80.0",
     "body-parser": "^1.15.0",
+    "bufferlist": "^0.1.0",
     "config": "^1.20.4",
     "ejs": "^2.4.2",
     "express": "^4.13.4",
-    "request": "^2.72.0"
+    "request": "^2.72.0",
+    "uuid": "^3.1.0"
   },
   "engines": {
     "node": "~4.1.2"
   },
   "devDependencies": {
-    "bufferlist": "^0.1.0",
     "eslint": "^4.1.1",
     "eslint-config-google": "^0.8.0"
   }
