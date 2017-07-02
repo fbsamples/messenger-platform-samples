@@ -311,7 +311,9 @@ function receivedMessage(event) {
         sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
+    console.log(messageAttachments);
     sendTextMessage(senderID, "Message with attachment received");
+
   }
 }
 
@@ -408,7 +410,7 @@ function receivedAccountLink(event) {
  * Send an image using the Send API.
  *
  */
-function sendImageMessage(recipientId) {
+function  sendImageMessage(recipientId) {
   var messageData = {
     recipient: {
       id: recipientId
