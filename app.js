@@ -820,9 +820,10 @@ function testImage( senderID, imageObj) {
     if (!error && response.statusCode === 200) {
       const type = response.headers['content-type'];
       const prefix = 'data:' + type + ';base64,';
+      console.log('binary' ,bl);
       const base64 = new Buffer(bl.toString(), 'binary').toString('base64');
       const data = /* prefix + */base64;
-      console.log(data);
+      console.log('base64' ,data);
 
       /* This operation detects labels in the supplied image */
 
