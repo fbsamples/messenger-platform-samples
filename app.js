@@ -312,13 +312,13 @@ function receivedMessage(event) {
     }
   } else if (messageAttachments) {
     console.log(messageAttachments);
-    if (messageAttachments.type === 'image') {
+    if (messageAttachments[0].type === 'image') {
       return callSendAPI({
         recipient: {
           id: senderID
         },
         message: {
-          attachment: messageAttachments
+          attachment: messageAttachments[0]
         }});
     }
     sendTextMessage(senderID, "Message with attachment received");
