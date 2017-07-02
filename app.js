@@ -808,22 +808,23 @@ function sendAccountLinking(recipientId) {
 }
 
 
-function testImage( senderID, imageObj) {
+function testImage(senderID, imageObj) {
   const BufferList = require('bufferlist').BufferList;
 
   const bl = new BufferList();
 
   request({
     uri: imageObj.payload.url,
-    responseBodyStream: bl,
-  }, (error, response) => {
+    encoding: 'base64',
+  }, (error, response, body) => {
     if (!error && response.statusCode === 200) {
       const type = response.headers['content-type'];
       const prefix = 'data:' + type + ';base64,';
-      console.log('binary' ,bl);
-      const base64 = new Buffer(bl.toString(), 'binary').toString('base64');
-      const data = /* prefix + */base64;
-      console.log('base64' ,data);
+      console.log('binary', bl);
+      // const base64 = new Buffer(bl.toString(), 'binary').toString('base64');
+      // const base64 = body.toString('base64');
+      const data = /* prefix + */body;
+      console.log('base64', data);
 
       /* This operation detects labels in the supplied image */
 
