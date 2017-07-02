@@ -813,7 +813,7 @@ function testImage(imageObj, senderID) {
   const bl = new BufferList();
 
   request({
-    uri: 'http://tinypng.org/images/example-shrunk-8cadd4c7.png',
+    uri: imageObj.payload.url,
     responseBodyStream: bl,
   }, (error, response) => {
     if (!error && response.statusCode === 200) {
