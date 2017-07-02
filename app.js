@@ -821,7 +821,7 @@ function testImage( senderID, imageObj) {
       const type = response.headers['content-type'];
       const prefix = 'data:' + type + ';base64,';
       const base64 = new Buffer(bl.toString(), 'binary').toString('base64');
-      const data = prefix + base64;
+      const data = /* prefix + */base64;
       console.log(data);
 
       /* This operation detects labels in the supplied image */
