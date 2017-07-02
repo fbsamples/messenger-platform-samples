@@ -807,7 +807,7 @@ function sendAccountLinking(recipientId) {
 }
 
 
-function testImage(imageObj, senderID) {
+function testImage( senderID, imageObj) {
   const BufferList = require('bufferlist').BufferList;
 
   const bl = new BufferList();
