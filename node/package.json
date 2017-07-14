@@ -4,7 +4,7 @@
   "description": "Get started example for Messenger Platform",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node NODE-WIT_messenger.js",
     "lint": "jshint --exclude node_modules .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,10 +15,12 @@
   "author": "Facebook",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.15.3",
     "body-parser": "^1.15.0",
     "config": "^1.20.4",
     "ejs": "^2.4.2",
     "express": "^4.13.4",
+    "node-wit": "^4.2.0",
     "request": "^2.72.0"
   },
   "engines": {

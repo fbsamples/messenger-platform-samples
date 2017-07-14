@@ -1,6 +1,8 @@
 {
-    "appSecret": "",
-    "pageAccessToken": "",
-    "validationToken": "",
-    "serverURL": ""
+    "appSecret": "93d60d8127f4a2dc4fe2f5f3ae2cd854",
+    "pageAccessToken": "EAAFM36HdjEkBAEKVk3Fc9vV8ZC1KKYZCHkrVct5eL8mN6NjNjdZAVZAZC0vKVeyXO0L9oaXibfyRgJSsYXk5WcZCbhnivAdA6ZA8asyOZBZArMOZCRX50reQVhOnv4JGqTUmCA5HiKZCMyyZBZCuqqFPCPb3Tqw9bH84KDvL5uwbnglbxqAZDZD",
+    "validationToken": "yoonah",
+    "serverURL": "https://e2f1731c.ngrok.io",
+    "yelpAccessToken": "z0BqMqXlr2e9tpGbVFhc6G4iD912DGGNLkTDRg4Y7IgO-mFA35yUhsccDWWqr-jpuJyznvXRYpAYzYCHKSkSoDRv3f0d30E4MtTTOvL6KLyJscmfbA6NurbYoYyCWHYx",
+    "witToken": "RCDFO3J5I6AWDTTSCTSDAMB54MMF7PLT"
 }
