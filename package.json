@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "lint": "eslint .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "precommit": "lint-staged"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,9 @@
     "config": "^1.20.4",
     "ejs": "^2.4.2",
     "express": "^4.13.4",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.3",
+    "prettier": "^1.5.3",
     "request": "^2.72.0",
     "uuid": "^3.1.0"
   },
@@ -30,5 +34,9 @@
   "devDependencies": {
     "eslint": "^4.1.1",
     "eslint-config-google": "^0.8.0"
+  },
+  "lint-staged": {
+    "*.js": ["prettier --print-width 117 --single-quote --write", "git add"],
+    "*.json": ["prettier --parser json --write", "git add"]
   }
 }
