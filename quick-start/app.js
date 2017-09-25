@@ -1,8 +1,7 @@
 'use strict';
 
 // Imports dependencies and set up http server
-const 
-  page_access_token = process.env.PAGE_ACCESS_TOKEN,
+const   
   express = require('express'),
   body_parser = require('body-parser'),
   app = express().use(body_parser.json()); // creates express http server
@@ -147,6 +146,8 @@ function sendGenericTemplateMessage(psid) {
 
 function callSendAPI(psid, message_data) {
 
+  const page_access_token = process.env.PAGE_ACCESS_TOKEN,
+
   let message = {
     recipient: {
       id: psid
@@ -175,13 +176,13 @@ function callSendAPI(psid, message_data) {
 }
 
 function receivePostback(webhook_event) {
-  var sender_psid = webhook_event.sender.id;
-  var recipient_psid = webhook_event.recipient.id;
-  var postback_timestamp = webhook_event.timestamp;
+  let sender_psid = webhook_event.sender.id,
+      recipient_psid = webhook_event.recipient.id,
+      postback_timestamp = webhook_event.timestamp;
 
   // The 'payload' param is a developer-defined field which is set in a postback 
   // button for Structured Messages. 
-  var payload = webhook_event.postback.payload;
+  let payload = webhook_event.postback.payload;
 
   console.log("Received postback for user %d and page %d with payload '%s' " + 
     "at %d", sender_psid, recipient_psid, payload, postback_timestamp);
