@@ -2,6 +2,7 @@
 
 // Imports dependencies and set up http server
 const   
+  request = require('request'),
   express = require('express'),
   body_parser = require('body-parser'),
   app = express().use(body_parser.json()); // creates express http server
@@ -75,18 +76,18 @@ app.get('/webhook', (req, res) => {
   }
 });
 
-function receiveMessage(webhookEvent) {
+function receiveMessage(webhook_event) {
 
-  let sender_psid = event.sender.id,
-      recipient_psid = event.recipient.id,
-      event_timestamp = event.timestamp,
-      message = event.message,
+  let sender_psid = webhook_event.sender.id,
+      recipient_psid = webhook_event.recipient.id,
+      event_timestamp = webhook_event.timestamp,
+      message = webhook_event.message,
       message_id = message.mid,
       message_text = message.text,
       message_attachments = message.attachments;
 
   console.log("Received message for user %d and page %d at %d with message.", 
-    sender_psid, recipient_psid, message_timestamp);
+    sender_psid, recipient_psid, event_timestamp);
 
   if (message_text) {
 
@@ -146,7 +147,7 @@ function sendGenericTemplateMessage(psid) {
 
 function callSendAPI(psid, message_data) {
 
-  const page_access_token = process.env.PAGE_ACCESS_TOKEN,
+  const page_access_token = process.env.PAGE_ACCESS_TOKEN;
 
   let message = {
     recipient: {
