@@ -1,5 +1,9 @@
 'use strict';
 
+// Imports credentials from environment variables
+const VERIFY_TOKEN = process.env.VERIFY_TOKEN,
+    PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+
 // Imports dependencies and set up http server
 const   
   request = require('request'),
@@ -51,9 +55,6 @@ app.post('/webhook', (req, res) => {
 // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
 
-  // Your verify token. Should be a random string.
-  let verify_token = process.env.VERIFY_TOKEN;
-    
   // Parse the query params
   let mode = req.query['hub.mode'],
       token = req.query['hub.verify_token'],
@@ -158,7 +159,7 @@ function callSendAPI(psid, message_data) {
 
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: page_access_token },
+    qs: { access_token: PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: message
   }, (error, response, body) => {
