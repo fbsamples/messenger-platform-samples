@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.80.0",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.15.0",
     "bufferlist": "^0.1.0",
     "config": "^1.20.4",
@@ -25,11 +26,14 @@
     "husky": "^0.14.3",
     "lint-staged": "^4.0.3",
     "prettier": "^1.5.3",
-    "request": "^2.72.0",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.4",
+    "util": "^0.10.3",
     "uuid": "^3.1.0"
   },
   "engines": {
-    "node": "~4.1.2"
+    "node": "8.x",
+    "npm": "5.x"
   },
   "devDependencies": {
     "eslint": "^4.1.1",

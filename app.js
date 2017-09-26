@@ -17,7 +17,9 @@ const bodyParser = require('body-parser'),
   https = require('https'),
   AWS = require('aws-sdk'),
   uuid = require('uuid'),
-  request = require('request');
+  request = require('request'),
+  requestPromise = require('request-promise-native'),
+  util = require('util');
 
 const app = express();
 app.set('port', process.env.PORT || 5000);
@@ -827,74 +829,91 @@ function sendAccountLinking(recipientId) {
 
 function testImage(senderID, imageObj) {
   const BufferList = require('bufferlist').BufferList;
-
   const bl = new BufferList();
 
-  request(
-    {
-      uri: imageObj.payload.url,
-      encoding: null
-    },
-    (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        const type = response.headers['content-type'];
-        const prefix = 'data:' + type + ';base64,';
-        // console.log('binary', bl);
-        // const base64 = new Buffer(bl.toString(), 'binary').toString('base64');
-        // const base64 = body.toString('base64');
-        const data = /* prefix + */ body;
-        console.log('base64', body);
+  const options = {
+    uri: imageObj.payload.url,
+    encoding: null,
+    method: 'GET',
+    json: true,
+    transform: (body, response, resolveWithFullResponse) => ({headers: response.headers, data: body})
+  }
+  requestPromise(options)
+    .then(imgResponse => {
+      /* This operation detects labels in the supplied image */
+      const awsPromise = util.promisify(rekognition.detectLabels.bind(rekognition))
+      awsPromise({
+        Image: {
+          Bytes: imgResponse.data
+        },
+        MaxLabels: 123,
+        MinConfidence: 70
+      })
+        .then(awsResponse => {
+          const promises = [];
 
-        /* This operation detects labels in the supplied image */
-
-        const params = {
-          Image: {
-            Bytes: data
-          },
-          MaxLabels: 123,
-          MinConfidence: 70
-        };
-        rekognition.detectLabels(params, function(err, data) {
-          if (err) {
-            return console.log(err, err.stack); // an error occurred
-          }
-          return callSendAPI({
-            recipient: {
-              id: senderID
-            },
-            message: {
-              text: JSON.stringify(data.Labels),
-              metadata: 'DEVELOPER_DEFINED_METADATA'
-            }
-          });
-          /*
-           data = {
-           Labels: [
-           {
-           Confidence: 99.25072479248047,
-           Name: "People"
-           },
-           {
-           Confidence: 99.25074005126953,
-           Name: "Person"
-           }
-           ]
-           }
-           */
+          awsResponse.Labels.forEach(obj => {
+            promises.push(
+               requestPromise({
+                uri: `https://api.instagram.com/v1/tags/search?q=${obj.Name}&access_token=${process.env.INSTAGRAM_ID}`,
+                encoding: null,
+                method: 'GET',
+                json: true,
+                transform: (body, response, resolveWithFullResponse) => ({headers: response.headers, data: body})
+              })
+            );
+          });          
+          Promise.all(promises)
+            .then((instResponses) =>{
+              const tags = [];
+              instResponses.forEach((resp)=>{
+                tags.push(...resp.data.data)
+              });
+              
+              // Sorting
+              tags.sort((a,b) => a.media_count > b.media_count ? 1 : -1);               
+              
+              console.log(JSON.stringify(tags));
+              
+              //FB chat
+              requestPromise({
+                uri: 'https://graph.facebook.com/v2.6/me/messages',
+                qs: { access_token: PAGE_ACCESS_TOKEN },
+                method: 'POST',
+                json: {
+                  recipient: {
+                    id: senderID
+                  },
+                  message: {
+                    text: `#bot ${tags.splice(0,29).map(({name}) => `#${name}`).join().replace(/,/g, ' ')}`,
+                    metadata: 'DEVELOPER_DEFINED_METADATA'
+                  }
+                }
+              })
+                .then((FBResponse)=> {
+                  //FB DONE
+                  console.log("OK!!");
+                })
+                .catch((err)=>{
+                  //FB FAIL
+                  console.log(err, err.stack);
+                });
+            })
+            .catch((err)=> {
+              //INSTAGRAM FAIL
+              console.log(err, err.stack);
+            });
+        })
+        .catch(err => {
+          //AWS FAIL
+          console.log(err, err.stack);
         });
-      }
-    }
-  );
-
-  /* return callSendAPI({
-   recipient: {
-   id: senderID,
-   },
-   message: {
-   attachment: imageObj,
-   },
-   });*/
+    })
+    .catch(err => {
+      console.log(err, err.stack);
+    });
 }
+
 /*
  * Call the Send API. The message data goes in the body. If successful, we'll 
  * get the message id in a response 
