@@ -2,7 +2,7 @@
 
 // Imports credentials from environment variables
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN,
-    PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
+      PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 // Imports dependencies and set up http server
 const   
@@ -64,7 +64,7 @@ app.get('/webhook', (req, res) => {
   if (mode && token) {
   
     // Checks the mode and token sent is correct
-    if (mode === 'subscribe' && token === verify_token) {
+    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       
       // Responds with the challenge token from the request
       console.log('WEBHOOK_VERIFIED');
@@ -85,70 +85,56 @@ function receiveMessage(webhook_event) {
       message = webhook_event.message,
       message_id = message.mid,
       message_text = message.text,
-      message_attachments = message.attachments;
+      message_attachments = message.attachments,
+      quick_reply = message.quick_reply;
 
   console.log("Received message for user %d and page %d at %d with message.", 
     sender_psid, recipient_psid, event_timestamp);
 
   if (message_text) {
-
-    // If we receive a text message, check to see if it matches a keyword
-    // and send back the example. Otherwise, just echo the text we received.
-    switch (message_text) {
-      case 'generic template':
-        sendGenericTemplateMessage(sender_psid);
-        break;
-
-      default:
-        sendTextMessage(sender_psid, "Text message received.");
-    }
-  } else if (message_attachments) {
-    sendTextMessage(sender_psid, "Attachment received.");
-  }
-}
-
-function sendTextMessage(psid, message_text) {
-  
-  let message_data = {
-    text: message_text
-  }
-  
-  callSendAPI(psid, message_data);
-
-}
-
-function sendGenericTemplateMessage(psid) {
-  
-  let message_data = {
-    attachment: {
-      type: "template",
-      payload: {
-        template_type: "generic",
-        elements: [{
-          title: "rift",
-          subtitle: "Next-generation virtual reality",
-          item_url: "https://www.oculus.com/en-us/rift/",               
-          image_url: "http://messengerdemo.parseapp.com/img/rift.png",
-          buttons: [{
-            type: "web_url",
-            url: "https://www.oculus.com/en-us/rift/",
-            title: "Open Web URL"
-          }, {
-            type: "postback",
-            title: "Call Postback",
-            payload: "Payload for first bubble",
-          }],
-        }]
+    let message_data;
+    if (quick_reply) {
+      message_data = {
+        text: "Yeah " + quick_reply.payload + " is the best."
+      }
+    } else {
+      // If we receive a text message, check to see if it matches a keyword
+      // and send back the example. Otherwise, just echo the text we received.
+      message_data = {
+        text: "You sent a text message!"
       }
     }
+    callSendAPI(sender_psid, message_data);    
+    
+  } else if (message_attachments) {
+    let message_data = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [{
+            title: "rift",
+            subtitle: "Next-generation virtual reality",
+            item_url: "https://www.oculus.com/en-us/rift/",               
+            image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+            buttons: [{
+              type: "web_url",
+              url: "https://www.oculus.com/en-us/rift/",
+              title: "Open Web URL"
+            }, {
+              type: "postback",
+              title: "Call Postback",
+              payload: "This is my postback payload.",
+            }],
+          }]
+        }
+      }
+    }
+    callSendAPI(sender_psid, message_data);
   }
-
-  callSendAPI(psid, message_data);
 }
 
 function callSendAPI(psid, message_data) {
-
-  const page_access_token = process.env.PAGE_ACCESS_TOKEN;
 
   let message = {
     recipient: {
@@ -191,5 +177,22 @@ function receivePostback(webhook_event) {
 
   // When a postback is called, we'll send a message back to the sender to 
   // let them know it was successful
-  sendTextMessage(sender_psid, "Postback received.");
+  let message_data = {
+    "text": "What's your favorite food?",
+    "quick_replies":[
+      {
+        "content_type":"text",
+        "title":"Tacos",
+        "payload":"just one taco",
+        "image_url":"http://example.com/img/red.png"
+      },
+      {
+        "content_type":"text",
+        "title":"More Tacos",
+        "payload":"extra tacos"
+      }
+    ]
+  }
+  
+  callSendAPI(sender_psid, message_data);    
 }
