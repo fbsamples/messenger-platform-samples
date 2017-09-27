@@ -128,23 +128,24 @@ function receiveMessage(webhook_event) {
         payload: {
           template_type: "generic",
           elements: [{
-            title: "rift",
-            subtitle: "Next-generation virtual reality",
-            item_url: "https://www.oculus.com/en-us/rift/",               
-            image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+            title: "The Messenger Platform",
+            subtitle: "Build awesome Messenger apps!",
+            image_url: "https://raw.githubusercontent.com/amuramoto/messenger-platform-samples/master/images/Messenger_Icon.png",
             buttons: [{
               type: "web_url",
-              url: "https://www.oculus.com/en-us/rift/",
-              title: "Open Web URL"
+              url: "https://www.messenger.com/",
+              title: "Open Webview"
             }, {
               type: "postback",
-              title: "Call Postback",
-              payload: "This is my postback payload.",
+              title: "Send Postback",
+              payload: "postback payload.",
             }],
           }]
         }
       }
     }
+
+    // Send the response message
     callSendAPI(sender_psid, message_data);
   }
 }
@@ -202,17 +203,18 @@ function receivePostback(webhook_event) {
     "quick_replies":[
       {
         "content_type":"text",
-        "title":"Tacos",
-        "payload":"just one taco",
-        "image_url":"http://example.com/img/red.png"
+        "title":"Cookies",
+        "payload":"one cookie",
+        "image_url":"https://raw.githubusercontent.com/amuramoto/messenger-platform-samples/master/images/cookie.png"
       },
       {
         "content_type":"text",
-        "title":"More Tacos",
-        "payload":"extra tacos"
+        "title":"More Cookies!",
+        "payload":"more cookies"
       }
     ]
   }
   
+  // Send the response message 
   callSendAPI(sender_psid, message_data);    
 }
