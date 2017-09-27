@@ -41,7 +41,7 @@ app.post('/webhook', (req, res) => {
 app.get('/webhook', (req, res) => {
 
   // Your verify token. Should be a random string.
-  let verify_token = '<YOUR_VERIFY_TOKEN>';
+  let VERIFY_TOKEN = '<YOUR_VERIFY_TOKEN>';
     
   // Parse the query params
   let mode = req.query['hub.mode'],
@@ -52,7 +52,7 @@ app.get('/webhook', (req, res) => {
   if (mode && token) {
   
     // Checks the mode and token sent is correct
-    if (mode === 'subscribe' && token === verify_token) {
+    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
       
       // Responds with the challenge token from the request
       console.log('WEBHOOK_VERIFIED');
