@@ -1,6 +1,6 @@
 'use strict';
 
-// Imports page access token from environment variables
+// Imports page access token from environment variable
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 
 // Imports dependencies and set up http server
@@ -31,10 +31,12 @@ app.post('/webhook', (req, res) => {
       
       if (webhook_event.message) {
 
+        // Event is type messages
         receiveMessage(webhook_event);        
 
       } else if (webhook_event.postback) {
 
+        // Event is type messaging_postbacks
         receivePostback(webhook_event);
 
       }
@@ -54,6 +56,7 @@ app.post('/webhook', (req, res) => {
 // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
 
+  // Imports verify token from environment variable
   let VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
   // Parse the query params
@@ -78,36 +81,47 @@ app.get('/webhook', (req, res) => {
   }
 });
 
+
+// Processes messages webhook event
 function receiveMessage(webhook_event) {
 
   let sender_psid = webhook_event.sender.id,
       recipient_psid = webhook_event.recipient.id,
       event_timestamp = webhook_event.timestamp,
-      message = webhook_event.message,
       message_id = message.mid,
-      message_text = message.text,
-      message_attachments = message.attachments,
-      quick_reply = message.quick_reply;
-
+      message = webhook_event.message;
+      
+      
   console.log("Received message for user %d and page %d at %d with message.", 
     sender_psid, recipient_psid, event_timestamp);
 
-  if (message_text) {
+  if (message.text) {
+    
+    // Message contains text
     let message_data;
-    if (quick_reply) {
+
+    if (message.quick_reply) {
+      
+      // 'quick_reply' property exists, so process the event as a quick reply
       message_data = {
         text: "Yeah " + quick_reply.payload + " is the best."
       }
+
     } else {
-      // If we receive a text message, check to see if it matches a keyword
-      // and send back the example. Otherwise, just echo the text we received.
+      
+      // Message is text only, so send back a text message
       message_data = {
-        text: "You sent a text message!"
+        text: "You sent the message: " + message.text;
       }
     }
+
+    // Send the response message
     callSendAPI(sender_psid, message_data);    
     
-  } else if (message_attachments) {
+  } else if (message.attachments) {
+
+    // Message contains an attachment
+    // Define message data for a Generic Template message
     let message_data = {
       attachment: {
         type: "template",
@@ -135,8 +149,11 @@ function receiveMessage(webhook_event) {
   }
 }
 
+
 function callSendAPI(psid, message_data) {
 
+  // Common format for basic message sends
+  // Recipient is the PSID we received in the webhook event
   let message = {
     recipient: {
       id: psid
@@ -144,6 +161,7 @@ function callSendAPI(psid, message_data) {
     message: message_data
   }
 
+  // Call the Send API
   request({
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     qs: { access_token: PAGE_ACCESS_TOKEN },
@@ -164,20 +182,21 @@ function callSendAPI(psid, message_data) {
   });  
 }
 
+
 function receivePostback(webhook_event) {
   let sender_psid = webhook_event.sender.id,
       recipient_psid = webhook_event.recipient.id,
       postback_timestamp = webhook_event.timestamp;
 
-  // The 'payload' param is a developer-defined field which is set in a postback 
-  // button for Structured Messages. 
+  // Gets the 'payload' param set in the postback 
   let payload = webhook_event.postback.payload;
 
   console.log("Received postback for user %d and page %d with payload '%s' " + 
     "at %d", sender_psid, recipient_psid, payload, postback_timestamp);
 
-  // When a postback is called, we'll send a message back to the sender to 
-  // let them know it was successful
+  // Defines a quick reply to respond with
+  // 'title' is displayed on the quick reply button
+  // 'payload' is returned in the postback
   let message_data = {
     "text": "What's your favorite food?",
     "quick_replies":[
