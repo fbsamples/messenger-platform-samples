@@ -1,19 +1,21 @@
 # Messenger Platform Samples
 
-## 🔥 Welcome Brave Developer! 🔥
+### 🔥 Welcome Brave Developer! 🔥
   
 This repo contains samples applications that will help you learn to build awesome apps on the Messenger Platform. 
 
-### Completely new to the Platform?
+#### Completely new to the Platform?
 
 Have a look at the [Introduction section](https://developers.facebook.com/docs/messenger-platform/getting-started) of the docs
 
 
-### Looking to get started?
+#### Looking to get started?
 
 Check out the [Get Started section](https://developers.facebook.com/docs/messenger-platform/getting-started) of the docs for a complete walkthrough of everything you need to know.
 
-## More Resources
+You can also try out our [quick start tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start) to build your first Messenger app right now!
+
+### More Resources
 
 To learn more about the Messenger Platform, check out these other resources.
 
