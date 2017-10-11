@@ -1,6 +1,6 @@
 # Messenger Platform Samples
 
-<h3 style="text-align: center">🔥 Welcome Brave Developer! 🔥</h3>
+<h3 align="center">🔥 Welcome Brave Developer! 🔥</h3>
   
 This repo contains sample applications that will help you learn to build awesome apps on the Messenger Platform. 
 
