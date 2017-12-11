@@ -4,7 +4,7 @@
   "description": "An example webhook for Facebook Messenger quick start tutorial.",
   "main": "app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
