@@ -1,9 +1,13 @@
 {
-  "name": "echo_bot",
+  "name": "hop2inbox_bot",
   "version": "0.0.1",
-  "description": "Echo bot",
+  "description": "Handover Protocol to Page Inbox example",
   "main": "index.js",
-  "author": "Evgeniy Arbatov",
+  "author": "Tudor Săpunaru",
+  "contributors": [{
+    "name": "Alex Muramoto",
+    "url": "https://www.github.com/amuramoto"
+  }],
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.1",
