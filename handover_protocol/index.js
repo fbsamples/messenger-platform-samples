@@ -34,12 +34,12 @@ app.post('/webhook', (req, res) => {
       switch (quick_reply.payload) {
         case 'pass_thread_control':
           handover_protocol.passThreadControl(psid, PAGE_INBOX_APP_ID);
-          let message = 'You are now in a conversation with the Page Inbox. Tap \'Handover to Bot\' to let your bot take back thread control, or move the conversation to the "Done" folder in your inbox.';
+          let message = 'You are now in a conversation with the Page Inbox. Tap "Handover to Bot" to let your bot take back thread control, or click the "Done" checkbox in your inbox.';
           sendQuickReply(psid, message, payload);
           break;
         case 'take_thread_control':
           handover_protocol.takeThreadControl(psid);
-          let message = 'You are now in a conversation with a bot. Tap \'Handover to Page Inbox\' to pass thread control to the Page Inbox.';
+          let message = 'You are now in a conversation with a bot. Tap "Handover to Page Inbox" to pass thread control to the Page Inbox.';
           sendQuickReply(psid, message, payload);
       }
     } else {

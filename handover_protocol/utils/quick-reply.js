@@ -7,19 +7,26 @@
 'use strict';
 const api = require('./api');
 
-function sendQuickReply(psid, message) {
+function sendQuickReply(psid, message, payload) {
   let payload = {};
+  let title; 
 
   payload.recipient = {
     id: psid
   }
-  
+
+  if (payload === 'pass_thread_control') {
+    title = 'Handover to Page Inbox';
+  } else if (payload === 'take_thread_control') {
+    title = 'Handover to Bot';
+  }
+
   payload.message = {
     text: message,
     quick_replies: [{
         content_type: 'text',
-        title: 'handover',
-        payload: 'handover'
+        title: payload,
+        payload: payload
     }]    
   }
 
