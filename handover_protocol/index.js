@@ -28,14 +28,24 @@ app.post('/webhook', (req, res) => {
   const webhook_events = req.body.entry[0].messaging;
   webhook_events.forEach(webhook_event => {
     const psid = webhook_event.sender.id;
-    const text = webhook_event.message.text;
+    const quick_reply = webhook_event.message.quick_reply;
 
-    if (text == 'handover') {
-      handover_protocol.passThreadControl(psid, PAGE_INBOX_APP_ID);
+    if (quick_reply) {
+      switch (quick_reply.payload) {
+        case 'pass_thread_control':
+          handover_protocol.passThreadControl(psid, PAGE_INBOX_APP_ID);
+          let message = 'You are now in a conversation with the Page Inbox. Tap \'Handover to Bot\' to let your bot take back thread control, or move the conversation to the "Done" folder in your inbox.';
+          sendQuickReply(psid, message, payload);
+          break;
+        case 'take_thread_control':
+          handover_protocol.takeThreadControl(psid);
+          let message = 'You are now in a conversation with a bot. Tap \'Handover to Page Inbox\' to pass thread control to the Page Inbox.';
+          sendQuickReply(psid, message, payload);
+      }
     } else {
-      let message = 'You are now in a conversation with a bot. Say \'handover\' at any time to talk to a human';
-      sendQuickReply(psid, message);     
+
     }
+    
   });
 
   res.sendStatus(200);

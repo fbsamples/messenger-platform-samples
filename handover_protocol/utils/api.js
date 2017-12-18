@@ -15,7 +15,7 @@ const call = (path, payload, callback) => {
     console.error('No endpoint specified on Messenger send!');
     return;
   } else if (!access_token || !graph_url) {
-    console.error('No Page access token or graph url configured!');
+    console.error('No Page access token or graph API url configured!');
     return;
   }
 
