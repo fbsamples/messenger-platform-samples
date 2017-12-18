@@ -7,22 +7,19 @@
 'use strict';
 const request = require('request');
 
-const call = (endPoint, messagePayload, callback) => {
+const call = (path, payload, callback) => {
+  const accessToken = process.env.MESSENGER_PAGE_ACCESS_TOKEN;
+  const graphUrl = 'https://graph.facebook.com';
+
   if (!endPoint) {
     console.error('No endpoint specified on Messenger send!');
     return;
   }
 
-  let accessToken = process.env.MESSENGER_PAGE_ACCESS_TOKEN;
-  let graphUrl = process.env.GRAPH_URL;
   if (!accessToken || !graphUrl) {
-    console.error('No Messenger page access token or graph url configured!');
+    console.error('No Page access token or graph url configured!');
     return;
   }
-
-  const queryParams = {
-    access_token: accessToken,
-  };
 
   const method = messagePayload ? 'POST' : 'GET';
 
@@ -33,7 +30,7 @@ const call = (endPoint, messagePayload, callback) => {
 
   request({
     uri: graphUrl + endPoint,
-    qs: queryParams,
+    qs: {'access_token': accessToken},
     method: method,
     json: messagePayload,
   }, (error, response, body) => {
@@ -57,5 +54,5 @@ const call = (endPoint, messagePayload, callback) => {
 };
 
 module.exports = {
-  call,
+  call
 };

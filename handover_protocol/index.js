@@ -11,27 +11,27 @@ const express = require('express');
 const app = express();
 
 const sendQuickReply = require('./utils/quick-reply');
-const handover = require('./utils/handover-protocol');
+const handover_protocol = require('./utils/handover-protocol');
 
 const PAGE_INBOX_APP_ID = 263902037430900;
 
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 app.use(bodyParser.urlencoded({extended: false}).json());
 
-app.get('/webhook', function (req, res) {
+app.get('/webhook', (req, res) => {
   if (req.query['hub.verify_token'] === process.env.VERIFY_TOKEN) {
     res.send(req.query['hub.challenge']);
   }
 });
 
-app.post('/webhook', function (req, res) {
+app.post('/webhook', (req, res) => {
   const events = req.body.entry[0].messaging;
-  events.forEach(function (event) {
+  events.forEach(event => {
     const psid = event.sender.id;
     const text = event.message.text;
 
     if (text == 'handover') {
-      handover.passThreadControl(psid, PAGE_INBOX_APP_ID);
+      handover_protocol.passThreadControl(psid, PAGE_INBOX_APP_ID);
     } else {
       let message = 'You are now in a conversation with a bot. Say \'handover\' at any time to talk to a human';
       sendQuickReply(psid, message);     
