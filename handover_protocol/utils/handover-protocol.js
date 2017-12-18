@@ -18,7 +18,7 @@ function passThreadControl (userPsid, targetAppId, metadata) {
     payload['metadata'] = metadata;
   }
 
-  api.call('/me/pass_thread_control', payload, () => {});
+  api.call('/pass_thread_control', payload, () => {});
 }
 
 function takeThreadControl (userPsid, metadata) {
@@ -31,10 +31,10 @@ function takeThreadControl (userPsid, metadata) {
     payload['metadata'] = metadata;
   }
 
-  api.call('/me/take_thread_control', payload, () => {});
+  api.call('/take_thread_control', payload, () => {});
 }
 
 module.exports = {
   passThreadControl,
-  takeThreadControl,
+  takeThreadControl
 };

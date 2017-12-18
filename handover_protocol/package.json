@@ -8,7 +8,7 @@
     "name": "Alex Muramoto",
     "url": "https://www.github.com/amuramoto"
   }],
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",

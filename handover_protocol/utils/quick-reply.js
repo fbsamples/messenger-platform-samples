@@ -23,7 +23,7 @@ function sendQuickReply(psid, message) {
     }]    
   }
 
-  api.call('/me/messages', payload, () => {});
+  api.call('/messages', payload, () => {});
 }
 
 module.exports = sendQuickReply;

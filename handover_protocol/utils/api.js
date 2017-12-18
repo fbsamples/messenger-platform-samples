@@ -9,14 +9,12 @@ const request = require('request');
 
 const call = (path, payload, callback) => {
   const access_token = process.env.MESSENGER_PAGE_ACCESS_TOKEN;
-  const graph_url = 'https://graph.facebook.com';
+  const graph_url = 'https://graph.facebook.com/me';
 
   if (!path) {
     console.error('No endpoint specified on Messenger send!');
     return;
-  }
-
-  if (!access_token || !graph_url) {
+  } else if (!access_token || !graph_url) {
     console.error('No Page access token or graph url configured!');
     return;
   }
