@@ -8,46 +8,29 @@
 const request = require('request');
 
 const call = (path, payload, callback) => {
-  const accessToken = process.env.MESSENGER_PAGE_ACCESS_TOKEN;
-  const graphUrl = 'https://graph.facebook.com';
+  const access_token = process.env.MESSENGER_PAGE_ACCESS_TOKEN;
+  const graph_url = 'https://graph.facebook.com';
 
-  if (!endPoint) {
+  if (!path) {
     console.error('No endpoint specified on Messenger send!');
     return;
   }
 
-  if (!accessToken || !graphUrl) {
+  if (!access_token || !graph_url) {
     console.error('No Page access token or graph url configured!');
     return;
   }
 
-  const method = messagePayload ? 'POST' : 'GET';
-
-  console.log(
-    'Sending some post data: ',
-    JSON.stringify(messagePayload, null, 2)
-  );
-
   request({
-    uri: graphUrl + endPoint,
-    qs: {'access_token': accessToken},
-    method: method,
-    json: messagePayload,
+    uri: graph_url + path,
+    qs: {'access_token': access_token},
+    method: 'POST',
+    json: payload,
   }, (error, response, body) => {
     if (!error && response.statusCode === 200) {
-      console.log('Message sent succesfully: \n', JSON.stringify({
-        endpoint: endPoint,
-        message_data: messagePayload,
-      }, null, 2));
-      console.log('Received back the following body: \n', JSON.stringify(
-        body, null, 2));
+      console.log('Message sent succesfully');
     } else {
-      console.error(
-        'Failure when calling Messenger API endpoint',
-        response.statusCode,
-        response.statusMessage,
-        body.error
-      );
+      console.error('Error: ' + error);        
     }
     callback(body);
   });

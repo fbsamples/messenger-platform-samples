@@ -25,10 +25,10 @@ app.get('/webhook', (req, res) => {
 });
 
 app.post('/webhook', (req, res) => {
-  const events = req.body.entry[0].messaging;
-  events.forEach(event => {
-    const psid = event.sender.id;
-    const text = event.message.text;
+  const webhook_events = req.body.entry[0].messaging;
+  webhook_events.forEach(webhook_event => {
+    const psid = webhook_event.sender.id;
+    const text = webhook_event.message.text;
 
     if (text == 'handover') {
       handover_protocol.passThreadControl(psid, PAGE_INBOX_APP_ID);

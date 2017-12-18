@@ -7,7 +7,7 @@
 'use strict';
 const api = require('./api');
 
-const passThreadControl = (userPsid, targetAppId, metadata) => {
+function passThreadControl (userPsid, targetAppId, metadata) {
   let payload = {
     recipient: {
       id: userPsid
@@ -21,7 +21,7 @@ const passThreadControl = (userPsid, targetAppId, metadata) => {
   api.call('/me/pass_thread_control', payload, () => {});
 }
 
-const takeThreadControl = (userPsid, metadata) => {
+function takeThreadControl (userPsid, metadata) {
   let payload = {
     recipient: {
       id: userPsid
