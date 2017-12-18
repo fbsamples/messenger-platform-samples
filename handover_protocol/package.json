@@ -1,0 +1,13 @@
+{
+  "name": "echo_bot",
+  "version": "0.0.1",
+  "description": "Echo bot",
+  "main": "index.js",
+  "author": "Evgeniy Arbatov",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "request": "^2.80.0"
+  }
+}
