@@ -20,4 +20,4 @@ function sendQuickReply(psid, message) {
   api.call('/me/messages', payload, () => {});
 }
 
-module.exports = SendAPIRequest;
+module.exports = sendQuickReply;
