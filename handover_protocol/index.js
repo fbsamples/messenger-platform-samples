@@ -8,17 +8,15 @@
 
 const bodyParser = require('body-parser');
 const express = require('express');
+const app = express();
 
-const SendAPIRequest = require('./utils/send-api-request');
+const sendQuickReply = require('./utils/quick-reply');
 const handover = require('./utils/handover-protocol');
 
 const PAGE_INBOX_APP_ID = 263902037430900;
 
-const app = express();
-
-app.set('port', (process.env.PORT || 1337));
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+app.use(bodyParser.urlencoded({extended: false}).json());
 
 app.get('/webhook', function (req, res) {
   if (req.query['hub.verify_token'] === process.env.VERIFY_TOKEN) {
@@ -29,27 +27,18 @@ app.get('/webhook', function (req, res) {
 app.post('/webhook', function (req, res) {
   const events = req.body.entry[0].messaging;
   events.forEach(function (event) {
-    const sender = event.sender.id;
+    const psid = event.sender.id;
     const text = event.message.text;
 
     if (text == 'handover') {
-      handover.passThreadControl(
-        sender,
-        PAGE_INBOX_APP_ID
-      );
+      handover.passThreadControl(psid, PAGE_INBOX_APP_ID);
     } else {
-      var sendAPIRequest = new SendAPIRequest();
-      sendAPIRequest.setRecipient(sender);
-      sendAPIRequest.setQuickReply(
-        'You are now in a conversation with a bot. Say \'handover\' at any time to talk to a human'
-      );
-      sendAPIRequest.send();     
+      let message = 'You are now in a conversation with a bot. Say \'handover\' at any time to talk to a human';
+      sendQuickReply(psid, message);     
     }
   });
 
   res.sendStatus(200);
 });
 
-app.listen(app.get('port'), function() {
-    console.log('running on port', app.get('port'));
-});
+
