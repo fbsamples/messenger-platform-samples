@@ -26,6 +26,7 @@ function call (path, payload, callback) {
     method: 'POST',
     json: payload,
   }, (error, response, body) => {
+    console.log(body)
     if (!error && response.statusCode === 200) {
       console.log('Message sent succesfully');
     } else {

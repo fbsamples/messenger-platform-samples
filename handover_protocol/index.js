@@ -12,7 +12,7 @@ const bodyParser = require('body-parser'),
       app = express();
 
 // import helper libs
-const QuickReply = require('./utils/quick-reply'),
+const sendQuickReply = require('./utils/quick-reply'),
       HandoverProtocol = require('./utils/handover-protocol'),
       env = require('./env');
 
@@ -32,46 +32,80 @@ app.get('/webhook', (req, res) => {
 app.post('/webhook', (req, res) => {
 
   // parse messaging array
-  const webhook_events = req.body.entry[0].messaging;
-console.log(req)    
-  // iterate webhook events
-  webhook_events.forEach(event => {
-console.log(event)  
-    // parse sender PSID and message
-    const psid = event.sender.id;
-    const message = event.message;
+  const webhook_events = req.body.entry[0];
+
+
+  // Secondary Receiver is in control - listen on standby channel
+  if (webhook_events.standby) {
     
-    if (message && message.quick_reply) {
-      
-      switch (message.quick_reply.payload) {
-       
-        case 'pass_thread_control':
+    // iterate webhook events from standby channel
+    webhook_events.standby.forEach(event => {
+    
+      console.log(event)  
+      const message = event.message;
 
-          // quick reply to pass to Page inbox was clicked
-          let page_inbox_app_id = 263902037430900;
-          HandoverProtocol.passThreadControl(psid, page_inbox_app_id);
-          QuickReply.handoverToBot(psid);      
+      let text, title, payload; 
 
-        case 'take_thread_control':
+      if (message && message.quick_reply && message.quick_reply.payload == 'take_from_inbox') {
+        // quick reply to take from Page inbox was clicked          
+        text = 'The Primary Receiver is taking control back. \n\n Tap "Pass to Inbox" to pass thread control to the Page Inbox.';
+        title = 'Pass to Inbox';
+        payload = 'pass_to_inbox';
+        
+        sendQuickReply(psid, text, title, payload);
+        HandoverProtocol.takeThreadControl(psid);
+      }
 
-          // quick reply to take from Page inbox was clicked
-          HandoverProtocol.takeThreadControl(psid);
-          take_from_inbox(psid);  
 
+    });
+   
+
+  }
+
+
+  // Bot is in control - listen for messages 
+  if (webhook_events.messaging) {
+    // iterate webhook events
+    webhook_events.messaging.forEach(event => {
+      console.log(event)  
+      // parse sender PSID and message
+      const psid = event.sender.id;
+      const message = event.message;
+
+      let text, title, payload; 
+
+      if (message && message.quick_reply && message.quick_reply.payload == 'pass_to_inbox') {
+        
+        // quick reply to pass to Page inbox was clicked
+        let page_inbox_app_id = 263902037430900;          
+        text = 'The Primary Receiver is passing control to the Page Inbox. \n\n Tap "Take From Inbox" to have the Primary Receiver take control back.';
+        title = 'Take From Inbox';
+        payload = 'take_from_inbox';
+        
+        sendQuickReply(psid, text, title, payload);
+        HandoverProtocol.passThreadControl(psid, page_inbox_app_id);
+        
+      } else if (event.pass_thread_control) {
+        
+        // thread control was passed back to bot manually in Page inbox
+        text = 'Passing control back to the Primary Receiver by marking "Done" in the Page Inbox. \n\n Tap "Pass to Inbox" to pass control to the Page Inbox.';
+        title = 'Pass to Inbox';
+        payload = 'pass_to_inbox';
+        
+        sendQuickReply(psid, text, title, payload);
+
+      } else {      
+        
+        // default
+        text = 'Welcome! The bot is currently in control. \n\n Tap "Pass to Inbox" to pass control to the Page Inbox.';
+        title = 'Pass to Inbox';
+        payload = 'pass_to_inbox';
+
+        sendQuickReply(psid, text, title, payload);
       }
       
-    } else if (webhook_event.pass_thread_control) {
-      
-      // thread control was passed back to bot manually in Page inbox
-      QuickReply.handoverToInbox(psid);
-
-    } else {      
-      
-      // default
-      QuickReply.handoverToInbox(psid);
-    }
-    
-  });
+    });
+  }
 
   // respond to all webhook events with 200 OK
   res.sendStatus(200);
