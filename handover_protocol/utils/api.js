@@ -8,7 +8,7 @@
 const env = require('../env'),
       request = require('request');
 
-const call = (path, payload, callback) => {
+function call (path, payload, callback) {
   const access_token = env.PAGE_ACCESS_TOKEN;
   const graph_url = 'https://graph.facebook.com/me';
 

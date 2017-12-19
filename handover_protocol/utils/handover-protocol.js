@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 'use strict';
+
+//import API helper
 const api = require('./api');
 
 function passThreadControl (userPsid, targetAppId) {
