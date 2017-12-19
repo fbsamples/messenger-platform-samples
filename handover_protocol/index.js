@@ -27,28 +27,31 @@ app.get('/webhook', (req, res) => {
 app.post('/webhook', (req, res) => {
   const webhook_events = req.body.entry[0].messaging;
   webhook_events.forEach(webhook_event => {
+    const psid = webhook_event.sender.id,
+          quick_reply = webhook_event.message.quick_reply;
+    let message,
+        payload;
     console.log(webhook_event)
-    const psid = webhook_event.sender.id;
-    const quick_reply = webhook_event.message.quick_reply;
-
-    if (quick_reply) {
-      let message;
+    if (quick_reply) {      
       switch (quick_reply.payload) {
         case 'pass_thread_control':
           let page_inbox_app_id = 263902037430900;
           handover_protocol.passThreadControl(psid, page_inbox_app_id);
           message = 'You are now in a conversation with the Page Inbox. Tap "Handover to Bot" to let your bot take back thread control, or click the "Done" checkbox in your inbox.';
+          payload = 'take_thread_control';
           sendQuickReply(psid, message, payload);
           break;
         case 'take_thread_control':
           handover_protocol.takeThreadControl(psid);
           message = 'You are now in a conversation with a bot. Tap "Handover to Page Inbox" to pass thread control to the Page Inbox.';
+          payload = 'pass_thread_control';
           sendQuickReply(psid, message, payload);
       }
     } else if (webhook_event.app_roles) {
 
     } else {
       message = 'You are now in a conversation with a bot. Tap "Handover to Page Inbox" to pass thread control to the Page Inbox.';
+      payload = 'pass_thread_control';
           sendQuickReply(psid, message, payload);
     }
     
