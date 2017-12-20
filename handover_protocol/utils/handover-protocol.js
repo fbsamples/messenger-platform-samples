@@ -10,6 +10,7 @@
 const api = require('./api');
 
 function passThreadControl (userPsid, targetAppId) {
+  console.log('PASSING THREAD CONTROL')
   let payload = {
     recipient: {
       id: userPsid
@@ -21,6 +22,7 @@ function passThreadControl (userPsid, targetAppId) {
 }
 
 function takeThreadControl (userPsid) {
+  console.log('TAKING THREAD CONTROL')
   let payload = {
     recipient: {
       id: userPsid

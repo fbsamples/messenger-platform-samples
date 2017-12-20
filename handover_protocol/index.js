@@ -17,7 +17,7 @@ const sendQuickReply = require('./utils/quick-reply'),
       env = require('./env');
 
 // webhook setup
-app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+app.listen(process.env.PORT || env.PORT || 1337, () => console.log('webhook is listening'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -34,6 +34,8 @@ app.post('/webhook', (req, res) => {
   // parse messaging array
   const webhook_events = req.body.entry[0];
 
+  // initialize quick reply properties
+  let text, title, payload;
 
   // Secondary Receiver is in control - listen on standby channel
   if (webhook_events.standby) {
@@ -41,10 +43,8 @@ app.post('/webhook', (req, res) => {
     // iterate webhook events from standby channel
     webhook_events.standby.forEach(event => {
     
-      console.log(event)  
+      const psid = event.sender.id;
       const message = event.message;
-
-      let text, title, payload; 
 
       if (message && message.quick_reply && message.quick_reply.payload == 'take_from_inbox') {
         // quick reply to take from Page inbox was clicked          
@@ -56,23 +56,17 @@ app.post('/webhook', (req, res) => {
         HandoverProtocol.takeThreadControl(psid);
       }
 
-
-    });
-   
-
+    });   
   }
-
 
   // Bot is in control - listen for messages 
   if (webhook_events.messaging) {
+    
     // iterate webhook events
-    webhook_events.messaging.forEach(event => {
-      console.log(event)  
+    webhook_events.messaging.forEach(event => {      
       // parse sender PSID and message
       const psid = event.sender.id;
       const message = event.message;
-
-      let text, title, payload; 
 
       if (message && message.quick_reply && message.quick_reply.payload == 'pass_to_inbox') {
         
@@ -88,7 +82,7 @@ app.post('/webhook', (req, res) => {
       } else if (event.pass_thread_control) {
         
         // thread control was passed back to bot manually in Page inbox
-        text = 'Passing control back to the Primary Receiver by marking "Done" in the Page Inbox. \n\n Tap "Pass to Inbox" to pass control to the Page Inbox.';
+        text = 'You passed control back to the Primary Receiver by marking "Done" in the Page Inbox. \n\n Tap "Pass to Inbox" to pass control to the Page Inbox.';
         title = 'Pass to Inbox';
         payload = 'pass_to_inbox';
         

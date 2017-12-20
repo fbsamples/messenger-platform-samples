@@ -13,6 +13,8 @@ const api = require('./api');
 // Send a quick reply message
 function sendQuickReply(psid, text, title, postback_payload) {
   
+  console.log('SENDING QUICK REPLY');
+  
   let payload = {};
   
   payload.recipient = {
