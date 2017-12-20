@@ -18,7 +18,7 @@ To run this app you will need the following:
   2. `cd <REPO_DIRECTORY>`
   3. `npm install`
 2. Deploy the app to your server
-3. Set the following in the `env` file
+3. Set the following in the `env` file or in your environment variables.
   - `PAGE_ACCESS_TOKEN`
   - `VERIFY TOKEN`
 4. Run the code
@@ -32,3 +32,5 @@ To run this app you will need the following:
 2. Tap the 'Handover to Page Inbox' quick reply
 3. Go to your Page Inbox and reply to the conversation
 4. Check the 'Done' checkbox or tap the 'Handover to Bot' quick reply
+5. Tap the 'Send to Inbox' quick reply.
+6. Tap the 'Take from Inbox' quick reply.

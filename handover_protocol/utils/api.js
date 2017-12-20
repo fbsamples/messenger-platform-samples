@@ -9,7 +9,7 @@ const env = require('../env'),
       request = require('request');
 
 function call (path, payload, callback) {
-  const access_token = env.PAGE_ACCESS_TOKEN;
+  const access_token = process.env.PAGE_ACCESS_TOKEN || env.PAGE_ACCESS_TOKEN;
   const graph_url = 'https://graph.facebook.com/me';
 
   if (!path) {
