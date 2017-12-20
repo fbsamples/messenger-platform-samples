@@ -7,24 +7,28 @@ This app is a basic demo of using the Messenger Platform's handover protocol.
 To run this app you will need the following:
 
 - Facebook developer account
-- Facebook developer app
+- Facebook developer app with a configured webhook
 - Facebook Page
 - A server that has Node.js installed
 
-## Setting Up the Bot
+## Setting Up the Webhook
 
-1. Set up the app
-  1. Download this repo
-  2. `cd <REPO_DIRECTORY>`
-  3. `npm install`
-2. Deploy the app to your server
-3. Set the following in the `env` file or in your environment variables.
-  - `PAGE_ACCESS_TOKEN`
-  - `VERIFY TOKEN`
-4. Run the code
-  - `node index.js`
-5. Configure the webhook
+This repo contains code for the webhook and application logic for an example Messenger bot. To run it, do the following:
 
+1. Download this repo
+2. Deploy the repo to your server
+3. Create an `env` file with the following `module.exports` object:
+
+``` js
+module.exports = {
+  "PAGE_ACCESS_TOKEN": "<YOUR PAGE ACCESS TOKEN>",  
+  "VERIFY TOKEN": "YOUR WEBHOOK VERIFY TOKEN"
+}  
+```
+
+Alternatively, you can set the above as environment variables.
+3. Run `npm install` in the repo directory
+4. Run `node index.js` to start the webhook
 
 ## Using the bot
 
