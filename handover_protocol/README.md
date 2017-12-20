@@ -28,6 +28,8 @@ Alternatively, you can set the above as environment variables.
 
 4. Run `npm install` in the repo directory
 5. Run `node index.js` to start the webhook
+6. Configure the webhook in your Facebook app settings
+7. Subscribe the Facebook app to receive webhook events for your Page
 
 ## Using the bot
 
