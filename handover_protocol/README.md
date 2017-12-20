@@ -32,7 +32,9 @@ Alternatively, you can set the above as environment variables.
 ## Using the bot
 
 1. Send any text message to the bot. The bot will respond with a greeting message and 'Pass to Inbox' quick reply.
-![Welcome Message](https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/welcome_msg.png)
+<div style="border: #000 1px solid; width: 500px;">
+<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/welcome_msg.png">
+</div>
 2. Tap the 'Pass to Inbox' quick reply. The bot will respond with this quick reply:
 ![Pass to inbox](https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/pass_to_inbox.png)
 3. Go to your Page Inbox and reply to the conversation. Messages sent from the Page inbox will appear in the conversation in Messenger.
