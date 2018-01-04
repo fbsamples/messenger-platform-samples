@@ -28,12 +28,20 @@ Alternatively, you can set the above as environment variables.
 
 4. Run `npm install` in the repo directory
 5. Run `node index.js` to start the webhook
+6. Configure the webhook in your Facebook app settings
+7. Subscribe the Facebook app to receive webhook events for your Page
 
 ## Using the bot
 
 1. Send any text message to the bot. The bot will respond with a greeting message and 'Pass to Inbox' quick reply.
+<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/welcome_msg.png" alt="Welcome message" width=650> 
 2. Tap the 'Pass to Inbox' quick reply. The bot will respond with this quick reply:
+<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/pass_to_inbox.png" alt="Pass to inbox" width=650> 
 3. Go to your Page Inbox and reply to the conversation. Messages sent from the Page inbox will appear in the conversation in Messenger.
+
 4. Check the 'Done' checkbox to pass control back to the bot.
+<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/done.png" alt="Done button" width=200> 
 5. Tap the 'Send to Inbox' quick reply. The conversation will be moved to the Page inbox, and the bot will respond with this quick reply:
+<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/pass_to_inbox.png" alt="Pass to inbox" width=650> 
 6. Tap the 'Take from Inbox' quick reply. The bot will respond with this quick reply:
+<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/take_control.png" alt="Take from inbox" width=650> 
