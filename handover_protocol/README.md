@@ -34,14 +34,14 @@ Alternatively, you can set the above as environment variables.
 ## Using the bot
 
 1. Send any text message to the bot. The bot will respond with a greeting message and 'Pass to Inbox' quick reply.
-<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/welcome_msg.png" alt="Welcome message" width=650> 
+<img src="https://github.com/fbsamples/messenger-platform-samples/raw/master/handover_protocol/img/welcome_msg.png" alt="Welcome message" width=650> 
 2. Tap the 'Pass to Inbox' quick reply. The bot will respond with this quick reply:
-<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/pass_to_inbox.png" alt="Pass to inbox" width=650> 
+<img src="https://github.com/fbsamples/messenger-platform-samples/raw/master/handover_protocol/img/pass_to_inbox.png" alt="Pass to inbox" width=650> 
 3. Go to your Page Inbox and reply to the conversation. Messages sent from the Page inbox will appear in the conversation in Messenger.
 
 4. Check the 'Done' checkbox to pass control back to the bot.
-<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/done.png" alt="Done button" width=200> 
+<img src="https://github.com/fbsamples/messenger-platform-samples/raw/master/handover_protocol/img/done.png" alt="Done button" width=200> 
 5. Tap the 'Send to Inbox' quick reply. The conversation will be moved to the Page inbox, and the bot will respond with this quick reply:
-<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/pass_to_inbox.png" alt="Pass to inbox" width=650> 
+<img src="https://github.com/fbsamples/messenger-platform-samples/raw/master/handover_protocol/img/pass_to_inbox.png" alt="Pass to inbox" width=650> 
 6. Tap the 'Take from Inbox' quick reply. The bot will respond with this quick reply:
-<img src="https://github.com/amuramoto/messenger-platform-samples/raw/master/handover_protocol/img/take_control.png" alt="Take from inbox" width=650> 
+<img src="https://github.com/fbsamples/messenger-platform-samples/raw/master/handover_protocol/img/take_control.png" alt="Take from inbox" width=650> 
