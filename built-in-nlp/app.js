@@ -22,7 +22,6 @@ var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({verify: verifyRequestSignature}));
-app.use(express.static('public'));
 
 /*
  * Be sure to setup your config values before running this code. You can
@@ -88,8 +87,6 @@ app.post('/webhook', function (req, res) {
         // Iterate over each entry
         // There may be multiple if batched
         data.entry.forEach(function (pageEntry) {
-            var pageID = pageEntry.id;
-            var timeOfEvent = pageEntry.time;
 
             // Iterate over each messaging event
             pageEntry.messaging.forEach(function (messagingEvent) {
@@ -159,7 +156,6 @@ function verifyRequestSignature(req, res, buf) {
         console.error("Couldn't validate the signature.");
     } else {
         var elements = signature.split('=');
-        var method = elements[0];
         var signatureHash = elements[1];
 
         var expectedHash = crypto.createHmac('sha1', APP_SECRET)
@@ -250,12 +246,9 @@ function receivedMessage(event) {
  *
  */
 function receivedDeliveryConfirmation(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
     var delivery = event.delivery;
     var messageIDs = delivery.mids;
     var watermark = delivery.watermark;
-    var sequenceNumber = delivery.seq;
 
     if (messageIDs) {
         messageIDs.forEach(function (messageID) {
@@ -300,9 +293,6 @@ function receivedPostback(event) {
  *
  */
 function receivedMessageRead(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-
     // All messages before watermark (a timestamp) or sequence have been seen.
     var watermark = event.read.watermark;
     var sequenceNumber = event.read.seq;
@@ -321,8 +311,6 @@ function receivedMessageRead(event) {
  */
 function receivedAccountLink(event) {
     var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-
     var status = event.account_linking.status;
     var authCode = event.account_linking.authorization_code;
 
