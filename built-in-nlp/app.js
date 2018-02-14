@@ -22,7 +22,6 @@ var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json({verify: verifyRequestSignature}));
-app.use(express.static('public'));
 
 /*
  * Be sure to setup your config values before running this code. You can
@@ -277,12 +276,9 @@ function searchNLP(nlp, name) {
  *
  */
 function receivedDeliveryConfirmation(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
     var delivery = event.delivery;
     var messageIDs = delivery.mids;
     var watermark = delivery.watermark;
-    var sequenceNumber = delivery.seq;
 
     if (messageIDs) {
         messageIDs.forEach(function (messageID) {
@@ -327,9 +323,6 @@ function receivedPostback(event) {
  *
  */
 function receivedMessageRead(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-
     // All messages before watermark (a timestamp) or sequence have been seen.
     var watermark = event.read.watermark;
     var sequenceNumber = event.read.seq;
@@ -348,8 +341,6 @@ function receivedMessageRead(event) {
  */
 function receivedAccountLink(event) {
     var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-
     var status = event.account_linking.status;
     var authCode = event.account_linking.authorization_code;
 

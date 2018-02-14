@@ -1,7 +1,7 @@
 {
-  "name": "messenger-get-started",
+  "name": "messenger-built-in-nlp",
   "version": "1.0.0",
-  "description": "Get started example for Messenger Platform",
+  "description": "Built-in NLP example example for Messenger Platform",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
