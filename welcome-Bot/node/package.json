@@ -1,7 +1,7 @@
 {
-  "name": "messenger-get-started",
+  "name": "messenger-welcome-screen",
   "version": "1.0.0",
-  "description": "Get started example for Messenger Platform",
+  "description": "Welcome screen example for Messenger Platform",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
