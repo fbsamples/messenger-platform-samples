@@ -87,9 +87,6 @@ app.post('/webhook', function (req, res) {
         // Iterate over each entry
         // There may be multiple if batched
         data.entry.forEach(function (pageEntry) {
-            var pageID = pageEntry.id;
-            var timeOfEvent = pageEntry.time;
-
             // Iterate over each messaging event
             pageEntry.messaging.forEach(function (messagingEvent) {
                 if (messagingEvent.optin) {
@@ -158,7 +155,6 @@ function verifyRequestSignature(req, res, buf) {
         console.error("Couldn't validate the signature.");
     } else {
         var elements = signature.split('=');
-        var method = elements[0];
         var signatureHash = elements[1];
 
         var expectedHash = crypto.createHmac('sha1', APP_SECRET)
