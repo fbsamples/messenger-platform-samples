@@ -41,44 +41,6 @@ app.listen(app.get('port'), function () {
 
 module.exports = app;
 
-app.get('/options', (req, res) => {
-    var ALLOWED_BY = new Set([
-        'https://www.facebook.com',
-        'https://www.messenger.com',
-        'https://facebook.com',
-        'https://messenger.com'
-    ]);
-    var domain = String(req.query.fb_iframe_origin);
-    if (ALLOWED_BY.has(domain)) {
-        res.setHeader('X-Frame-Options', 'ALLOW-FROM ' + domain);
-        res.sendFile('public/options.html', {root: __dirname});
-    }
-});
-
-app.get('/optionsnosdk', (req, res) => {
-    var ALLOWED_BY = new Set([
-        'https://www.facebook.com',
-        'https://www.messenger.com',
-        'https://facebook.com',
-        'https://messenger.com'
-    ]);
-    var domain = String(req.query.fb_iframe_origin);
-    if (ALLOWED_BY.has(domain)) {
-        res.setHeader('X-Frame-Options', 'ALLOW-FROM ' + domain);
-        res.sendFile('public/optionsnosdk.html', {root: __dirname});
-    }
-});
-
-app.get('/optionspostback', (req, res) => {
-    let body = req.query;
-    let response = {
-        "text": `Great, I will book you a ${body.bed} bed, with ${body.pillows} pillows and a ${body.view} view.`
-    };
-
-    res.status(200).send('Please close this window to return to the conversation thread.');
-    callSendAPI(body.psid, response);
-});
-
 app.post('/webhook', (req, res) => {
 
     // Parse the request body from the POST
@@ -147,50 +109,11 @@ app.get('/webhook', (req, res) => {
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
-    let response;
-
-    // Checks if the message contains text
-    if (received_message.text) {
-        switch (received_message.text.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
-            case "room preferences":
-                response = setRoomPreferences(sender_psid);
-                break;
-            default:
-                response = {
-                    "text": `You sent the message: "${received_message.text}".`
-                };
-                break;
-        }
-    } else {
-        response = {
-            "text": `Sorry, I don't understand what you mean.`
-        }
-    }
-
-    // Send the response message
-    callSendAPI(sender_psid, response);
+// Code to follow
 }
 
 function setRoomPreferences(sender_psid) {
-    var response = {
-        attachment: {
-            type: "template",
-            payload: {
-                template_type: "button",
-                text: "OK, let's set your room preferences so I won't need to ask for them in the future.",
-                buttons: [{
-                    type: "web_url",
-                    url: SERVER_URL + "/options",
-                    fallback_url: SERVER_URL + `/optionsnosdk?psid=${sender_psid}`,
-                    title: "Set preferences",
-                    webview_height_ratio: "compact",
-                    messenger_extensions: true
-                }]
-            }
-        }
-    };
-
-    return response;
+// Code to follow
 }
 
 // Sends response messages via the Send API
