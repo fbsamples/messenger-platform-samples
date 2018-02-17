@@ -234,34 +234,11 @@ function receivedMessage(event) {
     }
 
     if (messageText) {
-        const money = searchNLP(message.nlp, 'amount_of_money');
-        const email = searchNLP(message.nlp, 'email');
-        const when = searchNLP(message.nlp, 'datetime');
-        const formattedWhen = new Date(when.value).toDateString();
-
-        if (money && money.confidence > 0.8) {
-            if (email && email.confidence > 0.8) {
-                if (when && when.confidence > 0.8) {
-                    // TODO: Perform action
-                    sendTextMessage(senderID, `Great! I will transfer ${money.unit}${money.value} to ${email.value} ${formattedWhen} `);
-                } else {
-                    sendTextMessage(senderID, "Sorry, I don't understand when to make the transfer.");
-                }
-            } else {
-                sendTextMessage(senderID, "Sorry, I don't understand who the recipient is.");
-            }
-        } else {
-            sendTextMessage(senderID, "Sorry, I don't understand how much to transfer.");
-        }
     }
 }
 
 function searchNLP(nlp, name) {
-    if (nlp.entities[name]) {
-        return nlp.entities[name][0];
-    } else {
-        // TODO: Error handle
-    }
+// Code to follow
 }
 
 /*
