@@ -291,17 +291,7 @@ function receivedPostback(event) {
         "at %d", senderID, recipientID, payload, timeOfPostback);
 
     switch (payload) {
-        case 'get_started':
-            sendGetStarted(senderID);
-            break;
-        case 'check_in':
-            sendTextMessage(senderID, "Check In");
-            break;
-        case 'room_service':
-            sendTextMessage(senderID, "Room Service");
-            break;
-        default:
-            sendTextMessage(senderID, "Postback called");
+
     }
 }
 
@@ -360,34 +350,7 @@ function sendTextMessage(recipientId, messageText) {
  *
  */
 function sendGetStarted(recipientId) {
-    var messageData = {
-        recipient: {
-            id: recipientId
-        },
-        message: {
-            attachment: {
-                type: "template",
-                payload: {
-                    template_type: "button",
-                    text: "Welcome to the Bot Hotel, I can help with any of the three requests below.",
-                    buttons: [{
-                        type: "postback",
-                        title: "Check in",
-                        payload: "check_in"
-                    }, {
-                        type: "postback",
-                        title: "Room Service",
-                        payload: "room_service"
-                    }, {
-                        type: "phone_number",
-                        title: "Call Reception",
-                        payload: "+16505551234"
-                    }]
-                }
-            }
-        }
-    };
-    callSendAPI(messageData);
+
 }
 
 /*
