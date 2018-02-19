@@ -40,30 +40,26 @@ app.listen(app.get('port'), function () {
 
 module.exports = app;
 
-app.get('/options', (req, res) => {
-    var ALLOWED_BY = new Set([
-        'https://www.facebook.com',
-        'https://www.messenger.com',
-        'https://facebook.com',
-        'https://messenger.com'
-    ]);
-    var domain = String(req.query.fb_iframe_origin);
-    if (ALLOWED_BY.has(domain)) {
-        res.setHeader('X-Frame-Options', 'ALLOW-FROM ' + domain);
+app.get('/options', (req, res, next) => {
+    let referer = req.get('Referer');
+    if (referer) {
+        if (referer.indexOf('www.messenger.com') >= 0) {
+            res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.messenger.com/');
+        } else if (referer.indexOf('www.facebook.com') >= 0) {
+            res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.facebook.com/');
+        }
         res.sendFile('public/options.html', {root: __dirname});
     }
 });
 
-app.get('/optionsnosdk', (req, res) => {
-    var ALLOWED_BY = new Set([
-        'https://www.facebook.com',
-        'https://www.messenger.com',
-        'https://facebook.com',
-        'https://messenger.com'
-    ]);
-    var domain = String(req.query.fb_iframe_origin);
-    if (ALLOWED_BY.has(domain)) {
-        res.setHeader('X-Frame-Options', 'ALLOW-FROM ' + domain);
+app.get('/optionsnosdk', (req, res, next) => {
+    let referer = req.get('Referer');
+    if (referer) {
+        if (referer.indexOf('www.messenger.com') >= 0) {
+            res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.messenger.com/');
+        } else if (referer.indexOf('www.facebook.com') >= 0) {
+            res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.facebook.com/');
+        }
         res.sendFile('public/optionsnosdk.html', {root: __dirname});
     }
 });
@@ -180,7 +176,7 @@ function setRoomPreferences(sender_psid) {
                 buttons: [{
                     type: "web_url",
                     url: SERVER_URL + "/options",
-                    fallback_url: SERVER_URL + `/optionsnosdk?psid=${sender_psid}`,
+                    // fallback_url: SERVER_URL + `/optionsnosdk?psid=${sender_psid}`,
                     title: "Set preferences",
                     webview_height_ratio: "compact",
                     messenger_extensions: true
