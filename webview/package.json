@@ -7,7 +7,7 @@
     "node": "9.5.x"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "DEBUG=express:* node app.js"
   },
   "repository": {
     "type": "git",
