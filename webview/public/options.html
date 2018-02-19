@@ -15,23 +15,15 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'Messenger'));
 
-    window.extAsyncInit = function () {
+    window.extAsyncInit = () => {
         // TODO: How to parse env file from here?
         MessengerExtensions.getSupportedFeatures(function success(result) {
             let features = result.supported_features;
-            if (features.indexOf("context") != -1) {
+            if (features.includes("context")) {
                 MessengerExtensions.getContext('179442182820492',
                     function success(thread_context) {
                         // success
                         document.getElementById("psid").value = thread_context.psid;
-
-                        document.getElementById('submitButton').addEventListener('click', function () {
-                            MessengerExtensions.requestCloseBrowser(function success() {
-                                console.log("Webview closing");
-                            }, function error(err) {
-                                console.log(err);
-                            });
-                        });
                     },
                     function error(err) {
                         // error
@@ -42,6 +34,13 @@
         }, function error(err) {
             // error retrieving supported features
             console.log(err);
+        });
+        document.getElementById('submitButton').addEventListener('click', () => {
+            MessengerExtensions.requestCloseBrowser(function success() {
+                console.log("Webview closing");
+            }, function error(err) {
+                console.log(err);
+            });
         });
     };
 

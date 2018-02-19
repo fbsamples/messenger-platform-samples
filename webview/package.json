@@ -7,7 +7,7 @@
     "node": "9.5.x"
   },
   "scripts": {
-    "start": "DEBUG=express:* node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,6 @@
     "body-parser": "^1.15.0",
     "dotenv": "^5.0.0",
     "express": "^4.13.4",
-    "frameguard": "^3.0.0",
     "request": "^2.72.0"
   }
 }

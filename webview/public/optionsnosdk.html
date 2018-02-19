@@ -4,12 +4,16 @@
 </head>
 <body>
 <script>
-    window.onload = function () {
-        var urlParams = parseQueryString(window.location.search);
+    window.onload = () => {
+        const urlParams = parseQueryString(window.location.search);
         document.getElementById("psid").value = urlParams.psid;
 
         function parseQueryString(queryString) {
-            var params = {}, queries, temp, i, l;
+            const params = {};
+            let queries;
+            let temp;
+            let i;
+            let l;
             queries = queryString.substr(1).split("&");
             for (i = 0, l = queries.length; i < l; i++) {
                 temp = queries[i].split('=');
