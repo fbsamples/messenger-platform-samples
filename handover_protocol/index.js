@@ -88,7 +88,7 @@ app.post('/webhook', (req, res) => {
         
         sendQuickReply(psid, text, title, payload);
 
-      } else {      
+      } else if (message && !message.is_echo) {      
         
         // default
         text = 'Welcome! The bot is currently in control. \n\n Tap "Pass to Inbox" to pass control to the Page Inbox.';
