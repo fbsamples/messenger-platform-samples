@@ -21,92 +21,25 @@ const
     request = require('request'),
     express = require('express'),
     body_parser = require('body-parser'),
+    FB = require('fb'),
+    // TODO: Is there a better way?
+    current_post = "",
     app = express().use(body_parser.json()); // creates express http server
-let options = {appId: '191354111357525', appSecret: '62516d62fde1bb91521e89bf9cc3f07f'}
 
-let FB = require('fb'),
-    fb = new FB.Facebook(options);
-
-FB.setAccessToken('EAACuCRnVclUBAHizeKm9zDfZBYv72J46FnDr4YgCdfNnPvJtZBdH5cP3ucgzY96rvLNi1w7zkEo3Th50eEnaTF48SxG7OkrB8n8BZA35WuAJwir2de8kUkUPscVlnURfMfJ9E8fe2rrLpCSTz7OmHjNtPUUURExiljGSuEcFlZA4GMMBKdhCWmViy5ZBBsLiy3Pf36oDxSdVNJqXUx25q');
-
-app.get('/fbtest', (reg, res) => {
-    FB.api('186259632136572', function (res) {
-        if(!res || res.error) {
-            console.log(!res ? 'error occurred' : res.error);
-            return;
-        }
-        console.log(res.id);
-        console.log(res.name);
-    });
-});
-
-app.get('/parsecomments', (req, res) => {
-    FB.api('186259632136572/feed', function (res) {
-        if(!res || res.error) {
-            console.log(!res ? 'error occurred' : res.error);
-            return;
-        } else {
-            console.log(res.data);
-
-            var body = 'hey there';
-            FB.api('186259632136572_186651705430698/private_replies', 'post', { message: body }, function (res) {
-                if(!res || res.error) {
-                    console.log(!res ? 'error occurred' : res.error);
-                    return;
-                }
-                console.log('Post Id: ' + res);
-            });
-        }
-    //    TODO: Refactor to promises
-    });
-});
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 1338, () => console.log('webhook is listening'));
+app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
 
-// Accepts POST requests at /webhook endpoint
 app.post('/webhook', (req, res) => {
-    const VERIFY_TOKEN = "TOKEN";
 
     // Parse the request body from the POST
     let body = req.body;
 
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
-
-        // Iterate over each entry - there may be multiple if batched
         body.entry.forEach(function (entry) {
-
-            // Get the webhook event. entry.messaging is an array, but
-            // will only ever contain one event, so we get index 0
-            let webhook_event = entry.messaging[0];
-            console.log(webhook_event);
-
-        });
-
-        // Return a '200 OK' response to all events
-        res.status(200).send('EVENT_RECEIVED');
-
-    } else {
-        // Return a '404 Not Found' if event is not from a page subscription
-        res.sendStatus(404);
-    }
-
-});
-
-app.post('/webhook', (req, res) => {
-
-    // Parse the request body from the POST
-    let body = req.body;
-
-    // Check the webhook event is from a Page subscription
-    if (body.object === 'page') {
-
-        body.entry.forEach(function(entry) {
-
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
             console.log(webhook_event);
-
 
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
@@ -132,48 +65,131 @@ app.post('/webhook', (req, res) => {
 
 });
 
+app.get('/parsecomments', (req, res) => {
+    FB.setAccessToken("EAACuCRnVclUBAFAb1iLVNEhUic1HJ45pxgc48psoq240a65gIfF6reDR91eo8V98eZCFeGEWZAz3umKTd9ZAcZCjL2Xd7QxASaDKTqxWbuMGHEeYRc6n4stDSiBmNZAoSGQKFZArHmj57j0ZA5ncsJ098QI9rJLohyjRX4XvuE65AL5ENq3hfZC2NiiX3kCSQlmAyfEBu54yBwZDZD");
+    FB.api('186259632136572_186732172089318/comments', function (res) {
+        if (!res || res.error) {
+            console.log(!res ? 'error occurred' : res.error);
+            return;
+        } else {
+            let comments = res.data;
+            comments.forEach(function (comment) {
+                console.log(comment);
+                // TODO: What about multiple messages?
+                current_post = comment.id;
+                let body = "Please share your experiences, type 'share'.";
+                FB.api(`/${comment.id}/private_replies`, 'post', {message: body}, function (res) {
+                    if (!res || res.error) {
+                        console.log(!res ? 'error occurred' : res.error);
+                        return;
+                    }
+                    console.log('Post Id: ' + res.id);
+                });
+            });
+        }
+    });
+});
+
+// Accepts GET requests at the /webhook endpoint
+app.get('/webhook', (req, res) => {
+
+    const VERIFY_TOKEN = "TOKEN";
+
+    // Parse params from the webhook verification request
+    let mode = req.query['hub.mode'];
+    let token = req.query['hub.verify_token'];
+    let challenge = req.query['hub.challenge'];
+
+    // Check if a token and mode were sent
+    if (mode && token) {
+
+        // Check the mode and token sent are correct
+        if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+
+            // Respond with 200 OK and challenge token from the request
+            console.log('WEBHOOK_VERIFIED');
+            res.status(200).send(challenge);
+
+        } else {
+            // Responds with '403 Forbidden' if verify tokens do not match
+            res.sendStatus(403);
+        }
+    }
+});
+
 function handleMessage(sender_psid, received_message) {
     let response;
 
-    // Checks if the message contains text
     if (received_message.text) {
-        // Create the payload for a basic text message, which
-        // will be added to the body of our request to the Send API
-        response = {
-            "text": `You sent the message: "${received_message.text}". Now send me an attachment!`
+        switch (received_message.text.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
+            case "share":
+                response = shareExperiences(sender_psid);
+                break;
+            default:
+                response = {
+                    "text": `You sent the message: "${received_message.text}".`
+                };
+                break;
         }
-    } else if (received_message.attachments) {
-        // Get the URL of the message attachment
-        let attachment_url = received_message.attachments[0].payload.url;
+    } else {
         response = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "generic",
-                    "elements": [{
-                        "title": "Is this the right picture?",
-                        "subtitle": "Tap a button to answer.",
-                        "image_url": attachment_url,
-                        "buttons": [
-                            {
-                                "type": "postback",
-                                "title": "Yes!",
-                                "payload": "yes",
-                            },
-                            {
-                                "type": "postback",
-                                "title": "No!",
-                                "payload": "no",
-                            }
-                        ],
-                    }]
-                }
-            }
+            "text": `Sorry, I don't understand what you mean.`
         }
     }
 
     // Send the response message
     callSendAPI(sender_psid, response);
+}
+
+function shareExperiences(sender_psid) {
+    console.log(current_post);
+    let body = {
+        attachment: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Breaking News: Record Thunderstorms",
+                        // subtitle: "The local area is due for record thunderstorms over the weekend.",
+                        // image_url: "https://thechangreport.com/img/lightning.png",
+                        buttons: [
+                            {
+                                type: "element_share",
+                                share_contents: {
+                                    attachment: {
+                                        type: "template",
+                                        payload: {
+                                            template_type: "generic",
+                                            elements: [
+                                                {
+                                                    title: "I took the hat quiz",
+                                                    subtitle: "My result: Fez",
+                                                    image_url: "https://bot.peters-hats.com/img/hats/fez.jpg",
+                                                    default_action: {
+                                                        type: "web_url",
+                                                        url: "http://m.me/petershats?ref=invited_by_24601"
+                                                    },
+                                                    buttons: [
+                                                        {
+                                                            type: "web_url",
+                                                            url: "http://m.me/petershats?ref=invited_by_24601",
+                                                            title: "Take Quiz"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    };
+    callSendAPI(sender_psid, body);
 }
 
 function handlePostback(sender_psid, received_postback) {
@@ -184,9 +200,9 @@ function handlePostback(sender_psid, received_postback) {
 
     // Set the response based on the postback payload
     if (payload === 'yes') {
-        response = { "text": "Thanks!" }
+        response = {"text": "Thanks!"}
     } else if (payload === 'no') {
-        response = { "text": "Oops, try sending another image." }
+        response = {"text": "Oops, try sending another image."}
     }
     // Send the message to acknowledge the postback
     callSendAPI(sender_psid, response);
@@ -199,12 +215,12 @@ function callSendAPI(sender_psid, response) {
             "id": sender_psid
         },
         "message": response
-    }
+    };
 
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v2.6/me/messages",
-        "qs": { "access_token": "EAACuCRnVclUBAEgxlrGOVANm0rWttGhDulB6Pju5g000Mj1bwIBTms6Bps7l9YHoOAmQuTSeD08MZAhxAz7LXWkD2HrB8jZCLAa0NeDjSRGq889CwWcq8PQF3qaF5DoWub9X9KKf0Hl6ZA49FNQ7gZAwt4RYZA2n7VESpVRZBWUQZDZD" },
+        "qs": {"access_token": "EAACuCRnVclUBAFAb1iLVNEhUic1HJ45pxgc48psoq240a65gIfF6reDR91eo8V98eZCFeGEWZAz3umKTd9ZAcZCjL2Xd7QxASaDKTqxWbuMGHEeYRc6n4stDSiBmNZAoSGQKFZArHmj57j0ZA5ncsJ098QI9rJLohyjRX4XvuE65AL5ENq3hfZC2NiiX3kCSQlmAyfEBu54yBwZDZD"},
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {
