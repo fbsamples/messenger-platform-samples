@@ -1,8 +1,8 @@
-# Quick Start Tutorial - Finished Project
+# Quick Start Tutorial - Starter Project
 
-This is the final code for the [Messenger Platform quick start tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start). 
+This is a starter project you can use to as a starting point for completing the [Messenger Platform quick start tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start). 
 
-If you want to follow the quick start from scratch, download the starter code from the [tutorial-starters branch](https://github.com/fbsamples/messenger-platform-samples/tree/tutorial-starters/quick-start) of this repo.
+To download the completed quick start code, download it from the [master branch](https://github.com/fbsamples/messenger-platform-samples/tree/master/quick-start) of this repo.
 
 ### More Resources
 
