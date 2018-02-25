@@ -1,4 +1,4 @@
-# Messenger Platform Sample -- node.js
+# Messenger Platform Sample for Welcome Screens -- node.js
 
 This project is an example server for Messenger Platform built in Node.js. With this app, you can see how to use welcome screens on Messenger.
 
@@ -6,7 +6,7 @@ It contains the following functionality:
 
 * Webhook (specifically for Messenger Platform events)
 * Send API
-* Web Plugins
+* Welcome screen
 * Messenger Platform v1.1 features
 
 Follow the [walk-through](https://messenger.fb.com/developers/tutorials/setting-up-the-welcome-screen/) to learn about this project in more detail.
