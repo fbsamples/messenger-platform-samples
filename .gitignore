@@ -1,8 +1,10 @@
+package-lock.json
 logs
 *.log
 pids
 node_modules
 .npm
 *.dat
-.DS_Store
+Procfile
 .gitignore
+.DS_Store
