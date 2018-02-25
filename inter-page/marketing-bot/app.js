@@ -21,38 +21,37 @@ const
     request = require('request'),
     express = require('express'),
     body_parser = require('body-parser'),
-    FB = require('fb'),
+    ACCESS_TOKEN = "EAACuCRnVclUBAA1AsKLoY30T1F8exXh2MFtzZBPEC5IXN5PBoaDkZALb1V7ZAR1I4ZB48kgfzp5eO6BuT974fDwqbJBiYYC6smZCl6ZC8r4NeALI8R8jkXQg1FJA5WljoWEjjwaZCqJRG5cRX661zFoXKWZCPIZCKPO94AK6yYz19GwZDZD",
     app = express().use(body_parser.json()); // creates express http server
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
 
 app.post('/webhook', (req, res) => {
-
     // Parse the request body from the POST
     let body = req.body;
 
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
-
         body.entry.forEach(function (entry) {
+            if (entry.messaging) {
+                // Gets the body of the webhook event
+                let webhook_event = entry.messaging[0];
 
-            // Gets the body of the webhook event
-            let webhook_event = entry.messaging[0];
-            console.log(webhook_event);
+                // Get the sender PSID
+                let sender_psid = webhook_event.sender.id;
+                console.log('Sender PSID: ' + sender_psid);
 
-            // Get the sender PSID
-            let sender_psid = webhook_event.sender.id;
-            console.log('Sender PSID: ' + sender_psid);
-
-            // Check if the event is a message or postback and
-            // pass the event to the appropriate handler function
-            if (webhook_event.message) {
-                handleMessage(sender_psid, webhook_event.message);
-            } else if (webhook_event.postback) {
-                handlePostback(sender_psid, webhook_event.postback);
+                // Check if the event is a message or postback and
+                // pass the event to the appropriate handler function
+                if (webhook_event.message) {
+                    handleMessage(sender_psid, webhook_event.message);
+                } else if (webhook_event.postback) {
+                    handlePostback(sender_psid, webhook_event.postback);
+                }
+            } else if (entry.changes) {
+                processComments(entry.changes[0].value);
             }
-
         });
 
         // Return a '200 OK' response to all events
@@ -65,24 +64,35 @@ app.post('/webhook', (req, res) => {
 
 });
 
-app.get('/parsecomments', (req, res) => {
-    FB.api('186259632136572_186732172089318/comments', function (res) {
-        if (!res || res.error) {
-            console.log(!res ? 'error occurred' : res.error);
-            return;
-        } else {
-            let comments = res.data;
-            comments.forEach(function (comment) {
-                console.log(comment);
-            });
+function processComments(comment) {
+    let comment_id;
+    if (comment.item == 'post') {
+        comment_id = comment.post_id;
+    } else if (comment.item == 'comment') {
+        comment_id = comment.comment_id;
+    }
+    console.log("id: " + comment_id);
+    let encode_message = encodeURIComponent(comment.message);
+    let message_body = `Thank you for your question, to better assist you I am passing you to our support department. Click the link below to be transferred. https://m.me/acmeincsupport?ref=${encode_message}`;
+    let request_body = {
+        "message": message_body
+    };
+    request({
+        "uri": `https://graph.facebook.com/v2.12/${comment_id}/private_replies`,
+        "qs": {"access_token": ACCESS_TOKEN},
+        "method": "POST",
+        "json": request_body
+    }, (err, res) => {
+        if (!err) {
+            console.log("Private reply sent");
         }
     });
-});
+}
 
 // Accepts GET requests at the /webhook endpoint
 app.get('/webhook', (req, res) => {
-
-    const VERIFY_TOKEN = process.env.TOKEN;
+    console.log(req);
+    const VERIFY_TOKEN = "TOKEN";
 
     // Parse params from the webhook verification request
     let mode = req.query['hub.mode'];
@@ -105,35 +115,6 @@ app.get('/webhook', (req, res) => {
         }
     }
 });
-
-
-function handleMessage(sender_psid, received_message) {
-    let response;
-
-    if (received_message.text) {
-        switch (received_message.text.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
-            case "share":
-                response = shareExperiences(sender_psid);
-                break;
-            default:
-                response = {
-                    "text": `You sent the message: "${received_message.text}".`
-                };
-                break;
-        }
-    } else {
-        response = {
-            "text": `Sorry, I don't understand what you mean.`
-        }
-    }
-
-    // Send the response message
-    callSendAPI(sender_psid, response);
-}
-
-function shareExperiences(sender_psid) {
-
-}
 
 function handlePostback(sender_psid, received_postback) {
     let response;
@@ -158,12 +139,12 @@ function callSendAPI(sender_psid, response) {
             "id": sender_psid
         },
         "message": response
-    }
+    };
 
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v2.6/me/messages",
-        "qs": {"access_token": "EAACuCRnVclUBAERGVkMVSKTfUT86UtiaH3HQZC1vxrqdVlrXGEHnhtUTJCJijrEo3FEZAGzlhCQMbD0X9lxEDnWHdrgFU3ZCNkafLobIAY0JZAzWCtFJIXeqbRzR0uiIIK0Vyne9gmky5WxFPH6oPaAEVnnEI7vtQZAhEhZCZA4jQZDZD"},
+        "qs": {"access_token": ACCESS_TOKEN},
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {
