@@ -53,7 +53,6 @@ app.post('/webhook', (req, res) => {
             } else if (webhook_event.referral) {
                 handleIncoming(sender_psid, webhook_event.referral);
             }
-
         });
 
         // Return a '200 OK' response to all events
@@ -69,7 +68,7 @@ app.post('/webhook', (req, res) => {
 // Accepts GET requests at the /webhook endpoint
 app.get('/webhook', (req, res) => {
 
-    const VERIFY_TOKEN = "TOKEN";
+    const VERIFY_TOKEN = process.env.TOKEN;
 
     // Parse params from the webhook verification request
     let mode = req.query['hub.mode'];
@@ -141,7 +140,7 @@ function callSendAPI(sender_psid, response) {
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v2.6/me/messages",
-        "qs": {"access_token": "EAACOkZC1Y5pABAAHOrScsZAI5ZBFf4cj5MwzE62eWX67y1YcNpZBhrWSvcq6elZCH4Nh9BZAvzESYfNQqkTXD2V1ZBljbTzVO4ZBpFFMc8XlFuVuQ82ZCteO5DG7TDLOfBCRKZAfJ89IfZC4qNyPqAzvuyR19pdE5DRptfY7hULt26BTQZDZD"},
+        "qs": {"access_token": process.env.ACCESS_TOKEN},
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {

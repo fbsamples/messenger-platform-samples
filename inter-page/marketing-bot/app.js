@@ -21,7 +21,7 @@ const
     request = require('request'),
     express = require('express'),
     body_parser = require('body-parser'),
-    ACCESS_TOKEN = "EAACuCRnVclUBAA1AsKLoY30T1F8exXh2MFtzZBPEC5IXN5PBoaDkZALb1V7ZAR1I4ZB48kgfzp5eO6BuT974fDwqbJBiYYC6smZCl6ZC8r4NeALI8R8jkXQg1FJA5WljoWEjjwaZCqJRG5cRX661zFoXKWZCPIZCKPO94AK6yYz19GwZDZD",
+    ACCESS_TOKEN = process.env.ACCESS_TOKEN,
     app = express().use(body_parser.json()); // creates express http server
 
 // Sets server port and logs message on success
@@ -46,8 +46,6 @@ app.post('/webhook', (req, res) => {
                 // pass the event to the appropriate handler function
                 if (webhook_event.message) {
                     handleMessage(sender_psid, webhook_event.message);
-                } else if (webhook_event.postback) {
-                    handlePostback(sender_psid, webhook_event.postback);
                 }
             } else if (entry.changes) {
                 processComments(entry.changes[0].value);
@@ -92,7 +90,7 @@ function processComments(comment) {
 // Accepts GET requests at the /webhook endpoint
 app.get('/webhook', (req, res) => {
     console.log(req);
-    const VERIFY_TOKEN = "TOKEN";
+    const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
     // Parse params from the webhook verification request
     let mode = req.query['hub.mode'];
@@ -115,22 +113,6 @@ app.get('/webhook', (req, res) => {
         }
     }
 });
-
-function handlePostback(sender_psid, received_postback) {
-    let response;
-
-    // Get the payload for the postback
-    let payload = received_postback.payload;
-
-    // Set the response based on the postback payload
-    if (payload === 'yes') {
-        response = {"text": "Thanks!"}
-    } else if (payload === 'no') {
-        response = {"text": "Oops, try sending another image."}
-    }
-    // Send the message to acknowledge the postback
-    callSendAPI(sender_psid, response);
-}
 
 function callSendAPI(sender_psid, response) {
     // Construct the message body
