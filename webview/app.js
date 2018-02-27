@@ -52,18 +52,6 @@ app.get('/options', (req, res, next) => {
     }
 });
 
-app.get('/optionsnosdk', (req, res, next) => {
-    let referer = req.get('Referer');
-    if (referer) {
-        if (referer.indexOf('www.messenger.com') >= 0) {
-            res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.messenger.com/');
-        } else if (referer.indexOf('www.facebook.com') >= 0) {
-            res.setHeader('X-Frame-Options', 'ALLOW-FROM https://www.facebook.com/');
-        }
-        res.sendFile('public/optionsnosdk.html', {root: __dirname});
-    }
-});
-
 app.get('/optionspostback', (req, res) => {
     let body = req.query;
     let response = {
@@ -176,7 +164,6 @@ function setRoomPreferences(sender_psid) {
                 buttons: [{
                     type: "web_url",
                     url: SERVER_URL + "/options",
-                    // fallback_url: SERVER_URL + `/optionsnosdk?psid=${sender_psid}`,
                     title: "Set preferences",
                     webview_height_ratio: "compact",
                     messenger_extensions: true
