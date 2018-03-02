@@ -1,10 +1,12 @@
 {
-  "name": "messenger-quick-start",
+  "name": "messenger-welcome-screen",
   "version": "1.0.0",
-  "description": "An example webhook for Facebook Messenger quick start tutorial.",
+  "description": "Welcome screen example for Messenger Platform",
   "main": "app.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js",
+    "lint": "jshint --exclude node_modules .",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -14,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "config": "^1.20.4",
     "express": "^4.13.4",
     "request": "^2.72.0"
   },
