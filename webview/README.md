@@ -1,8 +1,8 @@
-# Quick Start Tutorial - Starter Project
+# Webview Screen - Starter Project
 
-This is a starter project you can use to as a starting point for completing the [Messenger Platform webview tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start).
+This is a starter project you can use to as a starting point for completing the [Messenger Platform Webview tutorial](#).
 
-To download the completed quick start code, download it from the [master branch](https://github.com/fbsamples/messenger-platform-samples/tree/master/quick-start) of this repo.
+To download the completed quick start code, download it from the [master branch](https://github.com/fbsamples/messenger-platform-samples/tree/master/webview) of this repo.
 
 ### More Resources
 
