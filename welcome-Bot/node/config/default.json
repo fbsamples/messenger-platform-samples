@@ -1,0 +1,6 @@
+{
+    "appSecret": "ADD YOURS HERE",
+    "pageAccessToken": "ADD YOURS HERE",
+    "validationToken": "TOKEN",
+    "serverURL": "to_be_set_manually"
+}
