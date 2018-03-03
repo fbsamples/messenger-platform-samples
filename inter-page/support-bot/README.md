@@ -1,8 +1,8 @@
-# Quick Start Tutorial - Starter Project
+# Inter Bot Tutorial - Starter Project for Support Bot
 
-This is a starter project you can use to as a starting point for completing the [Messenger Platform inter-bot tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start).
+This is a starter project you can use to as a starting point for completing the support bot of the [Messenger Platform inter-bot tutorial](#).
 
-To download the completed quick start code, download it from the [master branch](https://github.com/fbsamples/messenger-platform-samples/tree/master/quick-start) of this repo.
+To download the completed code, download it from the [master branch](https://github.com/fbsamples/messenger-platform-samples/tree/master/inter-page) of this repo.
 
 ### More Resources
 
