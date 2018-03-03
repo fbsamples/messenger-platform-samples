@@ -1,8 +1,8 @@
-# Quick Start Tutorial - Starter Project
+# Inter-bot Tutorial - Starter Project
 
-This is a starter project you can use to as a starting point for completing the [Messenger Platform inter-bot tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start).
+This is a final project for the [Messenger Platform inter-bot tutorial](#).
 
-To download the completed quick start code, download it from the [master branch](https://github.com/fbsamples/messenger-platform-samples/tree/master/quick-start) of this repo.
+Start each bot by running `npm run start` in the folder of each bot.
 
 ### More Resources
 
