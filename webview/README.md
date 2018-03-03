@@ -1,8 +1,8 @@
-# Quick Start Tutorial - Finished Project
+# Webview Tutorial - Finished Project
 
-This is the final code for the [Messenger Platform quick start tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start). 
+This is the final code for the [Messenger Platform Webview tutorial](#).
 
-If you want to follow the quick start from scratch, download the starter code from the [tutorial-starters branch](https://github.com/fbsamples/messenger-platform-samples/tree/tutorial-starters/quick-start) of this repo.
+If you want to follow the quick start from scratch, download the starter code from the [tutorial-starters branch](https://github.com/fbsamples/messenger-platform-samples/tree/tutorial-starters/webview) of this repo.
 
 ### More Resources
 
