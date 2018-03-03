@@ -1,8 +1,8 @@
-# Inter-bot Tutorial - Starter Project
+# Inter-bot Tutorial - Final Project for Support bot
 
-This is a final project for the [Messenger Platform inter-bot tutorial](#).
+This is a final project for the support bot of the [Messenger Platform inter-bot tutorial](#).
 
-Start each bot by running `npm run start` in the folder of each bot.
+Start by running `npm run start` in this folder.
 
 ### More Resources
 
