@@ -1,4 +1,4 @@
-# Inter Bot Tutorial - Starter Project for Support Bot
+# Inter-bot Tutorial - Starter Project for Support Bot
 
 This is a starter project you can use to as a starting point for completing the support bot of the [Messenger Platform inter-bot tutorial](#).
 
