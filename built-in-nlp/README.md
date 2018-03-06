@@ -4,6 +4,13 @@ This is the final code for the [Messenger Platform built-in NLP tutorial](https:
 
 If you want to follow the quick start from scratch, download the starter code from the [tutorial-starters branch](https://github.com/fbsamples/messenger-platform-samples/tree/tutorial-starters/built-in-nlp) of this repo.
 
+To run the project make sure you add your details to the _config/default.json_ file. Then run:
+
+```bash
+npm install
+npm run start
+```
+
 ### More Resources
 
 To learn more about the Messenger Platform, check out these other resources:
