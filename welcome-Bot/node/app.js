@@ -7,21 +7,17 @@
  *
  */
 
-/* jshint node: true, devel: true */
 'use strict';
 
 const
-    bodyParser = require('body-parser'),
     config = require('config'),
-    crypto = require('crypto'),
     express = require('express'),
-    https = require('https'),
-    request = require('request');
+    request = require('request'),
+    body_parser = require('body-parser'),
+    app = express().use(body_parser.json()); // creates express http server
 
-var app = express();
-app.set('port', process.env.PORT || 5000);
-app.set('view engine', 'ejs');
-app.use(bodyParser.json());
+// Sets server port and logs message on success
+app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
 /*
  * Be sure to setup your config values before running this code. You can
@@ -131,27 +127,7 @@ function receivedMessage(event) {
         senderID, recipientID, timeOfMessage);
     console.log(JSON.stringify(message));
 
-    var isEcho = message.is_echo;
-    var messageId = message.mid;
-    var appId = message.app_id;
-    var metadata = message.metadata;
-
     var messageText = message.text;
-    var quickReply = message.quick_reply;
-
-    if (isEcho) {
-        // Just logging message echoes to console
-        console.log("Received echo for message %s and app %d with metadata %s",
-            messageId, appId, metadata);
-        return;
-    } else if (quickReply) {
-        var quickReplyPayload = quickReply.payload;
-        console.log("Quick reply for message %s with payload %s",
-            messageId, quickReplyPayload);
-
-        sendTextMessage(senderID, "Quick reply tapped");
-        return;
-    }
 
     if (messageText) {
         switch (messageText) {
@@ -274,12 +250,3 @@ function callSendAPI(messageData) {
         }
     });
 }
-
-// Start server
-// Webhooks must be available via SSL with a certificate signed by a valid
-// certificate authority.
-app.listen(app.get('port'), function () {
-    console.log('Node app is running on port', app.get('port'));
-});
-
-module.exports = app;
