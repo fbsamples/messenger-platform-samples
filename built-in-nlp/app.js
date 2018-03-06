@@ -11,16 +11,14 @@
 'use strict';
 
 const
-    bodyParser = require('body-parser'),
+    body_parser = require('body-parser'),
     config = require('config'),
-    crypto = require('crypto'),
     express = require('express'),
-    https = require('https'),
-    request = require('request');
+    request = require('request'),
+    app = express().use(body_parser.json()); // creates express http server
 
-var app = express();
-app.set('port', process.env.PORT || 5000);
-app.use(bodyParser.json());
+// Sets server port and logs message on success
+app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
 /*
  * Be sure to setup your config values before running this code. You can
@@ -90,8 +88,6 @@ app.post('/webhook', function (req, res) {
             pageEntry.messaging.forEach(function (messagingEvent) {
                 if (messagingEvent.message) {
                     receivedMessage(messagingEvent);
-                } else if (messagingEvent.postback) {
-                    receivedPostback(messagingEvent);
                 } else {
                     console.log("Webhook received unknown messagingEvent: ", messagingEvent);
                 }
@@ -130,18 +126,7 @@ function receivedMessage(event) {
         senderID, recipientID, timeOfMessage);
     console.log(JSON.stringify(message));
 
-    var isEcho = message.is_echo;
-    var messageId = message.mid;
-    var appId = message.app_id;
-    var metadata = message.metadata;
-
     var messageText = message.text;
-
-    if (isEcho) {
-        console.log("Received echo for message %s and app %d with metadata %s",
-            messageId, appId, metadata);
-        return;
-    }
 
     if (messageText) {
     }
@@ -149,30 +134,6 @@ function receivedMessage(event) {
 
 function searchNLP(nlp, name) {
 // Code to follow
-}
-
-/*
- * Postback Event
- *
- * This event is called when a postback is tapped on a Structured Message.
- * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
- *
- */
-function receivedPostback(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-    var timeOfPostback = event.timestamp;
-
-    // The 'payload' param is a developer-defined field which is set in a postback
-    // button for Structured Messages.
-    var payload = event.postback.payload;
-
-    console.log("Received postback for user %d and page %d with payload '%s' " +
-        "at %d", senderID, recipientID, payload, timeOfPostback);
-
-    // When a postback is called, we'll send a message back to the sender to
-    // let them know it was successful
-    sendTextMessage(senderID, "Postback called");
 }
 
 /*
@@ -222,12 +183,3 @@ function callSendAPI(messageData) {
         }
     });
 }
-
-// Start server
-// Webhooks must be available via SSL with a certificate signed by a valid
-// certificate authority.
-app.listen(app.get('port'), function () {
-    console.log('Node app is running on port', app.get('port'));
-});
-
-module.exports = app;
