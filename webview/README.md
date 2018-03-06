@@ -4,6 +4,13 @@ This is the final code for the [Messenger Platform Webview tutorial](#).
 
 If you want to follow the quick start from scratch, download the starter code from the [tutorial-starters branch](https://github.com/fbsamples/messenger-platform-samples/tree/tutorial-starters/webview) of this repo.
 
+To run the project make sure you add your details to the _.env_ file and to _public/options.html_. Then run:
+
+```bash
+npm install
+npm run start
+```
+
 ### More Resources
 
 To learn more about the Messenger Platform, check out these other resources:
