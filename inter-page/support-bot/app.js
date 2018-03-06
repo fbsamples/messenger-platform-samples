@@ -1,16 +1,15 @@
 /**
- * Copyright 2017-present, Facebook, Inc. All rights reserved.
+ * Copyright 2018-present, Facebook, Inc. All rights reserved.
  *
  * This source code is licensed under the license found in the
  * LICENSE file in the root directory of this source tree.
  *
  *
- * Starter Project for Messenger Platform Quick Start Tutorial
+ * Starter Project for Support bot of the Messenger Platform Inter-bot Tutorial
  *
- * Use this project as the starting point for following the
- * Messenger Platform quick start tutorial.
+ * Use this project as the starting point for following the tutorial.
  *
- * https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start/
+ * TODO: Waiting for link
  *
  */
 

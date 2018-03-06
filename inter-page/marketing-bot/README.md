@@ -2,7 +2,12 @@
 
 This is a final project for the marketing bot of the [Messenger Platform inter-bot tutorial](#).
 
-Start by running `npm run start` in this folder.
+To run the project make sure you add your details to environment variables. Then run:
+
+```bash
+npm install
+npm run start
+```
 
 ### More Resources
 
