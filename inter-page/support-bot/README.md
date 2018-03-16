@@ -2,7 +2,12 @@
 
 This is a final project for the support bot of the [Messenger Platform inter-bot tutorial](#).
 
-To run the project make sure you add your details to environment variables. Then run:
+To run the project make sure you add the following values to your environment variables:
+ 
+ - `ACCESS_TOKEN`: A page access token for your app, found under _App -> Products -> Messenger -> Settings -> Token Generation_
+ - `VERIFY_TOKEN`: A token that verifies your webhook is being called. Can be any value, but needs to match the value in _App -> Products -> Webhooks -> Edit Subscription_
+ 
+Then issue the following commands in your terminal:
 
 ```bash
 npm install
