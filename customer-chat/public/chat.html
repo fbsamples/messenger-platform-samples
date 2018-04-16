@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat with us</title>
-    <script>(function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-    window.onload = function () {
-        document.getElementsByClassName("fb-customerchat")[0].setAttribute("ref", "12345");
-    }
-    </script>
 </head>
 <body>
-<!-- Your customer chat code -->
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+window.onload = function () {
+    document.getElementsByClassName("fb-customerchat")[0].setAttribute("ref", "12345");
+}
+</script>
 <div class="fb-customerchat"
      page_id="pid"
      logged_in_greeting="How can we help you shop today?"
