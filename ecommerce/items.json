@@ -1,0 +1,21 @@
+{
+  "products":
+  [
+    {
+      "name": "name one",
+      "description": "description one",
+      "image": "tshirt-one.jpg",
+      "currency": "USD",
+      "price": 50,
+      "sku": "tshirt-one"
+    },
+    {
+      "name": "name two",
+      "description": "description two",
+      "image": "tshirt-two.jpg",
+      "currency": "USD",
+      "price": 40,
+      "sku": "tshirt-two"
+    }
+  ]
+}
