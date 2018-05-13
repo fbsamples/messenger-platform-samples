@@ -1,7 +1,7 @@
 {
-  "name": "messenger-quick-start",
+  "name": "messenger-ecommerce",
   "version": "1.0.0",
-  "description": "An example webhook for Facebook Messenger quick start tutorial.",
+  "description": "An example webhook for Facebook Messenger ecommerce bot blueprint.",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
