@@ -1,0 +1,15 @@
+html
+  body
+    p Item: #{name}
+    p Amount: #{price}
+    form(action="/charge", method="post")
+      input(type='hidden' value=name name='description')
+      input(type='hidden' value=price name='amount')
+      input(type='hidden' value=currency name='currency')
+      script(
+        src="//checkout.stripe.com/v2/checkout.js",
+        class="stripe-button",
+        data-key=keyPublishable,
+        data-locale="auto",
+        data-description=name,
+        data-amount=price)
