@@ -5,21 +5,61 @@
     <title>Chat with us</title>
 </head>
 <body>
-<script>(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
 
-window.onload = function () {
-    document.getElementsByClassName("fb-customerchat")[0].setAttribute("ref", "12345");
-}
+<script>
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appID: '',
+            autoLogAppEvents: true,
+            xfbml: true,
+            version: 'v3.0'
+        });
+
+        FB.Event.subscribe('customerchat.show', function () {
+            console.log("chatShow");
+            FB.AppEvents.logEvent('customer_chat_plugin_shown');
+        });
+
+        FB.Event.subscribe('customerchat.hide', function () {
+            console.log("chatHide");
+            FB.AppEvents.logEvent('customer_chat_plugin_hidden');
+        });
+
+        FB.Event.subscribe('customerchat.dialogShow', function () {
+            console.log("dialogShow");
+            FB.AppEvents.logEvent('customer_chat_dialog_shown');
+        });
+
+        FB.Event.subscribe('customerchat.dialogHide', function () {
+            console.log("dialogHide");
+            FB.AppEvents.logEvent('customer_chat_dialog_hidden');
+        });
+    };
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    window.onload = function () {
+        document.getElementsByClassName("fb-customerchat")[0].setAttribute("ref", "12345");
+    };
+
+        // FB.XFBML.parse(document.body, function () {
+        //     console.log("chatShow");
+        //     FB.AppEvents.logEvent('customer_chat_plugin_shown');
+        // });
+        //
+
+
 </script>
+
 <div class="fb-customerchat"
-     page_id="pid"
+     page_id=""
      logged_in_greeting="How can we help you shop today?"
      logged_out_greeting="How can we help you shop today?"
      ref=""
