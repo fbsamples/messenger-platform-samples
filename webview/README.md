@@ -1,6 +1,6 @@
 # Webview Tutorial - Finished Project
 
-This is the final code for the [Messenger Platform Webview tutorial](#).
+This is the final code for the [Messenger Platform Webview tutorial](https://blog.messengerdevelopers.com/using-the-webview-to-create-richer-bot-to-user-interactions-ed8a789523c6).
 
 If you want to follow the quick start from scratch, download the starter code from the [tutorial-starters branch](https://github.com/fbsamples/messenger-platform-samples/tree/tutorial-starters/webview) of this repo.
 
