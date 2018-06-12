@@ -1,6 +1,6 @@
 # Inter-bot Tutorial - Starter Project for Marketing Bot
 
-This is a starter project you can use to as a starting point for completing the marketing bot of the [Messenger Platform inter-bot tutorial](#).
+This is a starter project you can use to as a starting point for completing the marketing bot of the [Messenger Platform inter-bot tutorial](https://blog.messengerdevelopers.com/transferring-customer-support-requests-between-facebook-pages-241e23c7000c).
 
 To download the completed code, download it from the [master branch](https://github.com/fbsamples/messenger-platform-samples/tree/master/inter-page) of this repo.
 
