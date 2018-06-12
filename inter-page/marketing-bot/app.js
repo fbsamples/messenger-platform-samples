@@ -9,7 +9,7 @@
  *
  * Use this project as the starting point for following the tutorial.
  *
- * TODO: Waiting for link
+ * https://blog.messengerdevelopers.com/transferring-customer-support-requests-between-facebook-pages-241e23c7000c
  *
  */
 
@@ -20,7 +20,7 @@ const
     request = require('request'),
     express = require('express'),
     body_parser = require('body-parser'),
-    ACCESS_TOKEN = process.env.ACCESS_TOKEN,
+    access_token = process.env.ACCESS_TOKEN,
     app = express().use(body_parser.json()); // creates express http server
 
 // Sets server port and logs message on success
@@ -32,14 +32,14 @@ app.post('/webhook', (req, res) => {
 
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
-        body.entry.forEach(function (entry) {
+        body.entry.forEach(entry => {
             if (entry.messaging) {
                 // Gets the body of the webhook event
                 let webhook_event = entry.messaging[0];
 
                 // Get the sender PSID
                 let sender_psid = webhook_event.sender.id;
-                console.log('Sender PSID: ' + sender_psid);
+                console.log(`Sender PSID: ${sender_psid}`);
 
                 // Check if the event is a message or postback and
                 // pass the event to the appropriate handler function
@@ -76,7 +76,7 @@ function processComments(comment) {
     };
     request({
         "uri": `https://graph.facebook.com/v2.12/${comment_id}/private_replies`,
-        "qs": {"access_token": ACCESS_TOKEN},
+        "qs": {"access_token": access_token},
         "method": "POST",
         "json": request_body
     }, (err, res) => {
@@ -89,7 +89,7 @@ function processComments(comment) {
 // Accepts GET requests at the /webhook endpoint
 app.get('/webhook', (req, res) => {
     console.log(req);
-    const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+    const verify_token = process.env.VERIFY_TOKEN;
 
     // Parse params from the webhook verification request
     let mode = req.query['hub.mode'];
@@ -100,7 +100,7 @@ app.get('/webhook', (req, res) => {
     if (mode && token) {
 
         // Check the mode and token sent are correct
-        if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+        if (mode === 'subscribe' && token === verify_token) {
 
             // Respond with 200 OK and challenge token from the request
             console.log('WEBHOOK_VERIFIED');
@@ -125,7 +125,7 @@ function callSendAPI(sender_psid, response) {
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v2.6/me/messages",
-        "qs": {"access_token": ACCESS_TOKEN},
+        "qs": {"access_token": access_token},
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {

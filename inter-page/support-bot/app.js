@@ -9,7 +9,7 @@
  *
  * Use this project as the starting point for following the tutorial.
  *
- * TODO: Waiting for link
+ * https://blog.messengerdevelopers.com/transferring-customer-support-requests-between-facebook-pages-241e23c7000c
  *
  */
 
@@ -67,7 +67,7 @@ app.post('/webhook', (req, res) => {
 // Accepts GET requests at the /webhook endpoint
 app.get('/webhook', (req, res) => {
 
-    const VERIFY_TOKEN = process.env.TOKEN;
+    const verify_token = process.env.TOKEN;
 
     // Parse params from the webhook verification request
     let mode = req.query['hub.mode'];
@@ -78,7 +78,7 @@ app.get('/webhook', (req, res) => {
     if (mode && token) {
 
         // Check the mode and token sent are correct
-        if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+        if (mode === 'subscribe' && token === verify_token) {
 
             // Respond with 200 OK and challenge token from the request
             console.log('WEBHOOK_VERIFIED');
@@ -101,7 +101,6 @@ function handleMessage(sender_psid, received_message) {
                 response = {
                     "text": `You sent the message: "${received_message.text}".`
                 };
-                break;
         }
     } else {
         response = {

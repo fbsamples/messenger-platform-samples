@@ -1,6 +1,6 @@
 # Inter-bot Tutorial - Final Project for Support bot
 
-This is a final project for the support bot of the [Messenger Platform inter-bot tutorial](#).
+This is a final project for the support bot of the [Messenger Platform inter-bot tutorial](https://blog.messengerdevelopers.com/transferring-customer-support-requests-between-facebook-pages-241e23c7000c).
 
 To run the project make sure you add the following values to your environment variables:
  
