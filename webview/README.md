@@ -1,6 +1,6 @@
 # Webview Screen - Starter Project
 
-This is a starter project you can use to as a starting point for completing the [Messenger Platform Webview tutorial](#).
+This is a starter project you can use to as a starting point for completing the [Messenger Platform Webview tutorial](https://blog.messengerdevelopers.com/using-the-webview-to-create-richer-bot-to-user-interactions-ed8a789523c6).
 
 To download the completed quick start code, download it from the [master branch](https://github.com/fbsamples/messenger-platform-samples/tree/master/webview) of this repo.
 

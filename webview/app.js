@@ -8,9 +8,9 @@
  * Starter Project for Messenger Platform Quick Start Tutorial
  *
  * Use this project as the starting point for following the
- * Messenger Platform quick start tutorial.
+ * Messenger Platform webview tutorial.
  *
- * https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start/
+ * https://blog.messengerdevelopers.com/using-the-webview-to-create-richer-bot-to-user-interactions-ed8a789523c6
  *
  */
 
@@ -21,7 +21,6 @@ const
     request = require('request'),
     express = require('express'),
     body_parser = require('body-parser'),
-    crypto = require('crypto'),
     dotenv = require('dotenv').config();
 
 var app = express();
@@ -106,9 +105,8 @@ app.get('/webhook', (req, res) => {
 });
 
 
-// Handles messages events
 function handleMessage(sender_psid, received_message) {
-
+// Handles messages sent to the bot
 }
 
 function setRoomPreferences(sender_psid) {
