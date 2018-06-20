@@ -95,13 +95,11 @@ app.get('/webhook', (req, res) => {
 function handleMessage(sender_psid, received_message) {
     let response;
 
-    if (received_message.text) {
-        switch (received_message.text.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
-            default:
-                response = {
-                    "text": `You sent the message: "${received_message.text}".`
-                };
-        }
+    if (received_message.text.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
+        response = {
+            "text": `You sent the message: "${received_message.text}".`
+        };
+
     } else {
         response = {
             "text": `Sorry, I don't understand what you mean.`
