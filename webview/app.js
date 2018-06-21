@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  *
- * Starter Project for Messenger Platform Quick Start Tutorial
+ * Starter Project for Messenger Platform webview Tutorial
  *
  * Use this project as the starting point for following the
  * Messenger Platform webview tutorial.
