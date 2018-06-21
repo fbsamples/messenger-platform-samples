@@ -61,6 +61,7 @@ app.post('/webhook', (req, res) => {
 
 });
 
+// Processes incoming posts to page to get ID of the poster
 function processComments(comment) {
     let comment_id;
     if (comment.item == 'post') {

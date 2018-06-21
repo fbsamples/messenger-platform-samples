@@ -109,7 +109,7 @@ function handleMessage(sender_psid, received_message) {
     // Send the response message
     callSendAPI(sender_psid, response);
 }
-
+// Handle incoming messages from marketing bot
 function handleIncoming(sender_psid, received_postback) {
     let response;
     if (received_postback.ref) {
