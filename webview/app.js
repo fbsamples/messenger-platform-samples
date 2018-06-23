@@ -39,6 +39,7 @@ app.listen(app.get('port'), function () {
 
 module.exports = app;
 
+// Accepts POST requests at the /webhook endpoint
 app.post('/webhook', (req, res) => {
 
     // Parse the request body from the POST
@@ -104,11 +105,11 @@ app.get('/webhook', (req, res) => {
     }
 });
 
-
-function handleMessage(sender_psid, received_message) {
 // Handles messages sent to the bot
+function handleMessage(sender_psid, received_message) {
 }
 
+// Define the template and webview
 function setRoomPreferences(sender_psid) {
 
 }
