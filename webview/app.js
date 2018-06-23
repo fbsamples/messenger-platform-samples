@@ -39,6 +39,7 @@ app.listen(app.get('port'), function () {
 
 module.exports = app;
 
+// Serve the options path and set required headers
 app.get('/options', (req, res, next) => {
     let referer = req.get('Referer');
     if (referer) {
@@ -51,6 +52,7 @@ app.get('/options', (req, res, next) => {
     }
 });
 
+// Handle postback from webview
 app.get('/optionspostback', (req, res) => {
     let body = req.query;
     let response = {
@@ -61,6 +63,7 @@ app.get('/optionspostback', (req, res) => {
     callSendAPI(body.psid, response);
 });
 
+// Accepts POST requests at the /webhook endpoint
 app.post('/webhook', (req, res) => {
 
     // Parse the request body from the POST
@@ -153,6 +156,7 @@ function handleMessage(sender_psid, received_message) {
     callSendAPI(sender_psid, response);
 }
 
+// Define the template and webview
 function setRoomPreferences(sender_psid) {
     let response = {
         attachment: {
