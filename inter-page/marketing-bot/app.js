@@ -26,6 +26,7 @@ const
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
 
+// Accepts POST requests at the /webhook endpoint
 app.post('/webhook', (req, res) => {
     // Parse the request body from the POST
     let body = req.body;
@@ -60,8 +61,8 @@ app.post('/webhook', (req, res) => {
 
 });
 
-function processComments(comment) {
 // Parses messages to get user id
+function processComments(comment) {
 }
 
 // Accepts GET requests at the /webhook endpoint
