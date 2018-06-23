@@ -25,6 +25,7 @@ const
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 5001, () => console.log('webhook is listening'));
 
+// Accepts POST requests at the /webhook endpoint
 app.post('/webhook', (req, res) => {
 
     // Parse the request body from the POST
@@ -91,7 +92,7 @@ app.get('/webhook', (req, res) => {
     }
 });
 
-
+// Handle incoming messages to bot
 function handleMessage(sender_psid, received_message) {
     let response;
 
@@ -109,6 +110,7 @@ function handleMessage(sender_psid, received_message) {
     // Send the response message
     callSendAPI(sender_psid, response);
 }
+
 // Handle incoming messages from marketing bot
 function handleIncoming(sender_psid, received_postback) {
     let response;
