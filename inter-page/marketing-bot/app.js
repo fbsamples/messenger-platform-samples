@@ -33,14 +33,14 @@ app.post('/webhook', (req, res) => {
 
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
-        body.entry.forEach(function (entry) {
-            if (entry.messaging) {
+        body.entry.forEach(({messaging}) => {
+            if (messaging) {
                 // Gets the body of the webhook event
-                let webhook_event = entry.messaging[0];
+                let webhook_event = messaging[0];
 
                 // Get the sender PSID
                 let sender_psid = webhook_event.sender.id;
-                console.log('Sender PSID: ' + sender_psid);
+                console.log(`Sender PSID: ${sender_psid}`);
 
                 // Check if the event is a message or postback and
                 // pass the event to the appropriate handler function
@@ -58,7 +58,6 @@ app.post('/webhook', (req, res) => {
         // Return a '404 Not Found' if event is not from a page subscription
         res.sendStatus(404);
     }
-
 });
 
 // Parses messages to get user id
