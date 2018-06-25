@@ -33,7 +33,7 @@ const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const SERVER_URL = process.env.SERVER_URL;
 const APP_SECRET = process.env.APP_SECRET;
 
-app.listen(app.get('port'), function () {
+app.listen(app.get('port'), () => {
     console.log('Node app is running on port', app.get('port'));
 });
 
@@ -48,15 +48,15 @@ app.post('/webhook', (req, res) => {
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
 
-        body.entry.forEach(function (entry) {
+        body.entry.forEach(({messaging}) => {
 
             // Gets the body of the webhook event
-            let webhook_event = entry.messaging[0];
+            let webhook_event = messaging[0];
             console.log(webhook_event);
 
             // Get the sender PSID
             let sender_psid = webhook_event.sender.id;
-            console.log('Sender PSID: ' + sender_psid);
+            console.log(`Sender PSID: ${sender_psid}`);
 
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
