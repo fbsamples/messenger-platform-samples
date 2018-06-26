@@ -24,46 +24,39 @@ const
     app = express().use(body_parser.json()); // creates express http server
 app.use(express.static('public'));
 
+// TODO: Add values here
+const access_token = '';
+const page_inbox_app_id = "";
+
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
 
+// receives webhook events from Messenger Platform
 app.post('/webhook', (req, res) => {
-    // Parse the request body from the POST
-    let body = req.body;
 
-    // Check the webhook event is from a Page subscription
-    if (body.object === 'page') {
+    // parse messaging array
+    const webhook_events = req.body.entry[0];
 
-        // Iterate over each entry - there may be multiple if batched
-        body.entry.forEach(function (entry) {
-            console.log(entry);
-            // Gets the body of the webhook event
-            let webhook_event = entry.messaging[0];
-            console.log(webhook_event);
+    // Secondary Receiver is in control - listen on standby channel
+    if (webhook_events.standby) {
 
-
-            // Get the sender PSID
-            let sender_psid = webhook_event.sender.id;
-            console.log('Sender PSID: ' + sender_psid);
-
-            // Check if the event is a message or postback and
-            // pass the event to the appropriate handler function
-            if (webhook_event.message) {
-                handleMessage(sender_psid, webhook_event.message);
-            } else if (webhook_event.postback) {
-                handlePostback(sender_psid, webhook_event.postback);
-            } else if (webhook_event.referral) {
-                handleReferral(sender_psid, webhook_event.referral);
-            }
+        // iterate webhook events from standby channel
+        webhook_events.standby.forEach(event => {
+            handleEvent(event.sender.id, event);
         });
-
-        // Return a '200 OK' response to all events
-        res.status(200).send('EVENT_RECEIVED');
-
-    } else {
-        // Return a '404 Not Found' if event is not from a page subscription
-        res.sendStatus(404);
     }
+
+    // Bot is in control - listen for messages
+    if (webhook_events.messaging) {
+
+        // iterate webhook events
+        webhook_events.messaging.forEach(event => {
+            handleEvent(event.sender.id, event);
+        });
+    }
+
+    // respond to all webhook events with 200 OK
+    res.sendStatus(200);
 
 });
 
@@ -96,22 +89,49 @@ app.get('/webhook', (req, res) => {
     }
 });
 
+// Check event type and pass to the appropriate handler function
+function handleEvent(sender_psid, webhook_event) {
+    if (webhook_event.message) {
+        handleMessage(webhook_event.sender.id, webhook_event.message);
+    } else if (webhook_event.postback) {
+        handlePostback(sender_psid, webhook_event.postback);
+    } else if (webhook_event.referral) {
+        handleReferral(sender_psid, webhook_event.referral);
+    } else if (webhook_event.pass_thread_control) {
+        handlePass(sender_psid, webhook_event.pass_thread_control);
+    }
+}
+
+// Handle thread control passed event
+function handlePass(sender_psid, received_event) {
+    let response;
+    response = {
+        "text": "An automated agent is now helping you with your inquiry."
+    };
+    callSendAPI(sender_psid, response);
+}
+
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
     let response;
-
-    if ((received_message.tags) && (received_message.tags.source == 'customer_chat_plugin') && (received_message.text)) {
+    if (received_message && received_message.text == 'Customer Support') {
         response = {
-            "text": `We hope you enjoyed our website, we see you would like help with:\n "${received_message.text}".`
-        }
+            "text": "A human support agent is now helping you with your inquiry."
+        };
+        callSendAPI(sender_psid, response);
+        passThreadControl(sender_psid, page_inbox_app_id);
     } else if (received_message.text) {
-        response = {
-            "text": `We see you would like help with ${received_message.text}.`
+        if ((received_message.tags) && (received_message.tags.source == 'customer_chat_plugin')) {
+            response = {
+                "text": `We hope you enjoyed our website, we see you would like help with:\n "${received_message.text}".`
+            };
+        } else {
+            response = {
+                "text": `We see you would like help with ${received_message.text}.`
+            };
         }
+        callSendAPI(sender_psid, response);
     }
-
-    // Send the response message
-    callSendAPI(sender_psid, response);
 }
 
 // Handles messaging_postbacks events
@@ -124,6 +144,31 @@ function handleReferral(sender_psid, received_referral) {
     console.log(`PSID: ${sender_psid}, referral: ${received_referral.ref}`);
 }
 
+// Pass thread control
+function passThreadControl(sender_psid, target_app_id) {
+    console.log('PASSING THREAD CONTROL');
+    let request_body = {
+        recipient: {
+            id: sender_psid
+        },
+        target_app_id
+    };
+
+    // Send the HTTP request to the Messenger Platform
+    request({
+        "uri": "https://graph.facebook.com/v2.6/me/pass_thread_control",
+        "qs": {"access_token": access_token},
+        "method": "POST",
+        "json": request_body
+    }, (err, res, body) => {
+        if (!err) {
+            console.log('message sent!')
+        } else {
+            console.error(`Unable to send message:${err}`);
+        }
+    });
+}
+
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
     // Construct the message body
@@ -132,19 +177,20 @@ function callSendAPI(sender_psid, response) {
             "id": sender_psid
         },
         "message": response
-    }
+    };
 
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v2.6/me/messages",
-        "qs": {"access_token": ""},
+        "qs": {"access_token": access_token},
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {
         if (!err) {
             console.log('message sent!')
         } else {
-            console.error("Unable to send message:" + err);
+            console.error(`Unable to send message:${err}`);
         }
     });
 }
+
