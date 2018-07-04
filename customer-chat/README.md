@@ -1,8 +1,8 @@
-# Quick Start Tutorial - Starter Project
+# Quick Start Tutorial - The Customer Chat Plugin
 
-This is a starter project you can use to as a starting point for completing the [Messenger Platform quick start tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start). 
+This is a starter project you can use to as a starting point for completing the [Customer Chat plugin tutorial](#). 
 
-To download the completed quick start code, download it from the [master branch](https://github.com/fbsamples/messenger-platform-samples/tree/master/quick-start) of this repo.
+To download the completed quick start code, download it from the [master branch]() of this repo.
 
 ### More Resources
 

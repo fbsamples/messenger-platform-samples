@@ -22,11 +22,15 @@ const
     express = require('express'),
     body_parser = require('body-parser'),
     app = express().use(body_parser.json()); // creates express http server
-app.use(express.static('public'));
-
 // TODO: Add values here
 const access_token = '';
 const page_inbox_app_id = "";
+const verify_token = "";
+
+// Set the folder for service HTML files
+app.use(express.static('public'));
+
+
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
@@ -64,9 +68,6 @@ app.post('/webhook', (req, res) => {
 // Accepts GET requests at the /webhook endpoint
 app.get('/webhook', (req, res) => {
 
-    /** UPDATE YOUR VERIFY TOKEN **/
-    const VERIFY_TOKEN = "TOKEN";
-
     // Parse params from the webhook verification request
     let mode = req.query['hub.mode'];
     let token = req.query['hub.verify_token'];
@@ -76,7 +77,7 @@ app.get('/webhook', (req, res) => {
     if (mode && token) {
 
         // Check the mode and token sent are correct
-        if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+        if (mode === 'subscribe' && token === verify_token) {
 
             // Respond with 200 OK and challenge token from the request
             console.log('WEBHOOK_VERIFIED');
@@ -98,12 +99,12 @@ function handleEvent(sender_psid, webhook_event) {
     } else if (webhook_event.referral) {
         handleReferral(sender_psid, webhook_event.referral);
     } else if (webhook_event.pass_thread_control) {
-        handlePass(sender_psid, webhook_event.pass_thread_control);
+        handlePassThreadControl(sender_psid, webhook_event.pass_thread_control);
     }
 }
 
 // Handle thread control passed event
-function handlePass(sender_psid, received_event) {
+function handlePassThreadControl(sender_psid, received_event) {
     let response;
     response = {
         "text": "An automated agent is now helping you with your inquiry."
@@ -157,7 +158,7 @@ function passThreadControl(sender_psid, target_app_id) {
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v2.6/me/pass_thread_control",
-        "qs": {"access_token": access_token},
+        "qs": { "access_token": access_token },
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {
@@ -182,7 +183,7 @@ function callSendAPI(sender_psid, response) {
     // Send the HTTP request to the Messenger Platform
     request({
         "uri": "https://graph.facebook.com/v2.6/me/messages",
-        "qs": {"access_token": access_token},
+        "qs": { "access_token": access_token },
         "method": "POST",
         "json": request_body
     }, (err, res, body) => {
