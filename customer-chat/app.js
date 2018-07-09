@@ -157,7 +157,7 @@ function passThreadControl(sender_psid, target_app_id) {
 
     // Send the HTTP request to the Messenger Platform
     request({
-        "uri": "https://graph.facebook.com/v2.6/me/pass_thread_control",
+        "uri": "https://graph.facebook.com/me/pass_thread_control",
         "qs": { "access_token": access_token },
         "method": "POST",
         "json": request_body
@@ -182,7 +182,7 @@ function callSendAPI(sender_psid, response) {
 
     // Send the HTTP request to the Messenger Platform
     request({
-        "uri": "https://graph.facebook.com/v2.6/me/messages",
+        "uri": "https://graph.facebook.com/me/messages",
         "qs": { "access_token": access_token },
         "method": "POST",
         "json": request_body
