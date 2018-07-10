@@ -2,7 +2,7 @@
 
 This is a starter project you can use to as a starting point for completing the [Customer Chat plugin tutorial](#). 
 
-To download the completed quick start code, download it from the [master branch]() of this repo.
+To download the completed quick start code, download it from the [master branch](#) of this repo.
 
 ### More Resources
 

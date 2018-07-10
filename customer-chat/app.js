@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  *
  *
- * Starter Project for Messenger Platform Quick Start Tutorial
+ * Starter Project for Messenger Platform Customer Chat plugin Tutorial
  *
  * Use this project as the starting point for following the
- * Messenger Platform quick start tutorial.
+ * Messenger Platform Customer chat plugin tutorial.
  *
- * https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start/
+ * TBC
  *
  */
 
