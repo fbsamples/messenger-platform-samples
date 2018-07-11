@@ -1,5 +1,5 @@
 {
-  "name": "messenger-quick-start",
+  "name": "messenger-customer-chat-plugin",
   "version": "1.0.0",
   "description": "An example webhook for Facebook Messenger customer chat plugin tutorial.",
   "main": "app.js",
