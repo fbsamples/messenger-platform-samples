@@ -31,17 +31,19 @@ import path from 'path';
 const app = express().use(body_parser.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
+
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
 
+// Serve the thanks page and log results from form submission
 app.post('/send', (req, res) => {
     console.log(req.body);
     res.sendFile(path.join(__dirname, '/public', 'thanks.html'));
 });
 
+// Parse the request body from the POST
 app.post('/webhook', (req, res) => {
 
-    // Parse the request body from the POST
     let body = req.body;
 
     // Check the webhook event is from a Page subscription
@@ -107,6 +109,7 @@ app.get('/webhook', (req, res) => {
     }
 });
 
+// Handle incoming messages
 function handleMessage(sender_psid, received_message, user_ref) {
     let response;
     let recipient;
@@ -131,6 +134,7 @@ function handleMessage(sender_psid, received_message, user_ref) {
     callSendAPI(sender_psid, recipient, response);
 }
 
+// Handle incoming postback messages
 function handlePostback(sender_psid, received_postback) {
     let response;
     // Get the payload for the postback
@@ -146,6 +150,7 @@ function handlePostback(sender_psid, received_postback) {
     callSendAPI(sender_psid, response);
 }
 
+// Call the send API to send messages
 function callSendAPI(sender_psid, recipient, response) {
     // Construct the message body
     let request_body = {
