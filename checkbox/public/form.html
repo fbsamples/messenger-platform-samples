@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Summary</title>
+    <script>
+        var randUserRef = "";
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '',
+                xfbml: true,
+                version: 'v2.6'
+            });
+            randUserRef = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            console.log(randUserRef);
+            document.getElementsByClassName("fb-messenger-checkbox")[0].setAttribute('user_ref', randUserRef);
+
+            FB.Event.subscribe('messenger_checkbox', function (e) {
+                console.log("messenger_checkbox event");
+                console.log(e);
+
+                if (e.event == 'rendered') {
+                    console.log("Plugin was rendered");
+                } else if (e.event == 'checkbox') {
+                    var checkboxState = e.state;
+                    console.log("Checkbox state: " + checkboxState);
+                } else if (e.event == 'not_you') {
+                    console.log("User clicked 'not you'");
+                } else if (e.event == 'hidden') {
+                    console.log("Plugin was hidden");
+                }
+
+            });
+        };
+
+        (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk')
+        );
+
+        function confirmOptIn() {
+            FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
+                'app_id': '',
+                'page_id': '',
+                'ref': 'PASS_THROUGH_PARAM',
+                'user_ref': randUserRef
+            });
+        }
+    </script>
+</head>
+<body>
+<p>Below is a summary of your order, please enter your name, city, and preferred day of delivery and we will contact you
+    to confirm delivery:</p>
+<form id="order-form" method="post" action="/send" onsubmit="confirmOptIn()">
+    <p><label for="full-name">Full name: </label><input id="full-name" name="full-name" type="text"></p>
+    <p><label for="city">City: </label><input id="city" name="city" type="text"></p>
+    <p><label for="week-day">Week day: </label><input id="week-day" name="week-day" type="text"></p>
+
+    <div class="fb-messenger-checkbox"
+         origin=""
+         page_id=""
+         messenger_app_id=""
+         user_ref=""
+         prechecked="false"
+         allow_login="true"
+         size="large"></div>
+
+    <input type="submit">
+</form>
+</body>
+</html>
