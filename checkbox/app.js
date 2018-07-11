@@ -19,15 +19,16 @@
  *
  */
 
-'use strict';
 const PAGE_ACCESS_TOKEN = "";
+
 // Imports dependencies and set up http server
-const
-    request = require('request'),
-    express = require('express'),
-    body_parser = require('body-parser'),
-    path = require('path'),
-    app = express().use(body_parser.json()); // creates express http server
+import request from 'request'; // creates express http server
+
+import express from 'express';
+import body_parser from 'body-parser';
+import path from 'path';
+
+const app = express().use(body_parser.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
 // Sets server port and logs message on success
@@ -46,25 +47,25 @@ app.post('/webhook', (req, res) => {
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
 
-        body.entry.forEach(function (entry) {
+        body.entry.forEach(entry => {
 
             // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
 
             if (webhook_event.message) {
                 let sender_psid = webhook_event.sender.id;
-                console.log('Sender ID: ' + sender_psid);
+                console.log(`Sender ID: ${sender_psid}`);
                 if (webhook_event.prior_message) {
                     console.log(`Message originated from ${webhook_event.prior_message.source} using the user_ref ${webhook_event.prior_message.identifier}`)
                 }
                 handleMessage(sender_psid, webhook_event.message, null);
             } else if (webhook_event.postback) {
                 let sender_psid = webhook_event.sender.id;
-                console.log('Sender ID: ' + sender_psid);
+                console.log(`Sender ID: ${sender_psid}`);
                 handlePostback(sender_psid, webhook_event.postback);
             } else if (webhook_event.optin) {
                 let sender_psid = webhook_event.optin.user_ref;
-                console.log('user_ref: ' + sender_psid);
+                console.log(`user_ref: ${sender_psid}`);
                 handleMessage(null, webhook_event.optin, webhook_event.optin.user_ref);
             }
 
@@ -161,7 +162,7 @@ function callSendAPI(sender_psid, recipient, response) {
         if (!err) {
             console.log('message sent!');
         } else {
-            console.error("Unable to send message:" + err);
+            console.error(`Unable to send message:${err}`);
         }
     });
 }
