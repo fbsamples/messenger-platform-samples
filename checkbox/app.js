@@ -19,15 +19,13 @@
  *
  */
 
-const PAGE_ACCESS_TOKEN = "";
 
 // Imports dependencies and set up http server
 import request from 'request'; // creates express http server
-
 import express from 'express';
 import body_parser from 'body-parser';
-import path from 'path';
 
+const PAGE_ACCESS_TOKEN = "";
 const app = express().use(body_parser.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: false}));
@@ -38,7 +36,7 @@ app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
 // Serve the thanks page and log results from form submission
 app.post('/send', (req, res) => {
     console.log(req.body);
-    res.sendFile(path.join(__dirname, '/public', 'thanks.html'));
+    res.sendFile(__dirname+'/public'+'/thanks.html');
 });
 
 // Parse the request body from the POST
@@ -82,33 +80,6 @@ app.post('/webhook', (req, res) => {
 
 });
 
-// Accepts GET requests at the /webhook endpoint
-app.get('/webhook', (req, res) => {
-
-    const VERIFY_TOKEN = "";
-
-    // Parse params from the webhook verification request
-    let mode = req.query['hub.mode'];
-    let token = req.query['hub.verify_token'];
-    let challenge = req.query['hub.challenge'];
-
-    // Check if a token and mode were sent
-    if (mode && token) {
-
-        // Check the mode and token sent are correct
-        if (mode === 'subscribe' && token === VERIFY_TOKEN) {
-
-            // Respond with 200 OK and challenge token from the request
-            console.log('WEBHOOK_VERIFIED');
-            res.status(200).send(challenge);
-
-        } else {
-            // Responds with '403 Forbidden' if verify tokens do not match
-            res.sendStatus(403);
-        }
-    }
-});
-
 // Handle incoming messages
 function handleMessage(sender_psid, received_message, user_ref) {
     let response;
@@ -149,6 +120,33 @@ function handlePostback(sender_psid, received_postback) {
     // Send the message to acknowledge the postback
     callSendAPI(sender_psid, response);
 }
+
+// Accepts GET requests at the /webhook endpoint
+app.get('/webhook', (req, res) => {
+
+    const VERIFY_TOKEN = "";
+
+    // Parse params from the webhook verification request
+    let mode = req.query['hub.mode'];
+    let token = req.query['hub.verify_token'];
+    let challenge = req.query['hub.challenge'];
+
+    // Check if a token and mode were sent
+    if (mode && token) {
+
+        // Check the mode and token sent are correct
+        if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+
+            // Respond with 200 OK and challenge token from the request
+            console.log('WEBHOOK_VERIFIED');
+            res.status(200).send(challenge);
+
+        } else {
+            // Responds with '403 Forbidden' if verify tokens do not match
+            res.sendStatus(403);
+        }
+    }
+});
 
 // Call the send API to send messages
 function callSendAPI(sender_psid, recipient, response) {
