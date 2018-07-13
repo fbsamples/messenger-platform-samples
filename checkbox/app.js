@@ -4,50 +4,61 @@
  * This source code is licensed under the license found in the
  * LICENSE file in the root directory of this source tree.
  *
+ * Messenger Platform checkbox plugin tutorial
  *
- * Starter Project for Messenger Platform Quick Start Tutorial
+ * This is the completed code for the Messenger Platform checkbox plugin tutorial
  *
- * Use this project as the starting point for following the
- * Messenger Platform quick start tutorial.
+ * TBC
  *
- * https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start/
+ * To run this code, you must do the following:
+ *
+ * 1. Deploy this code to a server running Node.js
+ * 2. Run `npm install`
+ * 3. Update the VERIFY_TOKEN
+ * 4. Add your PAGE_ACCESS_TOKEN to your environment vars
  *
  */
 
-'use strict';
 
 // Imports dependencies and set up http server
-const
-    request = require('request'),
-    express = require('express'),
-    body_parser = require('body-parser'),
-    app = express().use(body_parser.json()); // creates express http server
+import request from 'request'; // creates express http server
+import express from 'express';
+import body_parser from 'body-parser';
+
+const PAGE_ACCESS_TOKEN = "";
+const app = express().use(body_parser.json());
+app.use(express.static('public'));
+app.use(express.urlencoded({extended: false}));
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+app.listen(process.env.PORT || 5000, () => console.log('webhook is listening'));
 
-// Accepts POST requests at /webhook endpoint
+// Serve the thanks page and log results from form submission
+app.post('/send', (req, res) => {
+    console.log(req.body);
+    res.sendFile(__dirname+'/public'+'/thanks.html');
+});
+
+// Parse the request body from the POST
 app.post('/webhook', (req, res) => {
 
-    // Parse the request body from the POST
     let body = req.body;
 
     // Check the webhook event is from a Page subscription
     if (body.object === 'page') {
 
-        // Iterate over each entry - there may be multiple if batched
-        body.entry.forEach(function (entry) {
-            if (entry.optin) {
-                console.log(entry);
-                
-            }
-            // Get the webhook event. entry.messaging is an array, but
-            // will only ever contain one event, so we get index 0
+        body.entry.forEach(entry => {
+
+            // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
-            console.log(webhook_event);
+
+            if (webhook_event.message) {
+                let sender_psid = webhook_event.sender.id;
+                console.log(`Sender ID: ${sender_psid}`);
+                handleMessage(sender_psid, webhook_event.message, null);
+            }
 
         });
-
         // Return a '200 OK' response to all events
         res.status(200).send('EVENT_RECEIVED');
 
@@ -58,11 +69,28 @@ app.post('/webhook', (req, res) => {
 
 });
 
+// Handle incoming messages
+function handleMessage(sender_psid, received_message, user_ref) {
+    let response;
+    let recipient;
+
+    if (sender_psid) {
+        recipient = {
+            "id": sender_psid
+        };
+        response = {
+            "text": `You sent the message: "${received_message.text}".`
+        }
+    }
+
+    // Send the response message
+    callSendAPI(sender_psid, recipient, response);
+}
+
 // Accepts GET requests at the /webhook endpoint
 app.get('/webhook', (req, res) => {
 
-    /** UPDATE YOUR VERIFY TOKEN **/
-    const VERIFY_TOKEN = "<YOUR_VERIFY_TOKEN>";
+    const VERIFY_TOKEN = "";
 
     // Parse params from the webhook verification request
     let mode = req.query['hub.mode'];
@@ -85,3 +113,25 @@ app.get('/webhook', (req, res) => {
         }
     }
 });
+
+// Call the send API to send messages
+function callSendAPI(sender_psid, recipient, response) {
+    // Construct the message body
+    let request_body = {
+        recipient,
+        "message": response
+    };
+    // Send the HTTP request to the Messenger Platform
+    request({
+        "uri": "https://graph.facebook.com/v2.6/me/messages",
+        "qs": {"access_token": PAGE_ACCESS_TOKEN},
+        "method": "POST",
+        "json": request_body
+    }, (err, res, body) => {
+        if (!err) {
+            console.log('message sent!');
+        } else {
+            console.error(`Unable to send message:${err}`);
+        }
+    });
+}

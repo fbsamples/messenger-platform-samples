@@ -3,56 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Shopping Summary</title>
-    <script>
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '<APP_ID>',
-                xfbml: true,
-                version: 'v2.6'
-            });
-        };
 
-        (function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) {
-                    return;
-                }
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js";
-                fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk')
-        );
-
-        function confirmOptIn() {
-            FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
-                'app_id': 'APP_ID',
-                'page_id': 'PAGE_ID',
-                'ref': 'PASS_THROUGH_PARAM',
-                'user_ref': 'UNIQUE_REF_PARAM'
-            });
-        }
-    </script>
 </head>
 <body>
 <p>Below is a summary of your order, please enter your name, city, and preferred day of delivery and we will contact you
     to confirm delivery:</p>
-<!-- TODO: To come -->
-<form method="post" action="/send" onsubmit="confirmOptIn()">
-    <input name="full-name" type="text">
-    <input name="city" type="text">
-    <input name="day" type="checkbox">
-    <input name="phone" type="number">
+<form id="order-form" method="post" action="/send">
+    <p><label for="full-name">Full name: </label><input id="full-name" name="full-name" type="text"></p>
+    <p><label for="city">City: </label><input id="city" name="city" type="text"></p>
+    <p><label for="week-day">Week day: </label><input id="week-day" name="week-day" type="text"></p>
 
-    <div class="fb-messenger-checkbox"
-         origin="<WHITELISTED_DOMAIN>"
-         page_id="<PAGE_ID>"
-         messenger_app_id="<APP_ID>"
-         user_ref="UNIQUE_REF_PARAM"
-         prechecked="false"
-         allow_login="true"
-         size="large"></div>
-
+    <input type="submit">
 </form>
 </body>
 </html>
