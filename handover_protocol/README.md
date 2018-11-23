@@ -22,6 +22,7 @@ This repo contains code for the webhook and application logic for an example Mes
 module.exports = {
   "PAGE_ACCESS_TOKEN": "<YOUR PAGE ACCESS TOKEN>",  
   "VERIFY_TOKEN": "YOUR WEBHOOK VERIFY TOKEN"
+  "PAGE_ID": "YOUR PAGE ID"
 }  
 ```
 Alternatively, you can set the above as environment variables.
