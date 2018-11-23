@@ -71,7 +71,7 @@ app.post('/webhook', (req, res) => {
       if (message && message.quick_reply && message.quick_reply.payload == 'pass_to_inbox') {
         
         // quick reply to pass to Page inbox was clicked
-        let page_inbox_app_id = process.env.PAGE_ID || env.PAGE_ID;        
+        let page_inbox_app_id = process.env.PAGE_INBOX_ID || env.PAGE_INBOX_ID;        
         text = 'The Primary Receiver is passing control to the Page Inbox. \n\n Tap "Take From Inbox" to have the Primary Receiver take control back.';
         title = 'Take From Inbox';
         payload = 'take_from_inbox';
