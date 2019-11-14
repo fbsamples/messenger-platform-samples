@@ -10,8 +10,6 @@ Have a look at the [Introduction section](https://developers.facebook.com/docs/m
 
 Check out the [Get Started section](https://developers.facebook.com/docs/messenger-platform/getting-started) of the docs for a complete walkthrough of everything you need to know.
 
-You can also try out our [quick start tutorial](https://developers.facebook.com/docs/messenger-platform/getting-started/quick-start) to build your first Messenger experience right now!
-
 ### More Resources
 
 To learn more about the Messenger Platform, check out these other resources:
