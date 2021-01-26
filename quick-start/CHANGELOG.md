@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2021-01-26
+
+### Changed
+
+- Upgraded [Node](https://github.com/nodejs/node) to version greater than 10.x
+- Date to 2021
+
 ## [2.0.0] - 2019-02-01
 
 ### Added
