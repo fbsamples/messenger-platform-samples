@@ -72,52 +72,59 @@ app.get('/webhook', function(req, res) {
   }  
 });
 
+// Creates the endpoint for our webhook 
+app.post('/webhook', (req, res) => {  
+ 
+	let body = req.body;
+  
+	// Checks this is an event from a page subscription
+	if (body.object === 'page') {
+  
+	  // Iterates over each entry - there may be multiple if batched
+	  body.entry.forEach(function(entry) {
+  
+		// Gets the message. entry.messaging is an array, but 
+		// will only ever contain one message, so we get index 0
+		let webhook_event = entry.messaging[0];
+		console.log(webhook_event);
+	  });
+  
+	  // Returns a '200 OK' response to all requests
+	  res.status(200).send('EVENT_RECEIVED');
+	} else {
+	  // Returns a '404 Not Found' if event is not from a page subscription
+	  res.sendStatus(404);
+	}
+  
+  });
 
-/*
- * All callbacks for Messenger are POST-ed. They will be sent to the same
- * webhook. Be sure to subscribe your app to your page to receive callbacks
- * for your page. 
- * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
- *
- */
-app.post('/webhook', function (req, res) {
-  var data = req.body;
+// Adds support for GET requests to our webhook
+app.get('/webhook', (req, res) => {
 
-  // Make sure this is a page subscription
-  if (data.object == 'page') {
-    // Iterate over each entry
-    // There may be multiple if batched
-    data.entry.forEach(function(pageEntry) {
-      var pageID = pageEntry.id;
-      var timeOfEvent = pageEntry.time;
-
-      // Iterate over each messaging event
-      pageEntry.messaging.forEach(function(messagingEvent) {
-        if (messagingEvent.optin) {
-          receivedAuthentication(messagingEvent);
-        } else if (messagingEvent.message) {
-          receivedMessage(messagingEvent);
-        } else if (messagingEvent.delivery) {
-          receivedDeliveryConfirmation(messagingEvent);
-        } else if (messagingEvent.postback) {
-          receivedPostback(messagingEvent);
-        } else if (messagingEvent.read) {
-          receivedMessageRead(messagingEvent);
-        } else if (messagingEvent.account_linking) {
-          receivedAccountLink(messagingEvent);
-        } else {
-          console.log("Webhook received unknown messagingEvent: ", messagingEvent);
-        }
-      });
-    });
-
-    // Assume all went well.
-    //
-    // You must send back a 200, within 20 seconds, to let us know you've 
-    // successfully received the callback. Otherwise, the request will time out.
-    res.sendStatus(200);
-  }
-});
+	// Your verify token. Should be a random string.
+	let VERIFY_TOKEN = VALIDATION_TOKEN;
+	  
+	// Parse the query params
+	let mode = req.query['hub.mode'];
+	let token = req.query['hub.verify_token'];
+	let challenge = req.query['hub.challenge'];
+	  
+	// Checks if a token and mode is in the query string of the request
+	if (mode && token) {
+	
+	  // Checks the mode and token sent is correct
+	  if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+		
+		// Responds with the challenge token from the request
+		console.log('WEBHOOK_VERIFIED');
+		res.status(200).send(challenge);
+	  
+	  } else {
+		// Responds with '403 Forbidden' if verify tokens do not match
+		res.sendStatus(403);      
+	  }
+	}
+  });
 
 /*
  * This path is used for account linking. The account linking call-to-action

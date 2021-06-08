@@ -1,6 +1,6 @@
 {
-    "appSecret": "",
-    "pageAccessToken": "",
-    "validationToken": "",
-    "serverURL": ""
+    "appSecret": "6d42629953f65e7ca4d9dad7752ea3fe",
+    "pageAccessToken": "EAAN1yjQ4lIoBAJdk96pZBpsz5ZBuY4qekuZA1S39daxyKhQl6V4wWNGo4qXNp57IiCZB44yHxVEJ1nOZCfWytud0BZB0izsNcs4u4Ik8KevItQ5T1UIlJevLafB4dFvbzTfH21LxRmLVffeY2uZAa5BQ339xbGZAlE45S4fa27ztKN2OxIIyLSEm",
+    "validationToken": "you_are_my_sunshine",
+    "serverURL": "https://stark-river-27563.herokuapp.com/"
 }
