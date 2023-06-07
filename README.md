@@ -10,6 +10,17 @@ Have a look at the [Introduction section](https://developers.facebook.com/docs/m
 
 Check out the [Get Started section](https://developers.facebook.com/docs/messenger-platform/getting-started) of the docs for a complete walkthrough of everything you need to know.
 
+### Knowledge Bank: Messenger API
+
+We compiled a set of blog posts covering different aspects of the Messenger API. 
+[This repository](messenger-api) includes code snippets and projects used in the following articles:
+
+* [Integrating the Messenger API in a Python App](messenger-api/messenger-api-with-python)
+* [Using the Messenger API to Send Messages to Facebook and Instagram Users in Node.js](messenger-api/messenger-api-with-nodejs)
+* [Integrating the Messenger API in a Java App](messenger-api/messenger-api-with-java)
+* [Working with Webhooks for the Messenger Platform](messenger-api/messenger-api-and-webhooks)
+
+
 ### More Resources
 
 To learn more about the Messenger Platform, check out these other resources:
