@@ -40,7 +40,7 @@ export class Messenger {
 	}
 
 	async getConversationMessages( conversationId : string ) {
-		return await this.#sendApiRequest( `${conversationId}`, {
+		return await this.#sendApiRequest(`conversations/${conversationId}`, {
 			"fields": [ "id", "messages" ],
 		} );
 	}
