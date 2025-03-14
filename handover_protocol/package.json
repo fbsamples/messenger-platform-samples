@@ -1,0 +1,19 @@
+{
+  "name": "hop2inbox_bot",
+  "version": "0.0.1",
+  "description": "Handover Protocol to Page Inbox example",
+  "main": "index.js",
+  "author": "Tudor Săpunaru",
+  "contributors": [
+    {
+      "name": "Alex Muramoto",
+      "url": "https://www.github.com/amuramoto"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "request": "^2.80.0"
+  }
+}
