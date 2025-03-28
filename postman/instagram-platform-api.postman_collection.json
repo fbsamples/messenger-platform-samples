@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "28cdcd92-d15b-4540-b917-0744999d736d",
+		"name": "Instagram API",
+		"description": "Postman collection for the Instagram Send Message API which allows a professional IG user to send a message to any user on IG.\n\nNote: The recipient user must have sent a message to the sender (professional account).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38875560"
+	},
+	"item": [
+		{
+			"name": "Send API",
+			"item": [
+				{
+					"name": "Text Message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"recipient\": {\n        \"id\":\"{{instagram_scoped_id}}\"\n    },\n    \"message\": {\n        \"text\": \"Hello World!\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://graph.instagram.com/{{api_version}}/me/messages",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"instagram",
+								"com"
+							],
+							"path": [
+								"{{api_version}}",
+								"me",
+								"messages"
+							]
+						},
+						"description": "# Instagram Messages API\n\nThis endpoint allows you to send a message to a user on Instagram.\n\n## Request\n\n### Request Body\n\n- `recipient.id` (string, required): The Instagram user ID of the recipient.\n    \n- `message.text` (string, required): The text of the message to be sent.\n    \n\nExample:\n\n``` json\n{\n  \"recipient\": {\n    \"id\": \"{{instagram_scoped_id}}\"\n  },\n  \"message\": {\n    \"text\": \"Hello World!\"\n  }\n}\n\n ```\n\n## Response\n\nExample response\n\n``` json\n{\n  \"recipient_id\": \"IGSID\",\n  \"message_id\": \"MESSAGE-ID\"\n}\n\n ```\n\n- `message_id` (string): The ID of the sent message."
+					},
+					"response": []
+				},
+				{
+					"name": "Media Message (Photo)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipient\":{\n    \"id\":\"{{instagram_scoped_id}}\"\n  },\n  \"message\":{\n    \"attachment\":{\n      \"type\":\"image\", \n      \"payload\":{\n        \"url\":\"MEDIA_URL\"        \n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://graph.instagram.com/{{api-version}}/{{ig_account_id}}/messages",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"instagram",
+								"com"
+							],
+							"path": [
+								"{{api-version}}",
+								"{{ig_account_id}}",
+								"messages"
+							]
+						},
+						"description": "# Instagram Messages API\n\nThis API endpoint allows you to send messages on Instagram.\n\n## Request\n\n### Endpoint\n\n`POST https://graph.instagram.com/{{api-version}}/me/messages`\n\n### Request Body\n\n- Type: JSON\n    \n\n| Parameter | Type | Description |\n| --- | --- | --- |\n| recipient.id | String | The Instagram user ID of the recipient |\n| message.attachment.type | String | The type of attachment (e.g. image, video) |\n| message.attachment.payload.url | String | The URL of the attachment (e.g. image, video) |\n\n#### Example\n\n``` json\n{\n    \"recipient\": {\n        \"id\": \"{{instagram_scoped_id}}\"\n    },\n    \"message\": {\n        \"attachment\": {\n            \"type\": \"image\",\n            \"payload\": {\n                \"url\": \"https://www.example.com/image.jpg\"\n            }\n        }\n    }\n}\n## Response\nThe response of this request is a JSON object with the following schema:\n```json\n{\n  \"recipient_id\": \"IGSID\",\n  \"message_id\": \"MESSAGE-ID\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Media Message (GIF)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipient\":{\n    \"id\":\"{{instagram_scoped_id}}\"\n  },\n  \"message\":{\n    \"attachment\":{\n      \"type\":\"image\", \n      \"payload\":{\n        \"url\":\"MEDIA_URL\"\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://graph.instagram.com/{{api-version}}/{{ig_account_id}}/messages",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"instagram",
+								"com"
+							],
+							"path": [
+								"{{api-version}}",
+								"{{ig_account_id}}",
+								"messages"
+							]
+						},
+						"description": "### Instagram Messages\n\nThis endpoint allows you to send a message with an attachment to a recipient on Instagram.\n\n#### Request Body\n\n- `recipient.id` (string) - The Instagram user ID of the recipient.\n    \n- `message.attachment.type` (string) - The type of attachment, in this case, \"image\".\n    \n- `message.attachment.payload.url` (string) - The URL of the image to be sent as an attachment.\n    \n\n#### Response\n\nThe response for this request can be represented as a JSON schema. Here is an example of the response schema:\n\n``` json\n{\n  \"recipient_id\": \"IGSID\",\n  \"message_id\": \"MESSAGE-ID\"\n}\n\n ```\n\nThe `message_id` is the ID of the sent message, and the `attachment_id` is the ID of the attachment."
+					},
+					"response": []
+				},
+				{
+					"name": "Media Message (Audio or Video)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipient\":{\n    \"id\":\"{{instagram_scoped_id}}\"\n  },\n  \"message\": {\n    \"attachment\": {\n      \"type\": \"audio\",\n      \"payload\": {\n        \"url\": \"ACTUAL_AUDIO_OR_VIDEO_FILE_URL\"\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://graph.instagram.com/{{api-version}}/me/messages",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"instagram",
+								"com"
+							],
+							"path": [
+								"{{api-version}}",
+								"me",
+								"messages"
+							]
+						},
+						"description": "### POST /{{api-version}}/me/messages\n\nThis endpoint is used to send a message to the authenticated user on Instagram.\n\n#### Request Body\n\n- recipient (object, required): The recipient of the message.\n    \n    - id (string, required): The Instagram user ID of the recipient.\n        \n- message (object, required): The message content.\n    \n    - attachment (object, required): The attachment included in the message.\n        \n        - type (string, required): The type of attachment, e.g. \"audio\".\n            \n        - payload (object, required): The payload of the attachment.\n            \n            - url (string, required): The URL of the audio or video file to be sent as the attachment.\n                \n\n#### Response (JSON Schema)\n\n``` json\n{\n  \"recipient_id\": \"IGSID\",\n  \"message_id\": \"MESSAGE-ID\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Send a Sticker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipient\":{\n    \"id\":\"{{instagram_scoped_id}}\"\n  },\n  \"message\": {\n    \"attachment\": {\n      \"type\":\"like_heart\"\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://graph.instagram.com/{{api-version}}/me/messages",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"instagram",
+								"com"
+							],
+							"path": [
+								"{{api-version}}",
+								"me",
+								"messages"
+							]
+						},
+						"description": "### Instagram Messages\n\nThis endpoint allows you to send messages on Instagram.\n\n#### Request Body\n\n- `recipient` (object, required): The recipient of the message.\n    \n    - `id` (string, required): The Instagram ID of the recipient.\n        \n- `message` (object, required): The message content.\n    \n    - `attachment` (object, required): The attachment included in the message.\n        \n        - `type` (string, required): The type of attachment, e.g., \"like_heart\".\n            \n\n#### Response\n\nThe response for this request is not specified. However, you can use the following JSON schema as a reference:\n\n``` json\n{\n  \"recipient_id\": \"IGSID\",\n  \"message_id\": \"MESSAGE-ID\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "React or Unreact to a message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipient\":{\n    \"id\":\"{{instagram_scoped_id}}\"\n  },\n  \"sender_action\": \"react\",\n  \"payload\": {\n    \"message_id\": \"MESSAGE_ID\",\n    \"reaction\": \"love\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://graph.instagram.com/{{api-version}}/{{ig_account_id}}/messages",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"instagram",
+								"com"
+							],
+							"path": [
+								"{{api-version}}",
+								"{{ig_account_id}}",
+								"messages"
+							]
+						},
+						"description": "### POST /{{api-version}}/me/messages\n\nThis endpoint is used to send a message reaction to a specific Instagram user.\n\n#### Request Body\n\n- `recipient` (object, required): The recipient of the message.\n    \n    - `id` (string, required): The Instagram user ID of the recipient.\n        \n- `sender_action` (string, required): The action to be taken by the sender.\n    \n- `payload` (object, required): Additional payload for the message reaction.\n    \n    - `message_id` (string, required): The ID of the message to react to.\n        \n    - `reaction` (string, required): The type of reaction to be sent.\n        \n\n#### Response\n\nThe response for this request will be a JSON object with the relevant message reaction details.\n\n``` json\n{\n  \"recipient_id\": \"IGSID\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Published Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipient\": {\n    \"id\":\"{{instagram_scoped_id}}\"\n  },\n  \"message\": {\n    \"attachment\": {\n      \"type\": \"MEDIA_SHARE\",\n      \"payload\": {\n        \"id\": \"POST_ID\"\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://graph.instagram.com/{{api-version}}/{{ig_account_id}}/messages",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"instagram",
+								"com"
+							],
+							"path": [
+								"{{api-version}}",
+								"{{ig_account_id}}",
+								"messages"
+							]
+						},
+						"description": "### POST /{{api-version}}/me/messages\n\nThis endpoint is used to send a message to the authenticated user on Instagram.\n\n#### Request\n\n- Method: POST\n    \n- URL: `https://graph.instagram.com/{{api-version}}/me/messages`\n    \n- Body:\n    \n    - recipient (object)\n        \n        - id (string): The Instagram ID of the recipient.\n            \n    - message (object)\n        \n        - attachment (object)\n            \n            - type (string): The type of attachment, in this case \"MEDIA_SHARE\".\n                \n            - payload (object)\n                \n                - id (string): The ID of the post to be shared.\n                    \n\n#### Response\n\nThe response for this request is not provided.\n\n#### JSON Schema\n\n``` json\n{\n  \"recipient_id\": \"IGSID\",\n  \"message_id\": \"MESSAGE-ID\"\n}\n\n ```"
+					},
+					"response": []
+				}
+			],
+			"description": "The Instagram Send API is the main API used to send messages to users, including text, attachments, templates, sender actions, and more.\n\n### Before You Start\n\nYou will need:\n\n- An access token requested by the IG professional account who can send message to a user on the platform\n    \n- The `instagram_business_manage_messages` permission\n    \n- The message recipient user must have sent a message to your IG professional account\n    \n\n## Environment\n\nThis collection has a corresponding **Instagram Platform API** Postman [environment](https://learning.postman.com/docs/sending-requests/managing-environments/) which you must select when using the collection. Set **current values** for the variables defined in this environment if you wish to perform the queries in the collection.\n\n### Access tokens\n\nThe API supports both user and system user access tokens. You can get access tokens 3 different ways:\n\n- [Facebook login](https://developers.facebook.com/docs/facebook-login/overview) for your app\n    \n- [App Dashboard](https://developers.facebook.com/apps)\n    \n- [Graph API Explorer](https://developers.facebook.com/tools/explorer/)"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "instagram_scoped_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "api_version",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
