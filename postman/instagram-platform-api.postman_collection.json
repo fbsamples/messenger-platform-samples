@@ -2,11 +2,519 @@
 	"info": {
 		"_postman_id": "28cdcd92-d15b-4540-b917-0744999d736d",
 		"name": "Instagram API",
-		"description": "Postman collection for the Instagram Send Message API which allows a professional IG user to send a message to any user on IG.\n\nNote: The recipient user must have sent a message to the sender (professional account).",
+		"description": "This collection will allow you to connect to [Instagram's Graph API](https://developers.facebook.com/docs/instagram-api/), which allows Instagram Professionals - Businesses and Creators - to manage their presence on the platform. This guide will help you to **generate tokens**, **publish content**, **gather insights** and **manage an Instagram profile**.\n\nThe API is built on top of Facebook's Graph API, we recommend giving [this guide](https://developers.facebook.com/docs/graph-api/) a look before getting started.\n\n# Before You Start\n\nTo interact with the API, you must first have a Facebook App. You can create one following this [guide](https://desktop.postman.com/?desktopVersion=9.31.0&webVersion=9.31.22-ui-221031-1419&userId=19667706&teamId=3121756), for the purposes of the guide, we recommend using a `Business` App.\n\nAfter creating the app, you must generate a **User Access Token** with it. This token will allow you to manage permissions and objects you manage, you can generate it with this [guide](https://desktop.postman.com/?desktopVersion=9.31.0&webVersion=9.31.22-ui-221031-1419&userId=19667706&teamId=3121756). Afterwards, make sure to select the `Instagram` environment in Postman and paste the resulting token under the `user_access_token` variable.\n\nThe permission model for the API requires a **Page** to be linked with a [Professional Instagram Account](https://help.instagram.com/502981923235522?fbclid=IwAR1jt_4CNiu3TFxV6AN9wpI2EUy59TtxnrZP1RJuSUOZhuReTezFMs1cAAc) before starting. Linking process can be found [here](https://www.facebook.com/help/1148909221857370).\n\n## Access Token Permissions needed\n\nThese are the permissions needed for the requests in this collection:\n\n- `pages_show_list`\n- `instagram_basic`\n- `instagram_content_publish`\n- `pages_read_engagement`\n- `instagram_manage_comments`",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "38875560"
 	},
 	"item": [
+		{
+			"name": "Token",
+			"item": [
+				{
+					"name": "Get Access Tokens of Pages You Manage",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "Postman/InstagramCollection",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://graph.facebook.com/{{api_version}}/me/accounts?fields=name,access_token,tasks,instagram_business_account&access_token={{user_access_token}}",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"facebook",
+								"com"
+							],
+							"path": [
+								"{{api_version}}",
+								"me",
+								"accounts"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,access_token,tasks,instagram_business_account"
+								},
+								{
+									"key": "access_token",
+									"value": "{{user_access_token}}"
+								}
+							]
+						},
+						"description": "This request uses a **User Access Token** to get a list of all the pages managed by a User. Make sure to choose one page from the list, copy the `ID` into the `page_id` variable, the `access_token` field into the `page_access_token` variable of the environment and the `instagram_business_account` field into the `ig_user_id` variable.\n\nThis new access token is a **Page Access Token**, which acts on behalf of a Page that is linked to an Instagram profile.\n\nMore available fields can be found [here](https://developers.facebook.com/docs/graph-api/reference/page/#fields)."
+					},
+					"response": [
+						{
+							"name": "Get Access Tokens of Pages You Manage",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Postman/InstagramCollection",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://graph.facebook.com/{{api_version}}/me/accounts?fields=name,access_token,tasks,instagram_business_account&access_token={{user_access_token}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{api_version}}",
+										"me",
+										"accounts"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "name,access_token,tasks,instagram_business_account"
+										},
+										{
+											"key": "access_token",
+											"value": "{{user_access_token}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"name\": \"{page_name}\",\n            \"access_token\": \"{page_access_token}\",\n            \"instagram_business_account\": {\n                \"id\": \"{ig_user_id}\"\n            },\n            \"id\": \"{page_id}\",\n            \"tasks\": [\n                \"ANALYZE\",\n                \"ADVERTISE\",\n                \"MESSAGING\",\n                \"MODERATE\",\n                \"CREATE_CONTENT\",\n                \"MANAGE\"\n            ]\n        }\n        //...\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Specific Page Access Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "Postman/InstagramCollection",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://graph.facebook.com/{{api_version}}/{{page_id}}?fields=name,access_token,instagram_business_account&access_token={{user_access_token}}",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"facebook",
+								"com"
+							],
+							"path": [
+								"{{api_version}}",
+								"{{page_id}}"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "name,access_token,instagram_business_account"
+								},
+								{
+									"key": "access_token",
+									"value": "{{user_access_token}}"
+								}
+							]
+						},
+						"description": "If you already have the `page_id` available, you can query directly this endpoint to get the specific **Page Access Token** you need and avoid having to search for it on the list.\n\nMore available fields can be found [here](https://developers.facebook.com/docs/graph-api/reference/page/#fields)."
+					},
+					"response": [
+						{
+							"name": "Get Specific Page Access Token",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Postman/InstagramCollection",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://graph.facebook.com/{{api_version}}/{{page_id}}?fields=name,access_token,instagram_business_account&access_token={{user_access_token}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{api_version}}",
+										"{{page_id}}"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "name,access_token,instagram_business_account"
+										},
+										{
+											"key": "access_token",
+											"value": "{{user_access_token}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"name\": \"{page_name}\",\n    \"access_token\": \"{page_access_token}\",\n    \"instagram_business_account\": {\n        \"id\": \"{ig_user_id}\"\n    },\n    \"id\": \"{page_id}\"\n}"
+						}
+					]
+				}
+			],
+			"description": "An access token is a string that identifies a user, app or IG User and is used by an app to make Graph API calls. This section will cover the basics of tokens used for the Instagram API. Make sure the `Instagram` environment is active and the `user_access_token` variable has a value."
+		},
+		{
+			"name": "Reels Publishing",
+			"item": [
+				{
+					"name": "Upload a Reel to an IG Container",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code==200)",
+									"{",
+									"    var jsonData = JSON.parse(responseBody);",
+									"    pm.collectionVariables.set(\"ig_container_id\", jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "Postman/InstagramCollection",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://graph.facebook.com/{{api_version}}/{{ig_user_id}}/media?media_type=REELS&video_url={{video_url}}&caption=Hello World!&share_to_feed=false&access_token={{page_access_token}}",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"facebook",
+								"com"
+							],
+							"path": [
+								"{{api_version}}",
+								"{{ig_user_id}}",
+								"media"
+							],
+							"query": [
+								{
+									"key": "media_type",
+									"value": "REELS"
+								},
+								{
+									"key": "video_url",
+									"value": "{{video_url}}"
+								},
+								{
+									"key": "caption",
+									"value": "Hello World!"
+								},
+								{
+									"key": "share_to_feed",
+									"value": "false",
+									"description": "If set to true, the reel will appear in both the Feed and Reels tab. If it's set to false, it will only appear in the Reels tab."
+								},
+								{
+									"key": "access_token",
+									"value": "{{page_access_token}}"
+								}
+							]
+						},
+						"description": "This request will create an IG Container to hold the Reel. It will return a `container_id` that will be automatically placed into the `ig_container_id` variable. The `media_type` parameter will determine the type of video published, in this case REELS. It is important that the link in the `video_url` variable is accessible publicly as we will cURL the video from the server."
+					},
+					"response": [
+						{
+							"name": "Upload a Reel to an IG Container",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Postman/InstagramCollection",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://graph.facebook.com/{{api_version}}/{{ig_user_id}}/media?media_type=REELS&video_url={{video_url}}&caption=Hello World!&share_to_feed=false&access_token={{page_access_token}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{api_version}}",
+										"{{ig_user_id}}",
+										"media"
+									],
+									"query": [
+										{
+											"key": "media_type",
+											"value": "REELS"
+										},
+										{
+											"key": "video_url",
+											"value": "{{video_url}}"
+										},
+										{
+											"key": "caption",
+											"value": "Hello World!"
+										},
+										{
+											"key": "share_to_feed",
+											"value": "false",
+											"description": "If set to true, the reel will appear in both the Feed and Reels tab. If it's set to false, it will only appear in the Reels tab."
+										},
+										{
+											"key": "access_token",
+											"value": "{{page_access_token}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"18270815569115548\"//IG Container ID\n}"
+						}
+					]
+				},
+				{
+					"name": "Get IG Container Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "Postman/InstagramCollection",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://graph.facebook.com/{{api_version}}/{{ig_container_id}}?fields=status_code,status&access_token={{page_access_token}}",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"facebook",
+								"com"
+							],
+							"path": [
+								"{{api_version}}",
+								"{{ig_container_id}}"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "status_code,status"
+								},
+								{
+									"key": "access_token",
+									"value": "{{page_access_token}}"
+								}
+							]
+						},
+						"description": "After generating the IG Container, this request will allow you to monitor the status of the upload. Once the `status_code` is `FINISHED`, you'll be able to publish the Reel in the next request."
+					},
+					"response": [
+						{
+							"name": "Get IG Container Status",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Postman/InstagramCollection",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://graph.facebook.com/{{api_version}}/{{ig_container_id}}?fields=status_code,status&access_token={{page_access_token}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{api_version}}",
+										"{{ig_container_id}}"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "status_code,status"
+										},
+										{
+											"key": "access_token",
+											"value": "{{page_access_token}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"status_code\": \"FINISHED\",\n    \"status\": \"Finished: Media has been uploaded and it is ready to be published.\",\n    \"id\": \"18270815569115548\" //IG Container ID\n}"
+						}
+					]
+				},
+				{
+					"name": "Publish Reel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "User-Agent",
+								"value": "Postman/InstagramCollection",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://graph.facebook.com/{{api_version}}/{{ig_user_id}}/media_publish?creation_id={{ig_container_id}}&access_token={{page_access_token}}",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"facebook",
+								"com"
+							],
+							"path": [
+								"{{api_version}}",
+								"{{ig_user_id}}",
+								"media_publish"
+							],
+							"query": [
+								{
+									"key": "creation_id",
+									"value": "{{ig_container_id}}"
+								},
+								{
+									"key": "access_token",
+									"value": "{{page_access_token}}"
+								}
+							]
+						},
+						"description": "This request finalizes the Reels Publishing process and posts the Reel into a User's profile."
+					},
+					"response": [
+						{
+							"name": "Publish Reel",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "User-Agent",
+										"value": "Postman/InstagramCollection",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://graph.facebook.com/{{api_version}}/{{ig_user_id}}/media_publish?creation_id={{ig_container_id}}&access_token={{page_access_token}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{api_version}}",
+										"{{ig_user_id}}",
+										"media_publish"
+									],
+									"query": [
+										{
+											"key": "creation_id",
+											"value": "{{ig_container_id}}"
+										},
+										{
+											"key": "access_token",
+											"value": "{{page_access_token}}"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [],
+							"cookie": [],
+							"body": "{\n    \"id\": \"90011803596441\"//IG Media ID\n}"
+						}
+					]
+				}
+			],
+			"description": "This section allows developers to upload and publish a Reel into an Instagram User from a server.\n\nFor this section, you'll need to introduce a video link into the `video_url` variable. It needs to follow these specifications:\n\n- Container: MOV or MP4 (PMEG-4 Part 14)\n- Audio codec: AAC, 48khz\n- Video codec: HEVC or H.264\n- Frame rate: 23-60 FPS\n- Picture size:\n    - Maximum 1920 horizontal pixels\n    - Recommended aspect ratio 9:16\n- Video bitrate: 25 Mbps maximum\n- Audio bitrate: 128 kbps\n- Duration 15 minutes maximum, 3 seconds minimum\n- File size: 1 GB maximum\n    \n\nMore information about Reels Publishing can be found [here](https://developers.facebook.com/docs/instagram-api/guides/content-publishing/#reels-posts)."
+		},
 		{
 			"name": "Send API",
 			"item": [
@@ -281,6 +789,21 @@
 		},
 		{
 			"key": "api_version",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ig_media_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "comment_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ig_container_id",
 			"value": "",
 			"type": "string"
 		}
