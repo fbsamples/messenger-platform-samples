@@ -12,6 +12,450 @@
 			"name": "Send API",
 			"item": [
 				{
+					"name": "Sender actions",
+					"item": [
+						{
+							"name": "Mark seen",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n   \"sender_action\":\"mark_seen\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								},
+								"description": "To send a basic text message to a person who sent your Page a message, send a `POST` request to the `/PAGE-ID/messages` endpoint, with the `recipient` object literal key `id` set to person's Page-scoped ID (PSID), the `message_type` parameter set to `RESPONSE`, and the `message` parameter object `text` set to the message text."
+							},
+							"response": [
+								{
+									"name": "Mark seen",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n   \"sender_action\":\"mark_seen\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"{{page-id}}",
+												"messages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-fb-aed",
+											"value": "596"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"556828760849295\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v22.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "AqiSg2TFW_yfjvT0d0FuD5Y"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "ERNlDuKagSG"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1028355510"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "mtYI9rmmO9Hi9OxgGzVSjda2kXFq+wUTz1to/SUZyELF3Jywaof39Sur9TqQGiXJQDbzKL8WwmmmFkoUQusyUA=="
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 13 Oct 2025 20:22:45 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=14, rtx=0, c=10, mss=1208, tbw=3459, tp=-1, tpl=-1, uplat=289, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"recipient_id\": \"28860385560243840\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Typing on",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"sender_action\":\"typing_on\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								},
+								"description": "To send a basic text message to a person who sent your Page a message, send a `POST` request to the `/PAGE-ID/messages` endpoint, with the `recipient` object literal key `id` set to person's Page-scoped ID (PSID), the `message_type` parameter set to `RESPONSE`, and the `message` parameter object `text` set to the message text."
+							},
+							"response": [
+								{
+									"name": "Typing on",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"sender_action\":\"typing_on\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"{{page-id}}",
+												"messages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-fb-aed",
+											"value": "596"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"556828760849295\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v22.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "AKklcCaKbGrEJpY12tfLw7l"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "DZrfllo1GvW"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1028355510"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "HpbLMsJIqy4lF8hokpy8AkZe0IZu/L9gi6L5f2MqBGkZIHnO8Xtx1mvQcocaAAC8LdF8zmyYuqyAiv2mH8Ns8w=="
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 13 Oct 2025 20:23:34 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=14, rtx=0, c=10, mss=1208, tbw=4447, tp=-1, tpl=-1, uplat=231, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"recipient_id\": \"28860385560243840\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Typing off",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"sender_action\":\"typing_off\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								},
+								"description": "To send a basic text message to a person who sent your Page a message, send a `POST` request to the `/PAGE-ID/messages` endpoint, with the `recipient` object literal key `id` set to person's Page-scoped ID (PSID), the `message_type` parameter set to `RESPONSE`, and the `message` parameter object `text` set to the message text."
+							},
+							"response": [
+								{
+									"name": "Typing off",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"sender_action\":\"typing_off\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"{{page-id}}",
+												"messages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-fb-aed",
+											"value": "596"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"556828760849295\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v22.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "A7OyO40ldjK5TFSPNN2sS1c"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "HtOKK00UCe6"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1028355510"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "6UVSdu9IM6bxwtYRMIZ7TU7fKCApD1poiStopisYmtACZoqRVkbi4f+4x3C7drBMHS48tp71UW9mkaAlhS3dEg=="
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 13 Oct 2025 20:23:44 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=14, rtx=0, c=10, mss=1208, tbw=5435, tp=-1, tpl=-1, uplat=379, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"recipient_id\": \"28860385560243840\"\n}"
+								}
+							]
+						}
+					],
+					"description": "Sender actions in a conversation are to let message recipients know that you have seen and are processing their message.\n\n### Best Practices\n\n- Send the `mark_seen` indicator when your bot receives a message so that the user does not feel ignored.\n    \n- Send the `typing_on` indicator when your bot receives a message it will respond to. This helps create a conversational experience.\n    \n- Send `typing_on` and `typing_off` actions in the [separate batch requests](https://developers.facebook.com/docs/graph-api/making-multiple-requests). Batched requests are executed in order very quickly. This quick execution may result in the `typing_on` indicator being displayed for a fraction of a second if both actions are sent in the same batch.\n    \n- Do not allow an unnatural amount of time (too long or too short) to pass between `typing_on` and `typing_off` sender actions. Ideally, the user should feel that a real person was typing the message in the elapsed time.  \n    \n\nFor more details see: [https://developers.facebook.com/docs/messenger-platform/send-messages/sender-actions/](https://developers.facebook.com/docs/messenger-platform/send-messages/sender-actions/)"
+				},
+				{
 					"name": "Text Message",
 					"request": {
 						"method": "POST",
@@ -1866,9 +2310,301 @@
 							"body": "{\n    \"recipient_id\": \"5275811702471834\",\n    \"message_id\": \"m_uAma1RVB92m2QwtXfq03coAcfn2p3T7uiO5jm0L_PMS47LnbUp72BESMc4motRiWQTQafAsjMzGcv8G7ppj2_Q\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Customer Feedback Template",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipient\": {\n    \"id\":\"{{page-scoped-id}}\"\n  },\n  \"message\": {\n    \"attachment\": {\n      \"type\": \"template\",\n      \"payload\": {\n        \"template_type\": \"customer_feedback\",\n        \"title\": \"Rate your experience with Original Coast Clothing.\", // Business needs to define. \n        \"subtitle\": \"Let Original Coast Clothing know how they are doing by answering two questions\", // Business needs to define. \n        \"button_title\": \"Rate Experience\", // Business needs to define. \n        \"feedback_screens\": [{\n          \"questions\":[{\n            \"id\": \"hauydmns8\", // Unique id for question that business sets\n            \"type\": \"csat\",\n            \"title\": \"How would you rate your experience with Original Coast Clothing?\", // Optional. If business does not define, we show standard text. Standard text based on question type (\"csat\", \"nps\", \"ces\" >>> \"text\")\n            \"score_label\": \"neg_pos\", // Optional\n            \"score_option\": \"five_stars\", // Optional\n            \"follow_up\": // Optional. Inherits the title and id from the previous question on the same page.  Only free-from input is allowed. No other title will show. \n            {\n              \"type\": \"free_form\", \n              \"placeholder\": \"Give additional feedback\" // Optional\n            }\n          }]\n        }],\n        \"business_privacy\": \n        {\n            \"url\": \"https://www.example.com\"\n         },\n        \"expires_in_days\" : 3 // Optional, default 1 day, business defines 1-7 days\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"facebook",
+								"com"
+							],
+							"path": [
+								"{{version}}",
+								"{{page-id}}",
+								"messages"
+							]
+						},
+						"description": "The media template allows you to send images, GIFs, and video as a structured message with an optional [button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/buttons). Videos and animated GIFs sent with the media template are playable in the conversation.\n\nTo send an image, send a `POST` request to the Send API, with the following `payload` property in the request body, where `attachment_id` is an ID generated from the [attachment upload API](https://developers.facebook.com/docs/messenger-platform/send-api-reference/attachment-upload). For requests using the `attachment_id` property, images and videos are supported.\n\nFor complete request property details, see [Media Template Reference](https://developers.facebook.com/docs/messenger-platform/reference/template/media)."
+					},
+					"response": [
+						{
+							"name": "Customer Feedback Template",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"recipient\": {\n    \"id\":\"{{page-scoped-id}}\"\n  },\n  \"message\": {\n    \"attachment\": {\n      \"type\": \"template\",\n      \"payload\": {\n        \"template_type\": \"customer_feedback\",\n        \"title\": \"Rate your experience with Original Coast Clothing.\", // Business needs to define. \n        \"subtitle\": \"Let Original Coast Clothing know how they are doing by answering two questions\", // Business needs to define. \n        \"button_title\": \"Rate Experience\", // Business needs to define. \n        \"feedback_screens\": [{\n          \"questions\":[{\n            \"id\": \"hauydmns8\", // Unique id for question that business sets\n            \"type\": \"csat\",\n            \"title\": \"How would you rate your experience with Original Coast Clothing?\", // Optional. If business does not define, we show standard text. Standard text based on question type (\"csat\", \"nps\", \"ces\" >>> \"text\")\n            \"score_label\": \"neg_pos\", // Optional\n            \"score_option\": \"five_stars\", // Optional\n            \"follow_up\": // Optional. Inherits the title and id from the previous question on the same page.  Only free-from input is allowed. No other title will show. \n            {\n              \"type\": \"free_form\", \n              \"placeholder\": \"Give additional feedback\" // Optional\n            }\n          }]\n        }],\n        \"business_privacy\": \n        {\n            \"url\": \"https://www.example.com\"\n         },\n        \"expires_in_days\" : 3 // Optional, default 1 day, business defines 1-7 days\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "x-fb-aed",
+									"value": "596"
+								},
+								{
+									"key": "x-business-use-case-usage",
+									"value": "{\"556828760849295\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "facebook-api-version",
+									"value": "v22.0"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; preload"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "private, no-cache, no-store, must-revalidate"
+								},
+								{
+									"key": "Expires",
+									"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+								},
+								{
+									"key": "x-fb-request-id",
+									"value": "AjcT_ZZ0qrzCDNDSb9AyDZ1"
+								},
+								{
+									"key": "x-fb-trace-id",
+									"value": "DjGl5QxHWTq"
+								},
+								{
+									"key": "x-fb-rev",
+									"value": "1028345929"
+								},
+								{
+									"key": "X-FB-Debug",
+									"value": "haAfN3iKOHgJXndx9B4d0/8Pwus3+2TAjqOjHglMCg5YWgFNbBpPDae4LJvrJHQmMCaBE8QRAa0PPcA6XjeKzw=="
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Oct 2025 19:16:43 GMT"
+								},
+								{
+									"key": "X-FB-Connection-Quality",
+									"value": "EXCELLENT; q=0.9, rtt=16, rtx=0, c=10, mss=1208, tbw=4551, tp=-1, tpl=-1, uplat=716, ullat=0"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3=\":443\"; ma=86400"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Length",
+									"value": "140"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"recipient_id\": \"28860385560243840\",\n    \"message_id\": \"m_Le1-Y7nalA4FzA79SCuoSzm_d4OFucFpIfIKCO_Nf5piXza8E0yevXnE_tm0n6DbUzJoMP7rLTJx6g6XcVGjyQ\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Structured Information Template",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"recipient\":{\n    \"id\":\"{{page-scoped-id}}\"\n  },\n  \"message\": {\n    \"attachment\": {\n      \"type\": \"template\",\n      \"payload\": {\n        \"template_type\": \"customer_information\",\n        \"countries\": [\n          \"US\"            \n        ],\n        \"business_privacy\": {\n          \"url\": \"<PRIVACY-POLICY-URL>\"\n        },\n        \"expires_in_days\": 1\n      }\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+							"protocol": "https",
+							"host": [
+								"graph",
+								"facebook",
+								"com"
+							],
+							"path": [
+								"{{version}}",
+								"{{page-id}}",
+								"messages"
+							]
+						},
+						"description": "The media template allows you to send images, GIFs, and video as a structured message with an optional [button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/buttons). Videos and animated GIFs sent with the media template are playable in the conversation.\n\nTo send an image, send a `POST` request to the Send API, with the following `payload` property in the request body, where `attachment_id` is an ID generated from the [attachment upload API](https://developers.facebook.com/docs/messenger-platform/send-api-reference/attachment-upload). For requests using the `attachment_id` property, images and videos are supported.\n\nFor complete request property details, see [Media Template Reference](https://developers.facebook.com/docs/messenger-platform/reference/template/media)."
+					},
+					"response": [
+						{
+							"name": "Structured Information Template",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"recipient\":{\n    \"id\":\"{{page-scoped-id}}\"\n  },\n  \"message\": {\n    \"attachment\": {\n      \"type\": \"template\",\n      \"payload\": {\n        \"template_type\": \"customer_information\",\n        \"countries\": [\n          \"US\"            \n        ],\n        \"business_privacy\": {\n          \"url\": \"<PRIVACY-POLICY-URL>\"\n        },\n        \"expires_in_days\": 1\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=UTF-8"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "x-fb-aed",
+									"value": "596"
+								},
+								{
+									"key": "x-business-use-case-usage",
+									"value": "{\"556828760849295\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "facebook-api-version",
+									"value": "v22.0"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; preload"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "private, no-cache, no-store, must-revalidate"
+								},
+								{
+									"key": "Expires",
+									"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+								},
+								{
+									"key": "x-fb-request-id",
+									"value": "AToxhaOhaKWShKg97XzPCMy"
+								},
+								{
+									"key": "x-fb-trace-id",
+									"value": "CoSaMlDFf2O"
+								},
+								{
+									"key": "x-fb-rev",
+									"value": "1028345929"
+								},
+								{
+									"key": "X-FB-Debug",
+									"value": "xOjt3PtAsLTJu1IdEd+x5qvx2X3uPmz3HU50anZvENeI8NGGo4hXRTBHGTwal/bkG6dXQ8SHckEdsGDQ9ZhO5A=="
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 13 Oct 2025 20:18:15 GMT"
+								},
+								{
+									"key": "X-FB-Connection-Quality",
+									"value": "EXCELLENT; q=0.9, rtt=16, rtx=0, c=10, mss=1208, tbw=11490, tp=-1, tpl=-1, uplat=907, ullat=0"
+								},
+								{
+									"key": "Alt-Svc",
+									"value": "h3=\":443\"; ma=86400"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Length",
+									"value": "140"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"recipient_id\": \"28860385560243840\",\n    \"message_id\": \"m_-qirblJ2OJZK19TMKldWsTm_d4OFucFpIfIKCO_Nf5qDco7MqUYgTGRdcw9Op4SZo_aQH6hAorgRRABhkT9nxQ\"\n}"
+						}
+					]
 				}
 			],
-			"description": "## **Generic Template**\n\nThe generic template is a simple structured message that includes a title, subtitle, image, and up to three buttons. You may also specify a `default_action` object that sets a URL that will be opened in the Messenger webview when the template is tapped.\n\nFor more details see [https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic<br>](https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic)\n\n## Receipt Template\n\nThe receipt template allows you to send an order confirmation as a structured message. The template may include an order summary, payment details, and shipping information.\n\nFor more details see [https://developers.facebook.com/docs/messenger-platform/send-messages/template/receipt](https://developers.facebook.com/docs/messenger-platform/send-messages/template/receipt)\n\n## Button Template\n\nThe button template sends a text message with up to three attached buttons. This template is useful for offering the message recipient options to choose from, such as pre-determined responses to a question, or actions to take.\n\nFor more details see [https://developers.facebook.com/docs/messenger-platform/send-messages/template/button](https://developers.facebook.com/docs/messenger-platform/send-messages/template/button)\n\n## Media Template\n\nThe media template allows you to send images, GIFs, and video as a structured message with an optional [button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/buttons). Videos and animated GIFs sent with the media template are playable in the conversation.\n\nFor more details see [https://developers.facebook.com/docs/messenger-platform/send-messages/template/media](https://developers.facebook.com/docs/messenger-platform/send-messages/template/media)"
+			"description": "## **Generic Template**\n\nThe generic template is a simple structured message that includes a title, subtitle, image, and up to three buttons. You may also specify a `default_action` object that sets a URL that will be opened in the Messenger webview when the template is tapped.\n\nFor more details see [https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic<br>](https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic)\n\n## Receipt Template\n\nThe receipt template allows you to send an order confirmation as a structured message. The template may include an order summary, payment details, and shipping information.\n\nFor more details see [https://developers.facebook.com/docs/messenger-platform/send-messages/template/receipt](https://developers.facebook.com/docs/messenger-platform/send-messages/template/receipt)\n\n## Button Template\n\nThe button template sends a text message with up to three attached buttons. This template is useful for offering the message recipient options to choose from, such as pre-determined responses to a question, or actions to take.\n\nFor more details see [https://developers.facebook.com/docs/messenger-platform/send-messages/template/button](https://developers.facebook.com/docs/messenger-platform/send-messages/template/button)\n\n## Media Template\n\nThe media template allows you to send images, GIFs, and video as a structured message with an optional [button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/buttons). Videos and animated GIFs sent with the media template are playable in the conversation.\n\nFor more details see [https://developers.facebook.com/docs/messenger-platform/send-messages/template/media<br>](https://developers.facebook.com/docs/messenger-platform/send-messages/template/media)\n\n## Customer Feedback Template\n\nBusinesses now have more robust tools such as Customer Feedback Template to measure the experience they provide to their customers. With Customer Feedback Template businesses can:\n\n1. **Increase response rates** for your customer feedback surveys with Messenger’s native customer feedback template.\n    \n2. **Aggregate customer satisfaction ratings across channels easily** with built-in Messenger templates such as Customer Satisfaction (CSAT), Net Promoter Score (NPS) and Customer Effort Score (CES) surveys.\n    \n3. **Reduce biases and inconsistency** in survey scores with optimized UX.\n    \n\nFor more details see: [https://developers.facebook.com/docs/messenger-platform/send-messages/templates/customer-feedback-template<br>](https://developers.facebook.com/docs/messenger-platform/send-messages/templates/customer-feedback-template)\n\n## Structured Information Template\n\nThe Structured Information template allows you to send a customer a message that contains a form that gathers the customer's shipping information. You can select the fields you need, make fields required or optional, and receive webhooks with this information when the customer submits the form.\n\nFor more details see: [https://developers.facebook.com/docs/messenger-platform/send-messages/templates/structured-information-template](https://developers.facebook.com/docs/messenger-platform/send-messages/templates/structured-information-template)"
 		},
 		{
 			"name": "Quick Replies",
@@ -2298,6 +3034,1854 @@
 				}
 			],
 			"description": "Quick replies provide a way to present a set of up to 13 buttons in-conversation that contain a title and optional image, and appear prominently above the composer. You can also use quick replies to request a person's location, email address, and phone number.\n\nWhen a quick reply is tapped, the buttons are dismissed, and the title of the tapped button is posted to the conversation as a message. A `messages` event will be sent to your webhook that contains the button title and an optional payload.\n\nFor more details see: [https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies](https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies)"
+		},
+		{
+			"name": "Messenger Profile API",
+			"item": [
+				{
+					"name": "Persistent Menu",
+					"item": [
+						{
+							"name": "Setting the Persistent Menu",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"persistent_menu\": [\n        {\n            \"locale\": \"default\",\n            \"composer_input_disabled\": false,\n            \"call_to_actions\": [\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Talk to an agent\",\n                    \"payload\": \"CARE_HELP\"\n                },\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Outfit suggestions\",\n                    \"payload\": \"CURATION\"\n                },\n                {\n                    \"type\": \"web_url\",\n                    \"title\": \"Shop now\",\n                    \"url\": \"https://www.originalcoastclothing.com/\",\n                    \"webview_height_ratio\": \"full\"\n                }\n            ]\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/106259855420533/messenger_profile?",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"106259855420533",
+										"messenger_profile"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								},
+								"description": "To set the persistent menu, send a `POST` request to the [Messenger Profile API](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api) to set the `persistent_menu` property of your bot's Messenger profile.\n\nWe allow up to 20 buttons in the `call_to_actions` array.\n\n## Disabling the Composer\n\nYou may disable the composer to make the persistent menu the only way for a person to interact with your Messenger bot. This is useful if your bot has a very specific purpose or set of options.\n\nTo do this, set `\"composer_input_disabled\":true` when you create the persistent menu.\n\n## Localization\n\nYou may provide default and localized button text for the persistent menu that will be displayed based on a person's locale.\n\nTo do this, specify a separate object in the `persistent_menu` array for each locale. To specify the locale for each object, set the `locale` property to a [supported locale](https://developers.facebook.com/docs/messenger-platform/messenger-profile/supported-locales):\n\n```\n{\n  \"locale\":\"default\",\n  \"call_to_actions\":[...]\n},\n{\n  \"locale: \"zh_CN\",\n  \"call_to_actions\":[...]\n}\n\n ```\n\n## User level menu\n\nYou can override the Page level persistent menu with a user level setting. This allows your app to dynamically control:\n\n- The click to action buttons on the menu for the user.\n    \n- The visibility of the composer for the user.\n    \n\nTo enable or disable the user level setting a different endpoint called `custom_user_settings` is used. This endpoint supports POST, GET and DELETE calls.\n\nThe same configurations available for the Page level persistent menu apply at user level. The main difference is that a `psid` param is needed to indicate the user that this override applies to.\n\n**NOTE:** The update of user level persistent menu happens in realtime, while the update of page level persistent menu can take up to 24 hours.\n\nThe user level settings are rate limited to 10 calls per user per 10 min."
+							},
+							"response": [
+								{
+									"name": "Setting the Persistent Menu",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"persistent_menu\": [\n        {\n            \"locale\": \"default\",\n            \"composer_input_disabled\": false,\n            \"call_to_actions\": [\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Talk to an agent\",\n                    \"payload\": \"CARE_HELP\"\n                },\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Outfit suggestions\",\n                    \"payload\": \"CURATION\"\n                },\n                {\n                    \"type\": \"web_url\",\n                    \"title\": \"Shop now\",\n                    \"url\": \"https://www.originalcoastclothing.com/\",\n                    \"webview_height_ratio\": \"full\"\n                }\n            ]\n        }\n    ],\n    \"psid\": 5371409746245822\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/106259855420533/messenger_profile?",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"106259855420533",
+												"messenger_profile"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"106259855420533\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "AiZRr3d7NwJu1igZNyPoKZC"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "FHwolke8DTB"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1027045623"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "7xZdxQMfifeWwqyDUyTaj1OSfykxVajbaAbTnqXcWAHC0DVHqGrjjEQiIKw2RZuAVvtoe0Q+1txl2beC9m0HqA=="
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 12 Sep 2025 14:44:29 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=6, rtx=0, c=10, mss=1380, tbw=2727, tp=-1, tpl=-1, uplat=1132, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "20"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"result\": \"success\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Getting the Persistent Menu",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/me/messenger_profile?fields=persistent_menu",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"me",
+										"messenger_profile"
+									],
+									"query": [
+										{
+											"key": "fields",
+											"value": "persistent_menu"
+										}
+									]
+								},
+								"description": "To get the persistent menu, send a `GET` request to the [Messenger Profile API](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api) with fields=persistent_menu."
+							},
+							"response": [
+								{
+									"name": "Getting the Persistent Menu",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/me/messenger_profile?fields=persistent_menu",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"me",
+												"messenger_profile"
+											],
+											"query": [
+												{
+													"key": "fields",
+													"value": "persistent_menu"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Encoding",
+											"value": "br"
+										},
+										{
+											"key": "ETag",
+											"value": "\"a3ab509f38928acd49f9efffbd7b8b4dbd8af139\""
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"106259855420533\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "AtSbfilY_KrM8hw0hnaTYCJ"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "AE0763cDyX4"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1027048259"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "Of3ZQH4GwXKVz6kQff32nDww/PDJKFKhY68ZHsuHygOB5YZDKNZ+Q80Hxe2rlO0tUZW/A3QdRi3lQ2sfVz1BPA=="
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 12 Sep 2025 17:49:03 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=8, rtx=0, c=10, mss=1380, tbw=380, tp=-1, tpl=-1, uplat=790, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "229"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": [\n        {\n            \"persistent_menu\": [\n                {\n                    \"locale\": \"default\",\n                    \"composer_input_disabled\": false,\n                    \"call_to_actions\": [\n                        {\n                            \"type\": \"postback\",\n                            \"title\": \"Talk to an agent\",\n                            \"payload\": \"CARE_HELP\"\n                        },\n                        {\n                            \"type\": \"postback\",\n                            \"title\": \"Outfit suggestions\",\n                            \"payload\": \"CURATION\"\n                        },\n                        {\n                            \"type\": \"web_url\",\n                            \"title\": \"Shop now\",\n                            \"url\": \"https://www.originalcoastclothing.com/\",\n                            \"webview_height_ratio\": \"full\"\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Deleting the Persistent Menu",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"fields\": [\"persistent_menu\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/me/messenger_profile",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"me",
+										"messenger_profile"
+									]
+								},
+								"description": "To delete the persistent menu, send a `DELETE` request to the [Messenger Profile API](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api) with fields=\\[\"persistent_menu\"\\]."
+							},
+							"response": [
+								{
+									"name": "Deleting the Persistent Menu",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"fields\": [\"persistent_menu\"]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/me/messenger_profile",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"me",
+												"messenger_profile"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-ad-api-version-warning",
+											"value": "You are calling a deprecated version of the Ads API."
+										},
+										{
+											"key": "cross-origin-resource-policy",
+											"value": "cross-origin"
+										},
+										{
+											"key": "x-app-usage",
+											"value": "{\"call_count\":0,\"total_cputime\":0,\"total_time\":2}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v20.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "ABai-VQ6x0STCQhhbZ8d7-g"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "DLT1xbI7iuE"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1027048259"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "nXuGiFN2GdA0oaf06EUg5OcO2nuchypnQDE6rH8QFFZAt2ZPNWeerN+KdW7yt556e1p0pC+xRXugriQmLSgR4Q=="
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 12 Sep 2025 17:55:07 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=7, rtx=0, c=10, mss=1380, tbw=380, tp=-1, tpl=-1, uplat=2328, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "20"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"result\": \"success\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Setting a user-level Persistent Menu",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"persistent_menu\": [\n        {\n            \"locale\": \"default\",\n            \"composer_input_disabled\": false,\n            \"call_to_actions\": [\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Talk to an agent\",\n                    \"payload\": \"CARE_HELP\"\n                },\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Outfit suggestions\",\n                    \"payload\": \"CURATION\"\n                },\n                {\n                    \"type\": \"web_url\",\n                    \"title\": \"Shop now\",\n                    \"url\": \"https://www.originalcoastclothing.com/\",\n                    \"webview_height_ratio\": \"full\"\n                }\n            ]\n        }\n    ],\n    \"psid\": {{page-scoped-id}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/106259855420533/custom_user_settings?",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"106259855420533",
+										"custom_user_settings"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								},
+								"description": "## User level menu\n\nYou can override the Page level persistent menu with a user level setting. This allows your app to dynamically control:\n\n- The click to action buttons on the menu for the user.\n    \n- The visibility of the composer for the user.\n    \n\nTo enable or disable the user level setting a different endpoint called `custom_user_settings` is used. This endpoint supports POST, GET and DELETE calls.\n\nThe same configurations available for the Page level persistent menu apply at user level. The main difference is that a `psid` param is needed to indicate the user that this override applies to.\n\n**NOTE:** The update of user level persistent menu happens in realtime, while the update of page level persistent menu can take up to 24 hours.\n\nThe user level settings are rate limited to 10 calls per user per 10 min."
+							},
+							"response": [
+								{
+									"name": "Setting a user-level Persistent Menu",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"persistent_menu\": [\n        {\n            \"locale\": \"default\",\n            \"composer_input_disabled\": false,\n            \"call_to_actions\": [\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Talk to an agent\",\n                    \"payload\": \"CARE_HELP\"\n                },\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Outfit suggestions\",\n                    \"payload\": \"CURATION\"\n                },\n                {\n                    \"type\": \"web_url\",\n                    \"title\": \"Shop now\",\n                    \"url\": \"https://www.originalcoastclothing.com/\",\n                    \"webview_height_ratio\": \"full\"\n                }\n            ]\n        }\n    ],\n    \"psid\": {{page-scoped-id}}\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/106259855420533/custom_user_settings?",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"106259855420533",
+												"custom_user_settings"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"106259855420533\":[{\"type\":\"pages\",\"call_count\":0,\"total_cputime\":0,\"total_time\":0,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "AG9qHoRif_gKDRfdRJCvHH4"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "DeYcL+YMiq/"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1027045623"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "CXeDVXIslUXEI9r7YVkqlA8H2mj1ybPdX9MBlAkWP54RChDaYEzWIa9U9thJa5znB4gDtUNJL8KCyei4Ato2og=="
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 12 Sep 2025 14:45:36 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=8, rtx=0, c=10, mss=1380, tbw=380, tp=-1, tpl=-1, uplat=2631, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "20"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"result\": \"success\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Getting a user level persistent menu",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/106259855420533/custom_user_settings?psid={{page-scoped-id}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"106259855420533",
+										"custom_user_settings"
+									],
+									"query": [
+										{
+											"key": "psid",
+											"value": "{{page-scoped-id}}"
+										}
+									]
+								},
+								"description": "## User level menu\n\nYou can override the Page level persistent menu with a user level setting. This allows your app to dynamically control:\n\n- The click to action buttons on the menu for the user.\n    \n- The visibility of the composer for the user.\n    \n\nTo enable or disable the user level setting a different endpoint called `custom_user_settings` is used. This endpoint supports POST, GET and DELETE calls.\n\nThe same configurations available for the Page level persistent menu apply at user level. The main difference is that a `psid` param is needed to indicate the user that this override applies to.\n\n**NOTE:** The update of user level persistent menu happens in realtime, while the update of page level persistent menu can take up to 24 hours.\n\nThe user level settings are rate limited to 10 calls per user per 10 min."
+							},
+							"response": [
+								{
+									"name": "Getting a user level persistent menu",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/106259855420533/custom_user_settings?psid={{page-scoped-id}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"106259855420533",
+												"custom_user_settings"
+											],
+											"query": [
+												{
+													"key": "psid",
+													"value": "{{page-scoped-id}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Encoding",
+											"value": "br"
+										},
+										{
+											"key": "ETag",
+											"value": "\"44d4645f72ed3e3d2e8c5591ce0b5bfcd4f18b3f\""
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Accept-Encoding"
+										},
+										{
+											"key": "cross-origin-resource-policy",
+											"value": "cross-origin"
+										},
+										{
+											"key": "x-app-usage",
+											"value": "{\"call_count\":0,\"total_cputime\":0,\"total_time\":0}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "Aub_hp-8ljNvN1E3Is1fKHh"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "Bx6U6jkkkFr"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1027045623"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "wqaAMs+iwp6nuoRJWhC4aeRqqO1I9Wx0T7ZxXH5vlfj/ezNXVoi1sq3ubI1Tk6gXjS25V3rT+4varvuR92gp/g=="
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 12 Sep 2025 14:48:45 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=8, rtx=0, c=10, mss=1380, tbw=380, tp=-1, tpl=-1, uplat=708, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "244"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": [\n        {\n            \"user_level_persistent_menu\": [\n                {\n                    \"locale\": \"default\",\n                    \"composer_input_disabled\": false,\n                    \"call_to_actions\": [\n                        {\n                            \"type\": \"postback\",\n                            \"title\": \"Talk to an agent\",\n                            \"payload\": \"CARE_HELP\"\n                        },\n                        {\n                            \"type\": \"postback\",\n                            \"title\": \"Outfit suggestions\",\n                            \"payload\": \"CURATION\"\n                        },\n                        {\n                            \"type\": \"web_url\",\n                            \"title\": \"Shop now\",\n                            \"url\": \"https://www.originalcoastclothing.com/\",\n                            \"webview_height_ratio\": \"full\"\n                        }\n                    ]\n                }\n            ],\n            \"page_level_persistent_menu\": [\n                {\n                    \"locale\": \"default\",\n                    \"composer_input_disabled\": false,\n                    \"call_to_actions\": [\n                        {\n                            \"type\": \"postback\",\n                            \"title\": \"Talk to an agent\",\n                            \"payload\": \"CARE_HELP\"\n                        },\n                        {\n                            \"type\": \"postback\",\n                            \"title\": \"Outfit suggestions\",\n                            \"payload\": \"CURATION\"\n                        },\n                        {\n                            \"type\": \"web_url\",\n                            \"title\": \"Shop now\",\n                            \"url\": \"https://www.originalcoastclothing.com/\",\n                            \"webview_height_ratio\": \"full\"\n                        }\n                    ]\n                }\n            ]\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "Deleting a user-level Persistent Menu",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"params\":[\"persistent_menu\"]}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/106259855420533/custom_user_settings?psid={{page-scoped-id}}",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"106259855420533",
+										"custom_user_settings"
+									],
+									"query": [
+										{
+											"key": "psid",
+											"value": "{{page-scoped-id}}"
+										}
+									]
+								},
+								"description": "## User level menu\n\nYou can override the Page level persistent menu with a user level setting. This allows your app to dynamically control:\n\n- The click to action buttons on the menu for the user.\n    \n- The visibility of the composer for the user.\n    \n\nTo enable or disable the user level setting a different endpoint called `custom_user_settings` is used. This endpoint supports POST, GET and DELETE calls.\n\nThe same configurations available for the Page level persistent menu apply at user level. The main difference is that a `psid` param is needed to indicate the user that this override applies to.\n\n**NOTE:** The update of user level persistent menu happens in realtime, while the update of page level persistent menu can take up to 24 hours.\n\nThe user level settings are rate limited to 10 calls per user per 10 min."
+							},
+							"response": [
+								{
+									"name": "Deleting a user-level Persistent Menu",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"params\":[\"persistent_menu\"]}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/106259855420533/custom_user_settings?psid={{page-scoped-id}}",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"106259855420533",
+												"custom_user_settings"
+											],
+											"query": [
+												{
+													"key": "psid",
+													"value": "{{page-scoped-id}}"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "cross-origin-resource-policy",
+											"value": "cross-origin"
+										},
+										{
+											"key": "x-app-usage",
+											"value": "{\"call_count\":0,\"total_cputime\":0,\"total_time\":0}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "AoXsesoxfWItlWRMCZazBJm"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "DozlgjpV1mD"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1027045623"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "61dEfRjELaqzVmrE8OqISCTfkpxesjCnhqiVKdXmPneWipgQnIt5sG/8zhPo1rp6ml27txiVt1O1iHKTRlnO6A=="
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 12 Sep 2025 14:50:39 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=7, rtx=0, c=10, mss=1380, tbw=2829, tp=-1, tpl=-1, uplat=2303, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "20"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"result\": \"success\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Disabling composer for a user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"persistent_menu\": [\n        {\n            \"locale\": \"default\",\n            \"composer_input_disabled\": true,\n            \"call_to_actions\": [\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Talk to an agent\",\n                    \"payload\": \"CARE_HELP\"\n                },\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Outfit suggestions\",\n                    \"payload\": \"CURATION\"\n                },\n                {\n                    \"type\": \"web_url\",\n                    \"title\": \"Shop now\",\n                    \"url\": \"https://www.originalcoastclothing.com/\",\n                    \"webview_height_ratio\": \"full\"\n                }\n            ]\n        }\n    ],\n    \"psid\": {{page-scoped-id}},\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/106259855420533/custom_user_settings?",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"106259855420533",
+										"custom_user_settings"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								},
+								"description": "## Disabling the Composer\n\nYou may disable the composer to make the persistent menu the only way for a person to interact with your Messenger bot. This is useful if your bot has a very specific purpose or set of options.\n\nTo do this, set `\"composer_input_disabled\":true` when you create the persistent menu."
+							},
+							"response": [
+								{
+									"name": "Disabling composer for a user",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"persistent_menu\": [\n        {\n            \"locale\": \"default\",\n            \"composer_input_disabled\": false,\n            \"call_to_actions\": [\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Talk to an agent\",\n                    \"payload\": \"CARE_HELP\"\n                },\n                {\n                    \"type\": \"postback\",\n                    \"title\": \"Outfit suggestions\",\n                    \"payload\": \"CURATION\"\n                },\n                {\n                    \"type\": \"web_url\",\n                    \"title\": \"Shop now\",\n                    \"url\": \"https://www.originalcoastclothing.com/\",\n                    \"webview_height_ratio\": \"full\"\n                }\n            ]\n        }\n    ],\n    \"psid\": {{page-scoped-id}},\n    \"composer_input_disabled\":true\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/106259855420533/custom_user_settings?",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"106259855420533",
+												"custom_user_settings"
+											],
+											"query": [
+												{
+													"key": "",
+													"value": null
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": null,
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"106259855420533\":[{\"type\":\"pages\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "Aru09rLgNA3AbcwCHJziTr1"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "CgUbw5gamF/"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1027045623"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "pJTq8kEEGe1yJvpbA0qXKUZn9SuuHMO8ShzB/z24S5YyoI+vV/rh9wPezGnK8y23asaC5qAM3vxd9qXA5hZ84A=="
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 12 Sep 2025 14:46:51 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "EXCELLENT; q=0.9, rtt=7, rtx=0, c=10, mss=1380, tbw=1310, tp=-1, tpl=-1, uplat=2174, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "20"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"result\": \"success\"\n}"
+								}
+							]
+						}
+					],
+					"description": "This documents shows you how to programmatically add the Persistent Menu to your messaging experience.\n\n<img src=\"https://content.pstmn.io/16ef0943-f638-4bca-89c9-ab018dcf9d6e/aW1hZ2UucG5n\" width=\"1125\" height=\"739\">\n\n## How It Works\n\nThe Persistent Menu allows you to create and send a menu of the main features of your business, such as hours of operation, store locations, and products, is always visible in a person's Messenger conversation with your business.\n\nWhen a person clicks an item in the menu, a `postback` webhook notification is sent to your serve. The webhook notification contains information about what item was select and by whom. This item selection action opens the standard messaging window. You have 24 hours to respond to the person.\n\n## Requirements\n\nFor the persistent menu to appear, the following must be true:\n\n- The person must be running Messenger v106 or above on iOS or Android.\n    \n- The Facebook Page the Messenger bot is subscribe to must be published.\n    \n- The Messenger bot must be set to \"public\" in the app settings.\n    \n- The Messenger bot must have the `pages_messaging` permission.\n    \n- The Messenger bot must have a [get started button](https://developers.facebook.com/docs/messenger-platform/discovery/welcome-screen#set_postback) set.\n    \n\n## Supported Buttons\n\nThe persistent menu is composed of an array of [buttons](https://developers.facebook.com/docs/messenger-platform/send-messages/buttons). The following button types are supported in the persistent menu:\n\n- `web_url`: Specifes the item is a [URL button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/url-button).\n    \n- `postback`: Specifies the item is a [postback button](https://developers.facebook.com/docs/messenger-platform/send-api-reference/postback-button)."
+				}
+			],
+			"description": "The Messenger Profile for your Page is where you set properties that define various aspects of the following Messenger Platform features. For more information, see the [Messenger Profile Properties](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api#profile_properties) table below.\n\n- [Get Started Button](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/get-started-button)\n    \n- [Welcome Page](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/greeting)\n    \n- [Ice Breakers](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/ice-breakers)\n    \n- [Persistent Menu](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/persistent-menu)\n    \n- [Domain Whitelist](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/domain-whitelisting)\n    \n- [Account Linking](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/account-linking-url)\n    \n- [Commands](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/commands)\n    \n\nThe Messenger Profile API allows you to set, update, retrieve, and delete properties from the Page Messenger Profile.\n\n## Permissions\n\nA page access token with `pages_messaging` permission is required to interact with this endpoint.\n\nApps in Development Mode, the Messenger Profile settings will only be visible to people with role on the app."
+		},
+		{
+			"name": "Buttons",
+			"item": [
+				{
+					"name": "Use Buttons in a Message Template",
+					"item": [
+						{
+							"name": "Log In Button",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"message\": {\n        \"attachment\": {\n            \"type\": \"template\",\n            \"payload\": {\n                \"template_type\": \"button\",\n                \"text\": \"Log into our service to continue\", // MESSAGE_TEXT\n                \"buttons\": [\n                    {\n                        \"type\": \"account_link\",\n                        \"url\": \"https://www.example.com\"\n                    }\n                ]\n            }\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Log In Button",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"message\": {\n        \"attachment\": {\n            \"type\": \"template\",\n            \"payload\": {\n                \"template_type\": \"button\",\n                \"text\": \"Log into our service to continue\", // MESSAGE_TEXT\n                \"buttons\": [\n                    {\n                        \"type\": \"account_link\",\n                        \"url\": \"https://www.example.com\"\n                    }\n                ]\n            }\n        }\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"{{page-id}}",
+												"messages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-fb-aed",
+											"value": "638"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"106259855420533\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "AvlNjRKJZcrF7MhqW0Rwr-v"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "AQ1ukIdPcn9"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1029766406"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "TSQe/gaAtEDZLcWDcxWu59kaK2WvzkQpRG1CjQXewxaj41D7HsxYdbqCtM9QmwyyApeAn0OOO2+ghF0mytFKrA=="
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 10:04:24 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "MODERATE; q=0.3, rtt=1375, rtx=0, c=10, mss=1334, tbw=4548, tp=-1, tpl=-1, uplat=913, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "139"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"recipient_id\": \"1234567890\",\n    \"message_id\": \"m_MESSAGE_ID\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Call Button",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"message\": {\n        \"attachment\": {\n            \"type\": \"template\",\n            \"payload\": {\n                \"template_type\": \"button\",\n                \"text\": \"Do you want to reach us on the phone?\", // MESSAGE_TEXT\n                \"buttons\": [\n                    {\n                        \"type\": \"phone_number\",\n                        \"title\": \"Call a representative\", // BUTTON_TEXT\n                        \"payload\": \"{{phone_number}}\"\n                    }\n                ]\n            }\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Call Button",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"message\": {\n        \"attachment\": {\n            \"type\": \"template\",\n            \"payload\": {\n                \"template_type\": \"button\",\n                \"text\": \"Do you want to reach us on the phone?\", // MESSAGE_TEXT\n                \"buttons\": [\n                    {\n                        \"type\": \"phone_number\",\n                        \"title\": \"Call a representative\", // BUTTON_TEXT\n                        \"payload\": \"{{phone_number}}\"\n                    }\n                ]\n            }\n        }\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"{{page-id}}",
+												"messages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-fb-aed",
+											"value": "638"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"106259855420533\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "Ac9p-nPtXIYVWLkLLznF4hq"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "CZQsal17ERN"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1029766406"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "TgX0jpSfaH5ywXWAaHKQ9HzXXQ9fkdurU+GHzkawv60+BHAfnbfkSOya3aWY62x9fHYzapMDwLyXUPjC0SfN7Q=="
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 10:26:28 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "MODERATE; q=0.3, rtt=971, rtx=1, c=10, mss=1334, tbw=3457, tp=-1, tpl=-1, uplat=901, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "139"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"recipient_id\": \"1234567890\",\n    \"message_id\": \"m_MESSAGE_ID\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Log Out Button",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"message\": {\n        \"attachment\": {\n            \"type\": \"template\",\n            \"payload\": {\n                \"template_type\": \"button\",\n                \"text\": \"Are you sure you want to log out?\", // MESSAGE_TEXT\n                \"buttons\": [\n                    {\n                        \"type\": \"account_unlink\"\n                    }\n                ]\n            }\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Log Out Button",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"message\": {\n        \"attachment\": {\n            \"type\": \"template\",\n            \"payload\": {\n                \"template_type\": \"button\",\n                \"text\": \"Are you sure you want to log out?\", // MESSAGE_TEXT\n                \"buttons\": [\n                    {\n                        \"type\": \"account_unlink\"\n                    }\n                ]\n            }\n        }\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"{{page-id}}",
+												"messages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-fb-aed",
+											"value": "638"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"106259855420533\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "A9z4q9p7tMwNhMhU07_euTJ"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "DpMGbnSGowk"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1029766406"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "4i45Fh2Q0iiseDxZks6h8ZUl+1ZJ3dozPGZSGTeiURVn2X4IyTiHFytoG4a4jA2peU/TV3t2Da3XftDcdHkIrA=="
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 10:05:14 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "MODERATE; q=0.3, rtt=1230, rtx=0, c=10, mss=1334, tbw=5641, tp=-1, tpl=-1, uplat=892, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "139"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"recipient_id\": \"1234567890\",\n    \"message_id\": \"m_MESSAGE_ID\"\n}"
+								}
+							]
+						},
+						{
+							"name": "URL Button",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"recipient\":{\n    \"id\":\"{{page-scoped-id}}\"\n  },\n  \"message\":{\n    \"attachment\":{\n      \"type\":\"template\",\n      \"payload\":{\n        \"template_type\":\"button\",\n        \"text\":\"What do you want to do next?\",\n        \"buttons\":[\n          {\n            \"type\":\"web_url\",\n            \"url\":\"https://www.messenger.com\",\n            \"title\":\"Visit Messenger\"\n          }\n        ]\n      }\n    }\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "URL Button",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"recipient\":{\n    \"id\":\"{{page-scoped-id}}\"\n  },\n  \"message\":{\n    \"attachment\":{\n      \"type\":\"template\",\n      \"payload\":{\n        \"template_type\":\"button\",\n        \"text\":\"What do you want to do next?\",\n        \"buttons\":[\n          {\n            \"type\":\"web_url\",\n            \"url\":\"https://www.messenger.com\",\n            \"title\":\"Visit Messenger\"\n          }\n        ]\n      }\n    }\n  }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"{{page-id}}",
+												"messages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-fb-aed",
+											"value": "638"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"106259855420533\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "Ali6rbMJcmrawez5585CNmd"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "ErO2fOptute"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1029766406"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "k2gfD6cfU4k/WQDc9ndQDrqXOyeDFcY+DO4z31FDN9x55ZdFVqnV0HFyNFmnl52v6zaGmNlluSQ9f1SC7JpNmA=="
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 10:21:05 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "MODERATE; q=0.3, rtt=541, rtx=0, c=10, mss=1334, tbw=3458, tp=-1, tpl=-1, uplat=975, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "139"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"recipient_id\": \"1234567890\",\n    \"message_id\": \"m_MESSAGE_ID\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Postback Button",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"message\": {\n        \"attachment\": {\n            \"type\": \"template\",\n            \"payload\": {\n                \"template_type\": \"button\",\n                \"text\": \"What do you want to do next?\",\n                \"buttons\": [\n                    {\n                        \"type\": \"postback\",\n                        \"title\": \"<BUTTON_TEXT>\",\n                        \"payload\": \"<STRING_SENT_TO_WEBHOOK>\"\n                    }\n                ]\n            }\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+									"protocol": "https",
+									"host": [
+										"graph",
+										"facebook",
+										"com"
+									],
+									"path": [
+										"{{version}}",
+										"{{page-id}}",
+										"messages"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Postback Button",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"recipient\": {\n        \"id\": \"{{page-scoped-id}}\"\n    },\n    \"message\": {\n        \"attachment\": {\n            \"type\": \"template\",\n            \"payload\": {\n                \"template_type\": \"button\",\n                \"text\": \"What do you want to do next?\",\n                \"buttons\": [\n                    {\n                        \"type\": \"postback\",\n                        \"title\": \"<BUTTON_TEXT>\",\n                        \"payload\": \"<STRING_SENT_TO_WEBHOOK>\"\n                    }\n                ]\n            }\n        }\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://graph.facebook.com/{{version}}/{{page-id}}/messages",
+											"protocol": "https",
+											"host": [
+												"graph",
+												"facebook",
+												"com"
+											],
+											"path": [
+												"{{version}}",
+												"{{page-id}}",
+												"messages"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=UTF-8"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "x-fb-aed",
+											"value": "638"
+										},
+										{
+											"key": "x-business-use-case-usage",
+											"value": "{\"106259855420533\":[{\"type\":\"messenger\",\"call_count\":1,\"total_cputime\":1,\"total_time\":1,\"estimated_time_to_regain_access\":0}]}"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "*"
+										},
+										{
+											"key": "facebook-api-version",
+											"value": "v23.0"
+										},
+										{
+											"key": "Strict-Transport-Security",
+											"value": "max-age=15552000; preload"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Expires",
+											"value": "Sat, 01 Jan 2000 00:00:00 GMT"
+										},
+										{
+											"key": "x-fb-request-id",
+											"value": "AH8wNC-qC_AkZAmKD-YKMi0"
+										},
+										{
+											"key": "x-fb-trace-id",
+											"value": "Bd2mGiMFb8t"
+										},
+										{
+											"key": "x-fb-rev",
+											"value": "1029766406"
+										},
+										{
+											"key": "X-FB-Debug",
+											"value": "ls1wogbwDTSIJDS1VP65J931TB29+ggfmpDDzHXYOik66agtfthbzywrWkjOGobypOoR3/rf/svEKrffCqpxYg=="
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 12 Nov 2025 10:22:16 GMT"
+										},
+										{
+											"key": "X-FB-Connection-Quality",
+											"value": "MODERATE; q=0.3, rtt=1236, rtx=1, c=10, mss=1334, tbw=3456, tp=-1, tpl=-1, uplat=852, ullat=0"
+										},
+										{
+											"key": "Alt-Svc",
+											"value": "h3=\":443\"; ma=86400"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Content-Length",
+											"value": "139"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "{\n    \"recipient_id\": \"1234567890\",\n    \"message_id\": \"m_MESSAGE_ID\"\n}"
+								}
+							]
+						}
+					]
+				}
+			],
+			"description": "Most [message templates](https://developers.facebook.com/docs/messenger-platform/send-messages/templates/), as well as the [persistent menu](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/persistent-menu), support buttons that invoke different types of actions. These buttons allow you to easily offer the message recipient actions they can take in response to the template, such as opening the Messenger webview, starting a payment flow, sending a postback message to your webhook, and more.\n\nFor message templates, buttons are defined by objects in the `buttons` array. For the persistent menu, buttons are defined by objects in the `call_to_actions` array.\n\n## [URL Button](https://web.postman.co/workspace/2fab0c3c-d027-4ae1-8900-f45c62b741b8/request/35152951-304baec2-6fed-4474-963e-aa176b5ccb90?action=share&source=copy-link&creator=35152951&ctx=documentation)\n\n<img src=\"https://content.pstmn.io/598c7b11-dfa5-4903-85bb-b0f1d9df1738/aW1hZ2UucG5n\" width=\"1188\" height=\"696\">\n\nThe URL Button opens a web page in the [Messenger webview](https://developers.facebook.com/docs/messenger-platform/webview). This allows you to enrich the conversation with a web-based experience, where you have the full development flexibility of the web. For example, you might display a product summary in-conversation, then use the URL button to open the full product page on your website.\n\n### App Links\n\nIf the site contains [App Links](https://developers.facebook.com/docs/applinks/metadata-reference/), the button will launch the specified native app.\n\n[The Facebook Crawler](https://developers.facebook.com/docs/sharing/webmasters/crawler/) needs to read the app link metatags for the redirect to work. Note that if you just implemented the tags in your website, you can request a new scrape with the [Sharing Debugger Tool](https://developers.facebook.com/tools/debug/sharing/). After the crawler has scraped the site, new URL buttons sent should follow the redirect behavior.\n\n### Supported Usage\n\nThe URL button is supported for use with the following:\n\n- Persistent menu\n    \n- Generic template\n    \n- List template\n    \n- Button template\n    \n- Media template\n    \n\n### Messenger Extensions SDK - Required Domain Whitelisting\n\nTo display a webpage with the [Messenger Extensions SDK](https://developers.facebook.com/docs/messenger-platform/webview/extensions) enabled in the Messenger webview you **must** whitelist the domain, including sub-domain, in the [<code>whitelisted_domains</code>&nbsp;property of your bot's Messenger Profile](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/domain-whitelisting). This ensures that only trusted domains have access to user information available via SDK functions.\n\nFor more information on whitelisting domains, see the [<code>whitelisted_domains</code>&nbsp;reference](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/domain-whitelisting).\n\n### Button Format\n\nFor a complete list of button properties, see the [URL button reference](https://developers.facebook.com/docs/messenger-platform/reference/buttons/url).\n\n```\n{\n  \"type\": \"web_url\",\n  \"url\": \"<URL_TO_OPEN_IN_WEBVIEW>\",\n  \"title\": \"<BUTTON_TEXT>\",\n}\n\n ```\n\n## [Postback Button](https://web.postman.co/workspace/2fab0c3c-d027-4ae1-8900-f45c62b741b8/request/35152951-ef451f67-794c-4b8a-89cb-0d0b911336a1?action=share&source=copy-link&creator=35152951&ctx=documentation)\n\nThe postback button sends a [<code>messaging_postbacks</code>](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messaging_postbacks) event to your webhook with the string set in the `payload` property. This allows you to take an arbitrary actions when the button is tapped. For example, you might display a list of products, then send the product ID in the postback to your webhook, where it can be used to query your database and return the product details as a structured message.\n\n### Supported Usage\n\nThe postback button is supported for use with the following:\n\n- Persistent menu\n    \n- Generic template\n    \n- List template\n    \n- Button template\n    \n- Media template\n    \n\n### Button Format\n\nFor a complete list of button properties, see the [postback button reference](https://developers.facebook.com/docs/messenger-platform/reference/buttons/postback).\n\n```\n{\n  \"type\": \"postback\",\n  \"title\": \"<BUTTON_TEXT>\",\n  \"payload\": \"<STRING_SENT_TO_WEBHOOK>\"\n}\n\n ```\n\n## [Call Button](https://web.postman.co/workspace/2fab0c3c-d027-4ae1-8900-f45c62b741b8/request/35152951-a813e4f9-d89b-4788-a3db-9fed98db6446?action=share&source=copy-link&creator=35152951&ctx=documentation)\n\n<img src=\"https://content.pstmn.io/9c270927-f59c-4de1-bd65-9be664f9a253/aW1hZ2UucG5n\" width=\"1154\" height=\"786\">\n\nThe call button dials a phone number when tapped. Phone number should be in the format `+`, e.g. `+15105559999`.\n\n### Supported Usage\n\nThe call button is supported for use with the following:\n\n- Generic template\n    \n- List template\n    \n- Button template\n    \n- Media template\n    \n\n### Button Format\n\nFor a complete list of button properties, see the [call button reference](https://developers.facebook.com/docs/messenger-platform/reference/buttons/call).\n\n```\n{\n  \"type\":\"phone_number\",\n  \"title\":\"<BUTTON_TEXT>\",\n  \"payload\":\"<PHONE_NUMBER>\"\n}\n\n ```\n\n## [Log In Button](https://web.postman.co/workspace/2fab0c3c-d027-4ae1-8900-f45c62b741b8/request/35152951-fd3b5fac-8f5c-46fc-8fe6-1d874cfd1d8d?action=share&source=copy-link&creator=35152951)\n\nThe log in button is used in the [account linking flow](https://developers.facebook.com/docs/messenger-platform/account-linking), which lets you link the message recipient's identity on Messenger with their account on your site by directing them to your web-based login flow for authentication.\n\nFor more on using the log in button for account linking, see [Account Linking](https://developers.facebook.com/docs/messenger-platform/account-linking).\n\n### Supported Usage\n\nThe log in button is supported for use with the following:\n\n- Generic template\n    \n- List template\n    \n- Button template\n    \n- Media template\n    \n\n### Button Format\n\nFor a complete list of button properties, see the [log in button reference](https://developers.facebook.com/docs/messenger-platform/reference/buttons/login).\n\n```\n{\n  \"type\": \"account_link\",\n  \"url\": \"<YOUR_LOGIN_URL>\"\n}\n\n ```\n\n## [Log Out Button](https://web.postman.co/workspace/2fab0c3c-d027-4ae1-8900-f45c62b741b8/request/35152951-b28c3c19-ddf4-4bd3-becc-1ead691f4d06?action=share&source=copy-link&creator=35152951&ctx=documentation)\n\nThe log out button is used in the [account linking flow](https://developers.facebook.com/docs/messenger-platform/account-linking) to unlink the message recipient's identity on Messenger with their account on your site.\n\nFor more on using the log out button for account unlinking, see [Account Linking](https://developers.facebook.com/docs/messenger-platform/account-linking).\n\n### Supported Usage\n\nThe log out button is supported for use with the following:\n\n- Generic template\n    \n- List template\n    \n- Button template\n    \n- Media template\n    \n\n### Button Format\n\nFor a complete list of button properties, see the [log out button reference](https://developers.facebook.com/docs/messenger-platform/reference/buttons/logout).\n\n```\n{\n  \"type\": \"account_unlink\"\n}\n\n ```\n\n## Best Practices\n\nDo - Use buttons to prompt for follow-up or further interaction with a particular message.\n\nDo - Start with a verb to help people understand the action they're taking.\n\nDo - Use URL buttons for tasks that you want completed on your website (ex: purchases, account linking, etc.). Make it clear you’re sending people outside of Messenger.\n\nDo - Send a response after someone taps a callback button. This confirms that you've processed or completed their action (ex: canceling a reservation, answering a question).\n\nDon't - Use buttons when their action depends on the current state of the bot, since they'll be permanently available in the thread.\n\nDon't - Use more than 1-3 words or add punctuation. Try to keep your text under 20 characters, including spaces.\n\nDon't - Rely on URLs for every button. The more interactions you can build within Messenger, the more seamless your experience will be.\n\nDon't - Use a single callback button. Where's only one button to choose from, people often think it's a continuation of your message text and don't understand it's an action you want them to take."
 		}
 	],
 	"auth": {
