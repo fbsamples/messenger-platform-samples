@@ -68,7 +68,7 @@ def webhook():
         return "INVALID WEBHOOK EVENT", 403
 
 
-def comment_on_post(post_id):
+def comment_on_post(post_id: str) -> None:
     payload = {"message": "Lovely post!"}
     headers = {"content-type": "application/json"}
     url = "https://graph.facebook.com/{}/comments?access_token={}".format(
