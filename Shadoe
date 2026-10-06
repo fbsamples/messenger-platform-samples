@@ -1,0 +1,32 @@
+[
+  {
+    "object": "page",
+    "entry": [
+      {
+        "time": 1680575902263,
+        "id": "PAGE-ID",
+        "messaging": [
+          {
+           "recipient": {
+              "id": "PAGE-ID"
+            },
+            "from": {
+              "id": "USER-ID",
+              "name": "Cinderella Hoover"
+            },
+            "group_id": "GROUP-ID",
+            "comment_id": "COMMENT-ID",
+            "parent_id": "PARENT-ID",
+            "post_id": "POST-ID",
+            "created_time": 1680575789,
+            "item": "comment",
+            "verb": "add",
+            "message": "Does this shirt come in blue?",
+            "field": "group_feed"
+          }
+        ],
+        "hop_context": null
+      }
+    ]
+  }
+]
