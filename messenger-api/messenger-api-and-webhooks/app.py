@@ -21,7 +21,7 @@ APP_SECRET = os.environ.get("APP_SECRET", "")
 
 
 @app.route("/webhook", methods=["GET", "POST"])
-def webhook():
+def webhook() -> tuple[str, int]:
     # Webhook verification
     if request.method == "GET":
         if request.args.get("hub.mode") == "subscribe" and request.args.get(
@@ -66,6 +66,7 @@ def webhook():
 
             return "WEBHOOK EVENT HANDLED", 200
         return "INVALID WEBHOOK EVENT", 403
+    return "INVALID REQUEST", 400
 
 
 def comment_on_post(post_id: str) -> None:
